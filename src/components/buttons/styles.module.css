@@ -1,0 +1,28 @@
+.button_view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 74px;
+    height: 20px;
+
+    font-size: 12px;
+    text-transform: uppercase;
+
+    background-color: unset;
+    border: 1px solid #FFFFFF;
+}
+
+.button_add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 90px;
+    height: 26px;
+
+    border: unset;
+    border-radius: 10px 0;
+    background-color: var(--color-primary);
+    filter: var(--shadow-dark-blue);
+}

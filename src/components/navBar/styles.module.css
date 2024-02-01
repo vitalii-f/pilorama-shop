@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 1200px;
+    height: var(--navBar-height);
+
+    padding: 0 10px;
+}
+
+.ul {
+    display: flex;
+    gap: 20px;
+}
+
+.drawerHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+}
