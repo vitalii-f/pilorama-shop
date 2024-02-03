@@ -4,8 +4,9 @@ import Image from 'next/image';
 import React from 'react';
 import { ContentRaiting, DescriptionWrapper, DevInfo, GameName, HeroContent, HeroControl, GameImage, Price, Section, RaitingDescription, CartButton, BackgroundImage, Background } from './GameHero.styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Games } from '@/types/types';
 
-const GameHero = ({ gameData }: {gameData: Collection['games']}) => {
+const GameHero = ({ gameData }: {gameData: Games}) => {
   return (
     <Section>
     <Background>
@@ -16,8 +17,8 @@ const GameHero = ({ gameData }: {gameData: Collection['games']}) => {
         <DescriptionWrapper>
           <GameName>{gameData.name}</GameName>
           <DevInfo>
-            <PlatformLabel text={gameData.platform![0]} variant='contained' />
-            <p>{gameData.developer}</p>
+            <PlatformLabel text={gameData.platform![0].item.name} variant='contained' />
+            <p>{gameData.developer[0].item.name}</p>
           </DevInfo>
           <ContentRaiting>
             <Image src='/ESRB.png' alt='ESRB' width={45} height={72} quality={100} />

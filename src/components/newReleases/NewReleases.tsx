@@ -1,21 +1,13 @@
 import React from 'react';
 import ViewAll from '../buttons/ViewAll';
 import PlatformLabel from '../labels/PlatformLabel';
-import directus from '@/helpers/diretus';
-import { readItems } from '@directus/sdk';
 import { Card, CardContent, CardDescription, CardDeveloper, CardPrice, CardTitle, Cards, RealeasesImage, Releases, ReleasesHeader } from './NewReleases.styled';
 import Link from 'next/link';
+import { Games } from '@/types/types';
 
-const fetchData = async () => {
-  return directus.request(
-    readItems('games', {
-      fields: ['id', 'name', 'price', 'developer', 'platform', 'capsule'],
-    })
-  );
-};
 
-const NewReleases = async () => {
-  const data = await fetchData();
+
+const NewReleases = async ({ data }: { data: Games[]}) => {
   return (
     <Releases>
       <ReleasesHeader>
@@ -24,7 +16,6 @@ const NewReleases = async () => {
       </ReleasesHeader>
       <Cards>
         {data.map((item) => (
-          
             <Card key={item.name}>
               <RealeasesImage
                 src={`${process.env.DB_IMG}/${item.capsule}`}
@@ -36,11 +27,11 @@ const NewReleases = async () => {
               <CardContent>
                 <CardDescription>
                   <CardTitle><Link href={`/games/${item.id}`}>{item.name}</Link></CardTitle>
-                  <CardDeveloper>{item.developer}</CardDeveloper>
+                  <CardDeveloper>{item.developer[0].item.name}</CardDeveloper>
                 </CardDescription>
-                <PlatformLabel text={item.platform![0]} variant='outlined' />
+                <PlatformLabel text={item.platform[0].item.name} variant='outlined' />
                 <CardPrice href={`/games/${item.id}`}>
-                  $30.00
+                  ${item.price}
                 </CardPrice>
               </CardContent>
             </Card>

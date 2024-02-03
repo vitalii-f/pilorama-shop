@@ -1,15 +1,14 @@
-import Link from 'next/link';
 import styles from './styles.module.css';
 import Image from 'next/image';
 import HeroNav from './HeroNav';
 import Trending from '../trending/Trending';
 import PlatformLabel from '../labels/PlatformLabel';
 import directus from '@/helpers/diretus';
-import { readItem, readItems } from '@directus/sdk';
+import { readSingleton } from '@directus/sdk';
 import { cache } from 'react';
 
 const fetchBanner = cache(async () => {
-  return directus.request(readItem('main_banner', 1));
+  return directus.request(readSingleton('main_banner'));
 });
 
 const Hero = async () => {
