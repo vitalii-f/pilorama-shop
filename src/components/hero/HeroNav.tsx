@@ -1,23 +1,23 @@
 'use client'
 
 import Link from "next/link"
-import styles from './styles.module.css'
 import { usePathname } from "next/navigation"
+import { HeroNavigation, NavLink } from "./Hero.styled"
 
 const HeroNav = () => {
     const pathname = usePathname()
     return (
-        <nav className={styles.hero__nav}>
+        <HeroNavigation>
             <ul>
-                <li><Link href='/' className={pathname === '/' ? styles['link-active'] : styles.link}>Discover</Link></li>
-                <li><Link href='/' className={pathname === '/explore' ? styles['link-active'] : styles.link}>Explore</Link></li>
+                <li><NavLink href='/' $isActive={pathname === '/'}>Discover</NavLink></li>
+                <li><NavLink href='/' $isActive={pathname === '/explore'}>Explore</NavLink></li>
             </ul>
             <ul>
-                <li><Link href='/' className={pathname === '/collections' ? styles['link-active'] : styles.link}>Collections</Link></li>
-                <li><Link href='/' className={pathname === '/deals' ? styles['link-active'] : styles.link}>Deals</Link></li>
-                <li><Link href='/' className={pathname === '/subscriptions' ? styles['link-active'] : styles.link}>Subscriptions</Link></li>
+                <li><NavLink href='/' $isActive={pathname === '/collections'}>Collections</NavLink></li>
+                <li><NavLink href='/' $isActive={pathname === '/deals'}>Deals</NavLink></li>
+                <li><NavLink href='/' $isActive={pathname === '/subscribtions'}>Subscribtions</NavLink></li>
             </ul>
-        </nav>
+        </HeroNavigation>
     )
 }
 

@@ -3,11 +3,9 @@ import ViewAll from '../buttons/ViewAll';
 import PlatformLabel from '../labels/PlatformLabel';
 import { Card, CardContent, CardDescription, CardDeveloper, CardPrice, CardTitle, Cards, RealeasesImage, Releases, ReleasesHeader } from './NewReleases.styled';
 import Link from 'next/link';
-import { Games } from '@/types/types';
+import { Tables } from '@/types/supabase';
 
-
-
-const NewReleases = async ({ data }: { data: Games[]}) => {
+const NewReleases = async ({ data }: { data: Tables<'games'>[]}) => {
   return (
     <Releases>
       <ReleasesHeader>
@@ -18,7 +16,7 @@ const NewReleases = async ({ data }: { data: Games[]}) => {
         {data.map((item) => (
             <Card key={item.name}>
               <RealeasesImage
-                src={`${process.env.DB_IMG}/${item.capsule}`}
+                src={item.capsule_img}
                 alt={item.name!}
                 width={170}
                 height={170}
@@ -27,9 +25,9 @@ const NewReleases = async ({ data }: { data: Games[]}) => {
               <CardContent>
                 <CardDescription>
                   <CardTitle><Link href={`/games/${item.id}`}>{item.name}</Link></CardTitle>
-                  <CardDeveloper>{item.developer[0].item.name}</CardDeveloper>
+                  <CardDeveloper>{item.developers}</CardDeveloper>
                 </CardDescription>
-                <PlatformLabel text={item.platform[0].item.name} variant='outlined' />
+                <PlatformLabel text={item.platforms_array[0]} variant='outlined' />
                 <CardPrice href={`/games/${item.id}`}>
                   ${item.price}
                 </CardPrice>

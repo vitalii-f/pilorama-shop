@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
@@ -14,26 +14,48 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import styles from './styles.module.css';
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { HeaderDrawer } from './Navbar.styled';
+import { userStore } from '@/stores/user';
+import { User } from '@supabase/supabase-js';
+import { logout } from './action';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-function NavBar() {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  const [open, setOpen] = React.useState<boolean>(false)
+function NavBar({
+  user,
+  avatarURL,
+  role,
+}: {
+  user: User | null;
+  avatarURL?: string | null;
+  role: string;
+}) {
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const handleToggleNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setOpen(!open)
+    setOpen(!open);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   const menuItems = [
@@ -43,16 +65,11 @@ function NavBar() {
       icon: <HomeIcon />,
     },
     {
-      name: 'Products',
-      link: '/categories',
+      name: 'Games',
+      link: '/games',
       icon: <ShoppingCartIcon />,
     },
-    {
-      name: 'Test',
-      link: '/test',
-      icon: <BugReportIcon />,
-    },
-  ]
+  ];
 
   const renderNavBar = () => {
     return (
@@ -60,55 +77,67 @@ function NavBar() {
         {menuItems.map((item) => (
           <ListItem key={item.name} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {item.icon}
-              </ListItemIcon>
-              <Link href={item.link}><ListItemText primary={item.name} /></Link>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <Link href={item.link}>
+                <ListItemText primary={item.name} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-    )
-  }
+    );
+  };
 
   return (
-    <AppBar position="static" color='secondary' enableColorOnDark sx={{backgroundColor: 'secondary', height: 'var(--navbar-height)'}}>
-      <Container maxWidth="xl">
+    <AppBar
+      position='static'
+      color='secondary'
+      enableColorOnDark
+      sx={{
+        backgroundColor: 'secondary',
+        height: 'var(--navbar-height)',
+        width: '100%',
+      }}
+    >
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           {/* <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
             <Link href='/'><Image src='/logo.svg' width={100} height={100} alt='logo' priority /></Link>
           </Box> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleToggleNavMenu}
-              color="inherit"
+              color='inherit'
             >
               <MenuIcon />
             </IconButton>
             <Drawer
               open={open}
-              sx={{width: '300'}}
-              variant="persistent"
-              anchor="left"  
+              sx={{ width: '300' }}
+              variant='persistent'
+              anchor='left'
             >
-              <div className={styles.drawerHeader}>
+              <HeaderDrawer>
                 <IconButton onClick={handleToggleNavMenu}>
                   <ChevronLeftIcon />
                 </IconButton>
-              </div>
+              </HeaderDrawer>
               {renderNavBar()}
             </Drawer>
           </Box>
-          
+
           {/* <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: '100%', justifyContent: 'center' }}>
             <Link href='/'><Image src='/logo.svg' width={100} height={100} alt='logo' priority /></Link>
           </Box> */}
-          
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} color='red'>
+
+          <Box
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+            color='red'
+          >
             {menuItems.map((item) => (
               <Button
                 key={item.name}
@@ -119,41 +148,60 @@ function NavBar() {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ display: 'flex', flexGrow: 0, gap: '15px' }}>
-            <IconButton sx={{  }}>
-              <ShoppingBasketIcon fontSize='large' />
-            </IconButton>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              // onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting}
-                // onClick={handleCloseUserMenu}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
+          {/* <IconButton sx={{}}>
+                <ShoppingBasketIcon fontSize='large' color='primary' />
+              </IconButton> */}
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title='Open menu'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    alt='Remy Sharp'
+                    src={avatarURL ? avatarURL : undefined}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign='center'>
+                    <Link href='/profile'>Profile</Link>
+                  </Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                {role === 'admin' && (
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign='center'>
+                      <Link href='/admin'>Admin Menu</Link>
+                    </Typography>
+                  </MenuItem>
+                )}
+                <MenuItem
+                  onClick={async () => {
+                    handleCloseUserMenu();
+                    await logout();
+                  }}
+                >
+                  <Typography textAlign='center'>Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Link href='/login'>Login</Link>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

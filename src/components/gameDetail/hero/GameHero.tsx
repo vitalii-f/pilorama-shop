@@ -1,24 +1,23 @@
 import PlatformLabel from '@/components/labels/PlatformLabel';
-import { Collection } from '@/types/collections';
 import Image from 'next/image';
 import React from 'react';
 import { ContentRaiting, DescriptionWrapper, DevInfo, GameName, HeroContent, HeroControl, GameImage, Price, Section, RaitingDescription, CartButton, BackgroundImage, Background } from './GameHero.styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Games } from '@/types/types';
+import { Tables } from '@/types/supabase';
 
-const GameHero = ({ gameData }: {gameData: Games}) => {
+const GameHero = ({ gameData }: {gameData: Tables<'games'>}) => {
   return (
     <Section>
     <Background>
-        <BackgroundImage src={`${process.env.DB_IMG}/${gameData.banner}`} alt={gameData.name!} fill priority quality={100} />
+        <BackgroundImage src={gameData.hero_img} alt={gameData.name!} fill priority quality={100} />
     </Background>
       <HeroContent>
-        <GameImage src={`${process.env.DB_IMG}/${gameData.square_img}`} alt={gameData.name!} width={170} height={170} />
+        <GameImage src={gameData.icon_img} alt={gameData.name!} width={170} height={170} />
         <DescriptionWrapper>
           <GameName>{gameData.name}</GameName>
           <DevInfo>
-            <PlatformLabel text={gameData.platform![0].item.name} variant='contained' />
-            <p>{gameData.developer[0].item.name}</p>
+            <PlatformLabel text={gameData.platforms_array[0]} variant='contained' />
+            <p>{gameData.developers}</p>
           </DevInfo>
           <ContentRaiting>
             <Image src='/ESRB.png' alt='ESRB' width={45} height={72} quality={100} />

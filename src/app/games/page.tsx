@@ -1,5 +1,3 @@
-import directus from '@/helpers/diretus';
-import { readItems } from '@directus/sdk';
 import { cache } from 'react';
 import {
   AsideFilter,
@@ -19,33 +17,47 @@ import {
 import Link from 'next/link';
 import PlatformLabel from '@/components/labels/PlatformLabel';
 import Filters from '@/components/filters/Filters';
-import { Filters as FiltersProps } from '@/types/types';
+import { supabase } from '@/helpers/supabase';
+
+export const fetchCache = 'force-no-store'
 
 const fetchData = cache(async () => {
-  return await directus.request(
-    readItems('games', {
-      sort: ['-release_date'],
-      fields: [
-        'id',
-        'price',
-        'capsule',
-        'name',
-        {
-          developer: [{ item: { developer: ['name'] } }],
-          platform: [{ item: { Platform: ['name'] } }],
-        },
-      ],
-    })
-  );
+  try {
+    const { data, error } = await supabase
+      .from('games')
+      .select('*, developers(*)');
+    return data;
+  } catch (error) {}
 });
 
-const fetchFiltersList = cache(async () => {
-  return await directus.request(readItems('filters'))
-})
+const fetchFiltersList = cache(async () => {});
 
-const GamesPage = async () => {
+const fetchFilters = async () => {
+  try {
+    const { data: platforms, error: platformsError } = await supabase
+      .from('platforms')
+      .select('*');
+    if (platformsError) throw new Error(platformsError.message);
+
+    const { data: genres, error: genresError } = await supabase
+      .from('genres')
+      .select('*');
+    if (genresError) throw new Error(genresError.message);
+
+    return { platforms, genres };
+  } catch (error) {
+    throw new Error(error as string);
+  }
+};
+
+const GamesPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   const gamesData = await fetchData();
-  const filtersList = await fetchFiltersList()
+  const filtersList = await fetchFiltersList();
+  const filters = await fetchFilters();
   return (
     <Main>
       <Games>
@@ -55,35 +67,39 @@ const GamesPage = async () => {
         </GamesHeader>
         <div>
           <Cards>
-            {gamesData.map((item) => (
-              <Card key={item.name}>
-                <CardImage
-                  src={`${process.env.DB_IMG}/${item.capsule}`}
-                  alt={item.name!}
-                  width={170}
-                  height={170}
-                  quality={100}
-                />
-                <CardContent>
-                  <CardDescription>
-                    <CardTitle>
-                      <Link href={`/games/${item.id}`}>{item.name}</Link>
-                    </CardTitle>
-                    <CardDeveloper>{item.developer[0].item.name}</CardDeveloper>
-                  </CardDescription>
-                  <PlatformLabel text={item.platform[0].item.name!} variant='outlined' />
-                  <CardPrice href={`/games/${item.id}`}>
-                    ${item.price}
-                  </CardPrice>
-                </CardContent>
-              </Card>
-            ))}
+            {gamesData &&
+              gamesData.map((game) => (
+                <Card key={game.name}>
+                  <CardImage
+                    src={game.capsule_img}
+                    alt={game.name}
+                    width={170}
+                    height={170}
+                    quality={100}
+                  />
+                  <CardContent>
+                    <CardDescription>
+                      <CardTitle>
+                        <Link href={`/games/${game.id}`}>{game.name}</Link>
+                      </CardTitle>
+                      <CardDeveloper>{game.developers.name}</CardDeveloper>
+                    </CardDescription>
+                    <PlatformLabel
+                      text={game.platforms_array[0]}
+                      variant='outlined'
+                    />
+                    <CardPrice href={`/games/${game.id}`}>
+                      ${game.price}
+                    </CardPrice>
+                  </CardContent>
+                </Card>
+              ))}
           </Cards>
         </div>
       </Games>
       <AsideFilter>
         <AsideTitle>Filters</AsideTitle>
-        <Filters filtersList={filtersList as FiltersProps[]} />
+        <Filters filters={filters} />
       </AsideFilter>
     </Main>
   );

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles.module.css'
+import { Label } from './PlatformLabel.styled'
 
 interface PlatformLabelProps {
   variant?: 'contained' | 'outlined'
@@ -9,9 +9,9 @@ interface PlatformLabelProps {
 
 const PlatformLabel = ({variant, text, className}: PlatformLabelProps) => {
   return (
-    <div className={`${className} ${styles.label} ${variant ? styles[`label-${variant}`] : undefined}`}>
+    <Label $variant={variant} className={className}>
         {text}
-    </div>
+    </Label>
   )
 }
 

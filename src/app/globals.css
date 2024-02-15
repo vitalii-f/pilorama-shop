@@ -7,13 +7,21 @@
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
-  --color-background-navbar: #FFFFFF;
-  --color-background: #1F1F1F;
-  --color-primary: #0072CE;
-  --color-secondary: #C4C4C4;
+  --color-background-navbar: #ffffff;
+  --color-background: #1f1f1f;
+  --color-primary: #0072ce;
+  --color-secondary: #c4c4c4;
   --color-dark-grey: #383838;
+  --color-dark-red: #9e2020;
 
-  --shadow-dark-blue: drop-shadow(0 0 15px var(--color-primary))
+  --color-test: #2c292aaf;
+
+  --color-hover-link: #c4c4c45e;
+
+  --shadow-dark-blue: drop-shadow(0 0 15px var(--color-primary));
+  --shadow-dark-red: drop-shadow(0 0 15px #c20000);
+
+  --glow-dark-blue: 0px 0px 25px 5px rgba(0, 113, 206, 0.9);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -36,22 +44,22 @@ button {
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  /* width: 100vw; */
+  /* overflow-x: hidden; */
   display: flex;
   flex-direction: column;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: var(--color-background)
+  background-color: var(--color-background);
 }
 
-/* main {
+main {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-} */
+  /* display: flex;
+  flex-direction: column; */
+}
 
 a {
   color: inherit;
@@ -62,7 +70,6 @@ h2 {
   font-size: 27px;
   font-weight: 700;
 }
-
 
 @media (prefers-color-scheme: dark) {
   html {

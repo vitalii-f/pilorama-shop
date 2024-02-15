@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const GameSlider = ({ media }: { media: { directus_files_id: string }[]}) => {
+const GameSlider = ({ media }: { media: string[]}) => {
   return (
     <Section>
       <StyledSwiper
@@ -20,8 +20,8 @@ const GameSlider = ({ media }: { media: { directus_files_id: string }[]}) => {
         spaceBetween={50}
       >
         {media.map((item) => (
-            <SwiperSlide key={item.directus_files_id}>
-                <SliderImage src={`${process.env.NEXT_PUBLIC_DB_IMG}/${item.directus_files_id}`} alt='slide image' fill quality={100} priority />
+            <SwiperSlide key={item}>
+                <SliderImage src={item} alt='slide image' fill quality={100} priority />
             </SwiperSlide>
         ))}
       </StyledSwiper>

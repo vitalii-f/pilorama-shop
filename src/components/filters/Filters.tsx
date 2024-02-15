@@ -12,11 +12,10 @@ import {
   StyledCheckbox,
   SubmitButton,
 } from './Filters.styled';
-import { Filters } from '@/types/types';
-import { getFeatures, getGenres, getPlatforms } from '@/app/api/filters';
+import { redirect } from 'next/navigation';
 
 const submitFilters = async (formData: FormData) => {
-  console.log(formData.getAll('platform'));
+  redirect('?platforma=PS5')
 };
 
 interface FiltersStateProps {
@@ -25,14 +24,20 @@ interface FiltersStateProps {
   value: string;
 }
 
-const Filters = ({ filtersList }: { filtersList: Filters[] }) => {
+interface FiltersProps {
+  [key: string | 'ganres' | 'platforms']: {
+    id: number
+    name: string
+    value: string
+  }[]
+}
+
+const Filters = ({ filters }: { filters: FiltersProps }) => {
   const [budgete, setBudget] = useState<number[]>([5, 50]);
 
-  const [platform, setPlatform] = useState<FiltersStateProps[]>();
-  const [genre, setGenre] = useState<FiltersStateProps[]>();
-  const [features, setFeatures] = useState<FiltersStateProps[]>();
-
-  const [status, setStatus] = useState<'loading' | 'loaded'>('loading');
+  const [platform, setPlatform] = useState<FiltersStateProps[]>(filters.platforms);
+  const [genre, setGenre] = useState<FiltersStateProps[]>(filters.genres);
+  // const [features, setFeatures] = useState<FiltersStateProps[]>();
 
   const handleBudgetChange = (event: Event, newValue: number | number[]) => {
     setBudget(newValue as number[]);
@@ -41,15 +46,6 @@ const Filters = ({ filtersList }: { filtersList: Filters[] }) => {
   const valuetext = (value: number) => {
     return value.toString();
   };
-
-  useEffect(() => {
-    getPlatforms().then((value) => setPlatform(value as FiltersStateProps[]));
-    getGenres().then((value) => setGenre(value as FiltersStateProps[]));
-    getFeatures().then((value) => setFeatures(value as FiltersStateProps[]));
-    setStatus('loaded');
-  }, []);
-
-  if (status === 'loading') return <CircularProgress />;
 
   return (
     <>
@@ -93,7 +89,7 @@ const Filters = ({ filtersList }: { filtersList: Filters[] }) => {
             </CheckboxLabel>
           ))}
         </CheckboxContainer>
-
+{/* 
         <CheckboxContainer>
           Features
           {features?.map((item) => (
@@ -106,7 +102,7 @@ const Filters = ({ filtersList }: { filtersList: Filters[] }) => {
               />
             </CheckboxLabel>
           ))}
-        </CheckboxContainer>
+        </CheckboxContainer> */}
 
         <CheckboxContainer>
           Genre
