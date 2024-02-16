@@ -9,6 +9,7 @@ import StyledComponentsRegistry from '@/helpers/registry';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import { supabase } from '@/helpers/supabase';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
@@ -20,10 +21,10 @@ export const metadata: Metadata = {
 const fetchProfile = async () => {
   try {
     const { data, error } = await supabase.from('profiles').select('*');
-    if (error) throw new Error(error.message)
+    if (error) throw new Error(error.message);
     return data[0];
   } catch (error) {
-    throw new Error(error as string)
+    throw new Error(error as string);
   }
 };
 
@@ -50,8 +51,13 @@ export default async function RootLayout({
         <StyledComponentsRegistry>
           <AppRouterCacheProvider>
             <ThemeClient>
-              <NavBar user={user} avatarURL={profile.avatar} role={profile.role} />
+              <NavBar
+                user={user}
+                avatarURL={profile.avatar}
+                role={profile.role}
+              />
               {children}
+              <SpeedInsights />
             </ThemeClient>
           </AppRouterCacheProvider>
         </StyledComponentsRegistry>
