@@ -31,7 +31,7 @@ const fetchUser = async () => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data, error } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
   return data.user;
 };
@@ -48,7 +48,7 @@ export default async function RootLayout({
     <html lang='en'>
       <body className={openSans.className}>
         <StyledComponentsRegistry>
-          <AppRouterCacheProvider options={{}}>
+          <AppRouterCacheProvider>
             <ThemeClient>
               <NavBar user={user} avatarURL={profile.avatar} role={profile.role} />
               {children}

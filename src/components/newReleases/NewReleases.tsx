@@ -1,11 +1,28 @@
 import React from 'react';
 import ViewAll from '../buttons/ViewAll';
 import PlatformLabel from '../labels/PlatformLabel';
-import { Card, CardContent, CardDescription, CardDeveloper, CardPrice, CardTitle, Cards, RealeasesImage, Releases, ReleasesHeader } from './NewReleases.styled';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardDeveloper,
+  CardPrice,
+  CardTitle,
+  Cards,
+  RealeasesImage,
+  Releases,
+  ReleasesHeader,
+} from './NewReleases.styled';
 import Link from 'next/link';
 import { Tables } from '@/types/supabase';
 
-const NewReleases = async ({ data }: { data: Tables<'games'>[]}) => {
+interface NewReleasesProps {
+  data: (Tables<'games'> & {
+    developers: { id: number; name: string; value: string };
+  })[];
+}
+
+const NewReleases = async ({ data }: NewReleasesProps) => {
   return (
     <Releases>
       <ReleasesHeader>
@@ -13,26 +30,30 @@ const NewReleases = async ({ data }: { data: Tables<'games'>[]}) => {
         <ViewAll />
       </ReleasesHeader>
       <Cards>
-        {data.map((item) => (
-            <Card key={item.name}>
-              <RealeasesImage
-                src={item.capsule_img}
-                alt={item.name!}
-                width={170}
-                height={170}
-                quality={100}
+        {data.map((item, index) => (
+          <Card key={item.name + index}>
+            <RealeasesImage
+              src={item.capsule_img}
+              alt={item.name}
+              width={170}
+              height={170}
+              quality={100}
+              priority
+            />
+            <CardContent>
+              <CardDescription>
+                <CardTitle>
+                  <Link href={`/games/${item.id}`}>{item.name}</Link>
+                </CardTitle>
+                <CardDeveloper>{item.developers.name}</CardDeveloper>
+              </CardDescription>
+              <PlatformLabel
+                text={item.platforms_array[0]}
+                variant='outlined'
               />
-              <CardContent>
-                <CardDescription>
-                  <CardTitle><Link href={`/games/${item.id}`}>{item.name}</Link></CardTitle>
-                  <CardDeveloper>{item.developers}</CardDeveloper>
-                </CardDescription>
-                <PlatformLabel text={item.platforms_array[0]} variant='outlined' />
-                <CardPrice href={`/games/${item.id}`}>
-                  ${item.price}
-                </CardPrice>
-              </CardContent>
-            </Card>
+              <CardPrice href={`/games/${item.id}`}>${item.price}</CardPrice>
+            </CardContent>
+          </Card>
         ))}
       </Cards>
     </Releases>

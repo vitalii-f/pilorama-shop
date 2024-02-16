@@ -23,13 +23,11 @@ import {
   ListItemText,
 } from '@mui/material';
 import Link from 'next/link';
-import Image from 'next/image';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { HeaderDrawer } from './Navbar.styled';
-import { userStore } from '@/stores/user';
 import { User } from '@supabase/supabase-js';
 import { logout } from './action';
 
@@ -138,9 +136,9 @@ function NavBar({
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
             color='red'
           >
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <Button
-                key={item.name}
+                key={item.name + index}
                 onClick={handleToggleNavMenu}
                 sx={{ my: 2, display: 'block', color: 'black' }}
               >
