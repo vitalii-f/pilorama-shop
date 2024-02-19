@@ -179,6 +179,7 @@ export type Database = {
           avatar: string | null
           created_at: string
           email: string
+          favorite_games_list: number[] | null
           id: string
           login: string
           role: string
@@ -187,6 +188,7 @@ export type Database = {
           avatar?: string | null
           created_at?: string
           email: string
+          favorite_games_list?: number[] | null
           id: string
           login: string
           role?: string
@@ -195,6 +197,7 @@ export type Database = {
           avatar?: string | null
           created_at?: string
           email?: string
+          favorite_games_list?: number[] | null
           id?: string
           login?: string
           role?: string
@@ -219,12 +222,63 @@ export type Database = {
         }
         Relationships: []
       }
+      purchase: {
+        Row: {
+          created_at: string
+          id: number
+          invoiceId: string
+          product_id: number[]
+          status: Database["public"]["Enums"]["payment_status"]
+          total_price: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          invoiceId: string
+          product_id: number[]
+          status: Database["public"]["Enums"]["payment_status"]
+          total_price: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          invoiceId?: string
+          product_id?: number[]
+          status?: Database["public"]["Enums"]["payment_status"]
+          total_price?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_purchase_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_favorite_game: {
+        Args: {
+          profile_id: string
+          game_id: number
+        }
+        Returns: undefined
+      }
+      update_favorite_games_list: {
+        Args: {
+          profile_id: string
+          game_id: number
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       developer:
@@ -255,6 +309,14 @@ export type Database = {
         | "MMO"
         | "casual"
         | "sandbox"
+      payment_status:
+        | "created"
+        | "processing"
+        | "hold"
+        | "success"
+        | "failure"
+        | "reversed"
+        | "expired"
       platform: "PC" | "PS5" | "PS4" | "PS3" | "XBOX"
       publisher:
         | "Sony"

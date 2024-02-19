@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Swiper } from 'swiper/react';
 
 export const Section = styled.section`
-  width: 100vw;
+  width: 100%;
   height: 300px;
 `;
 

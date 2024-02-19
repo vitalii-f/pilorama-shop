@@ -49,7 +49,8 @@ export const submitAvatar = async (formData: FormData) => {
           const path = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_AVATARS_URL + dataStorage.path;
           const { data: dbData, error } = await supabase
             .from('profiles')
-            .update({ avatar: path });
+            .update({ avatar: path })
+            .eq('id', user.data.user?.id);
         }
       }
 
@@ -60,8 +61,6 @@ export const submitAvatar = async (formData: FormData) => {
           .update({ avatar: path })
           .eq('id', user.data.user?.id);
       }
-
-      // const { data, error } = await supabase.from('profiles').update({avatar: avatar[0][1]})
     } catch (error) {
       throw new Error(error as string);
     }

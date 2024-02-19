@@ -15,6 +15,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {
+  Badge,
   Drawer,
   List,
   ListItem,
@@ -27,9 +28,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import { HeaderDrawer } from './Navbar.styled';
+import {
+  HeaderDrawer,
+  Search,
+  SearchInput,
+} from './Navbar.styled';
 import { User } from '@supabase/supabase-js';
 import { logout } from './action';
+import Searchbar from './Searchbar';
 
 function NavBar({
   user,
@@ -146,9 +152,14 @@ function NavBar({
               </Button>
             ))}
           </Box>
-          {/* <IconButton sx={{}}>
+          <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <Searchbar />
+            <IconButton href='/cart'>
+              <Badge badgeContent={1} color='primary'>
                 <ShoppingBasketIcon fontSize='large' color='primary' />
-              </IconButton> */}
+              </Badge>
+            </IconButton>
+          </Box>
           {user ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open menu'>
@@ -174,6 +185,7 @@ function NavBar({
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
+                disableScrollLock={true}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign='center'>

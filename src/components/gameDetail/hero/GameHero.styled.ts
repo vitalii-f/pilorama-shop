@@ -10,7 +10,7 @@ export const Section = styled.section`
   align-items: flex-end;
   justify-content: center;
 
-  width: 100vw;
+  width: 100%;
   height: 620px;
 
 `;

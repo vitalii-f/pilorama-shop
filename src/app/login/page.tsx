@@ -10,7 +10,6 @@ import {
   LoginButton,
   Signup,
 } from './Login.styled';
-import Link from 'next/link';
 
 const LoginPage = () => {
   return (
