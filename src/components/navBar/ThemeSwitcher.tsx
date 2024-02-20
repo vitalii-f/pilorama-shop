@@ -58,8 +58,14 @@ const ThemeSwitcher = () => {
   const handleSwitchTheme = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if (theme === 'dark') toggleTheme('light');
-    if (theme === 'light') toggleTheme('dark');
+    if (theme === 'dark') {
+      toggleTheme('light');
+      localStorage.theme = 'dark'
+    }
+    if (theme === 'light'){
+      toggleTheme('dark');
+      localStorage.theme = 'light'
+    }
   };
 
   return (
