@@ -1,18 +1,24 @@
+import crypto from 'crypto';
+
 export async function POST(request: Request) {
   const message = await request.json();
   console.log(request.headers.get('x-sign'));
   console.log(message);
-  const crypto = require('crypto');
 
-  let pubKeyBase64 = process.env.X_SIGN!;
-  let xSignBase64 = request.headers.get('x-sign');
+  const xSign = request.headers.get('x-sign')
 
-  if (xSignBase64) {
+  if (xSign) {
+    let pubKeyBase64 = process.env.PUBLIC_KEY!
+    let xSignBase64 = xSign;
+
     let signatureBuf = Buffer.from(xSignBase64, 'base64');
     let publicKeyBuf = Buffer.from(pubKeyBase64, 'base64');
+
     let verify = crypto.createVerify('SHA256');
 
-    verify.write(message);
+    let messageString = JSON.stringify(message);
+
+    verify.write(messageString);
     verify.end();
 
     let result = verify.verify(publicKeyBuf, signatureBuf);
