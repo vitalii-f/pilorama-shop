@@ -46,7 +46,7 @@ export const createPay = async (cart: Tables<'games'>[]) => {
       customerEmails: [],
       basketOrder: basketOrder,
     },
-    redirectUrl: `${process.env.HOST}/cart/chekout`,
+    redirectUrl: `${process.env.HOST}/cart/checkout`,
     webHookUrl: `${process.env.HOST}/api/pay`,
     validity: 3600,
     paymentType: 'debit',

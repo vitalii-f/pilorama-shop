@@ -36,6 +36,7 @@ import {
 import { User } from '@supabase/supabase-js';
 import { logout } from './action';
 import Searchbar from './Searchbar';
+import ThemeSwitcher from './ThemeSwitcher';
 
 function NavBar({
   user,
@@ -159,6 +160,7 @@ function NavBar({
                 <ShoppingBasketIcon fontSize='large' color='primary' />
               </Badge>
             </IconButton>
+            <ThemeSwitcher />
           </Box>
           {user ? (
             <Box sx={{ flexGrow: 0 }}>
