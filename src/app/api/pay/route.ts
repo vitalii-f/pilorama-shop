@@ -1,14 +1,13 @@
+import { createClient } from '@/utils/supabase/server';
 import crypto from 'crypto';
+import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   const message = await request.json();
-  console.log(request.headers.get('x-sign'));
-  console.log(message);
-
-  const xSign = request.headers.get('x-sign')
+  const xSign = request.headers.get('x-sign');
 
   if (xSign) {
-    let pubKeyBase64 = process.env.PUBLIC_KEY!
+    let pubKeyBase64 = process.env.PUBLIC_KEY!;
     let xSignBase64 = xSign;
 
     let signatureBuf = Buffer.from(xSignBase64, 'base64');
@@ -22,10 +21,27 @@ export async function POST(request: Request) {
     verify.end();
 
     let result = verify.verify(publicKeyBuf, signatureBuf);
-    console.log(result === true ? 'OK' : 'NOT OK');
+
+    if (result === true) {
+      const cookieStore = cookies();
+      const supabase = createClient(cookieStore);
+
+      await supabase
+        .from('purchase')
+        .update({ status: message.status })
+        .eq('invoiceId', message.invoiceId);
+        
+      return new Response('200 OK', {
+        status: 200,
+        headers: { 'X-Sign': process.env.X_SIGN! },
+      });
+    } else {
+      return new Response('403', {
+        status: 403,
+      });
+    }
   }
-  return new Response('200 OK', {
-    status: 200,
-    headers: { 'X-Sign': process.env.X_SIGN! },
+  return new Response('400 bad request', {
+    status: 400,
   });
 }
