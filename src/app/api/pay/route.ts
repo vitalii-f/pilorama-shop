@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         .eq('invoiceId', message.invoiceId)
         .select('*');
 
-      if (message.status === 'saccess' && purchaseData) {
+      if (message.status === 'success' && purchaseData) {
         for (const gameId of purchaseData[0].product_id) {
           await supabase.from('user_library').insert({
             game_id: gameId,
