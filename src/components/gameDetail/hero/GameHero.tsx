@@ -48,6 +48,12 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
       isFavorite = true;
     }
   }
+  let inCart = false
+
+  if (userData.user) {
+    const { data } = await supabase.from('cart').select('*').eq('user_id', userData.user.id).eq('game_id', gameData.id)
+    inCart = !!data && !!data[0]
+  }
 
   return (
     <Section>
@@ -96,7 +102,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
         <HeroControl>
           <FavoriteButton gameId={gameData.id} isFavorite={isFavorite} />
           <Price>${gameData.price}</Price>
-          <AddToCart game={gameData} />
+          <AddToCart game={gameData} inCart={inCart} />
         </HeroControl>
       </HeroContent>
     </Section>

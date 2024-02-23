@@ -3,6 +3,7 @@
 import { supabase } from '@/helpers/supabase';
 import { Tables, TablesInsert } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/server';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
 
@@ -18,7 +19,7 @@ export const createPay = async (cart: Tables<'games'>[]) => {
   const basketOrder = cart.map((item) => ({
     name: item.name,
     qty: 1,
-    sum: item.price,
+    sum: item.price * 100,
     icon: item.icon_img,
     unit: 'шт.',
     code: item.id.toString(),
@@ -37,7 +38,7 @@ export const createPay = async (cart: Tables<'games'>[]) => {
   }));
 
   const requestBody = {
-    amount: total_price,
+    amount: total_price * 100,
     ccy: 980,
     merchantPaymInfo: {
       reference: '84d0070ee4e44667b31371d8f8813947',
@@ -77,5 +78,20 @@ export const createPay = async (cart: Tables<'games'>[]) => {
 
     redirect(response.pageUrl, RedirectType.replace);
   }
-  console.log(response);
 };
+
+export const removeFromCart = async (cartItemId: number) => {
+  try {
+    const { data, error } = await supabase
+      .from('cart')
+      .delete()
+      .eq('id', cartItemId)
+      .select();
+    if (error) throw new Error(error.message);
+
+    revalidatePath('/cart')
+    return data[0];
+  } catch (error) {
+    throw new Error(error as string);
+  }
+}

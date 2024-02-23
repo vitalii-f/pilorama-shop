@@ -4,15 +4,16 @@ import { ImageFormat } from '@/types/types';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 type AvatarForm = [string, FormDataEntryValue][];
 
 export const submitAvatar = async (formData: FormData) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-  const user = await supabase.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
   const avatar: AvatarForm = [];
+
+  if (!userData.user) throw new Error('UserData is null')
 
   for (const field of formData.entries()) {
     avatar.push(field);
@@ -23,7 +24,7 @@ export const submitAvatar = async (formData: FormData) => {
       const { data, error } = await supabase
         .from('profiles')
         .update({ avatar: avatar[0][1] })
-        .eq('id', user.data.user?.id);
+        .eq('id', userData.user.id);
       if (error) throw new Error(error.message);
     } catch (error) {
       throw new Error(error as string);
@@ -34,12 +35,12 @@ export const submitAvatar = async (formData: FormData) => {
     try {
       const { data: dataStorage, error } = await supabase.storage
         .from('avatars')
-        .upload(`${user.data.user?.id}/${file.name}`, file);
+        .upload(`${userData.user.id}/${file.name}`, file);
       if (error) {
         const { data: dataStorage, error } = await supabase.storage
           .from('avatars')
           .upload(
-            `${user.data.user?.id}/${file.name}_${Math.random() * 100}.${
+            `${userData.user.id}/${file.name}_${Math.random() * 100}.${
               ImageFormat[file.type as keyof typeof ImageFormat]
             }`,
             file
@@ -50,7 +51,7 @@ export const submitAvatar = async (formData: FormData) => {
           const { data: dbData, error } = await supabase
             .from('profiles')
             .update({ avatar: path })
-            .eq('id', user.data.user?.id);
+            .eq('id', userData.user.id);
         }
       }
 
@@ -59,7 +60,7 @@ export const submitAvatar = async (formData: FormData) => {
         const { data: dbData, error } = await supabase
           .from('profiles')
           .update({ avatar: path })
-          .eq('id', user.data.user?.id);
+          .eq('id', userData.user.id);
       }
     } catch (error) {
       throw new Error(error as string);

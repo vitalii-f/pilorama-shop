@@ -37,6 +37,18 @@ const fetchUser = async () => {
   return data.user;
 };
 
+const fetchCartItems = async (userId: string) => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { count } = await supabase
+    .from('cart')
+    .select('*', { count: 'estimated', head: true })
+    .eq('user_id', userId);
+
+  return count;
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -44,6 +56,11 @@ export default async function RootLayout({
 }) {
   const user = await fetchUser();
   const profile = await fetchProfile();
+  let cartItemsCount = undefined;
+
+  if (user) {
+    cartItemsCount = await fetchCartItems(user.id);
+  }
 
   return (
     <html lang='en'>
@@ -55,6 +72,7 @@ export default async function RootLayout({
                 user={user}
                 avatarURL={profile.avatar}
                 role={profile.role}
+                cartItems={cartItemsCount}
               />
               {children}
               <SpeedInsights />

@@ -10,10 +10,34 @@ export const addToFavorite = async (gameId: number) => {
 
   const { data: userData } = await supabase.auth.getUser();
 
-  const { data } = await supabase.rpc('update_favorite_games_list', {
-    profile_id: userData.user?.id,
-    game_id: gameId,
-  });
+  if (userData.user) {
+    await supabase.rpc('update_favorite_games_list', {
+      profile_id: userData.user.id,
+      game_id: gameId,
+    });
+  }
 
   revalidatePath(`/games/${gameId}`);
+};
+
+export const addToCart = async (gameId: number) => {
+  try {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data, error } = await supabase
+      .from('cart')
+      .insert({
+        game_id: gameId,
+        status: 'created',
+      })
+      .select();
+    if (error) throw new Error(error.message);
+
+    revalidatePath(`/cart`);
+
+    return data[0];
+  } catch (error) {
+    throw new Error(error as string);
+  }
 };

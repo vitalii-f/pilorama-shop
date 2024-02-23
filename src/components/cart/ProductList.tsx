@@ -14,30 +14,21 @@ import {
   Products,
 } from './ProductList.styled';
 import Image from 'next/image';
-import { createPay } from './actions';
+import { createPay, removeFromCart } from './actions';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ProductList = () => {
-  const [cart, setCart] = useState<Tables<'games'>[]>([])
+interface ProductListProps extends Tables<'cart'> {
+  games: Tables<'games'> | null
+}
 
-  useEffect(() => {
-    if (localStorage && localStorage.cart) {
-      setCart(JSON.parse(localStorage.cart));
-    }
-  }, [])
-
-  if (!localStorage.cart) return <h2>Cart is empty</h2>;
-
+const ProductList = ({ cart }: { cart: ProductListProps[] }) => {
   let totalPrice: number = 0;
-  cart.map((item) => (totalPrice += item.price));
+  cart.map((item) => (totalPrice += item.games!.price));
 
-  const DeleteFromCard = ({ gameIndex }: { gameIndex: number }) => {
-    const handleDelete = () => {
-      const cart: Tables<'games'>[] = JSON.parse(localStorage.cart);
-      cart.splice(gameIndex, 1);
-      localStorage.cart = JSON.stringify(cart)
-      setCart(cart)
+  const DeleteFromCard = ({ cartItemId }: { cartItemId: number }) => {
+    const handleDelete = async () => {
+      await removeFromCart(cartItemId)
     };
     return (
       <IconButton
@@ -53,20 +44,20 @@ const ProductList = () => {
   return (
     <Products>
       <Games>
-        {cart.map((game, index) => (
-          <ProductItem key={game.name}>
+        {cart.map((item) => (
+          <ProductItem key={item.games!.name}>
             <Image
-              src={game.header_img}
-              alt={game.name}
+              src={item.games!.header_img}
+              alt={item.games!.name}
               width={150}
               height={80}
               priority
             />
             <GameInfo>
-              <GameTitle>{game.name}</GameTitle>
-              <GamePrice>${game.price}</GamePrice>
+              <GameTitle>{item.games!.name}</GameTitle>
+              <GamePrice>${item.games!.price}</GamePrice>
             </GameInfo>
-            <DeleteFromCard gameIndex={index} />
+            <DeleteFromCard cartItemId={item.id} />
           </ProductItem>
         ))}
       </Games>
@@ -75,7 +66,7 @@ const ProductList = () => {
           <p>Total price: ${totalPrice}</p>
           <p>Total amount: {cart.length}</p>
         </PayZoneInfo>
-        <PayButton onClick={async () => await createPay(cart)}>Buy</PayButton>
+        <PayButton onClick={async () => await createPay(cart.map(item => item.games!))}>Buy</PayButton>
       </PayZone>
     </Products>
   );

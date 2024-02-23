@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cart: {
+        Row: {
+          created_at: string
+          game_id: number
+          id: number
+          status: Database["public"]["Enums"]["payment_status"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          game_id: number
+          id?: number
+          status: Database["public"]["Enums"]["payment_status"]
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          game_id?: number
+          id?: number
+          status?: Database["public"]["Enums"]["payment_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_cart_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_cart_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       developers: {
         Row: {
           id: number
@@ -177,6 +216,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar: string | null
+          cart: number[] | null
           created_at: string
           email: string
           favorite_games_list: number[] | null
@@ -186,6 +226,7 @@ export type Database = {
         }
         Insert: {
           avatar?: string | null
+          cart?: number[] | null
           created_at?: string
           email: string
           favorite_games_list?: number[] | null
@@ -195,6 +236,7 @@ export type Database = {
         }
         Update: {
           avatar?: string | null
+          cart?: number[] | null
           created_at?: string
           email?: string
           favorite_games_list?: number[] | null
@@ -253,6 +295,48 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "public_purchase_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_library: {
+        Row: {
+          created_at: string
+          game_id: number
+          game_key: string
+          id: number
+          price: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          game_id: number
+          game_key?: string
+          id?: number
+          price: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          game_id?: number
+          game_key?: string
+          id?: number
+          price?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_user_library_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_user_library_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

@@ -26,11 +26,27 @@ export async function POST(request: Request) {
       const cookieStore = cookies();
       const supabase = createClient(cookieStore);
 
-      await supabase
+      const { data: purchaseData } = await supabase
         .from('purchase')
         .update({ status: message.status })
-        .eq('invoiceId', message.invoiceId);
-        
+        .eq('invoiceId', message.invoiceId)
+        .select('*');
+
+      if (message.status === 'saccess' && purchaseData) {
+        for (const gameId of purchaseData[0].product_id) {
+          await supabase.from('user_library').insert({
+            game_id: gameId,
+            price: purchaseData[0].total_price,
+            user_id: purchaseData[0].user_id,
+          });
+        }
+
+        await supabase
+          .from('cart')
+          .delete()
+          .eq('user_id', purchaseData[0].user_id);
+      }
+
       return new Response('200 OK', {
         status: 200,
         headers: { 'X-Sign': process.env.X_SIGN! },

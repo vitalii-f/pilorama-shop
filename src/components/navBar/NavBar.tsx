@@ -26,12 +26,9 @@ import {
 import Link from 'next/link';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import BugReportIcon from '@mui/icons-material/BugReport';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {
   HeaderDrawer,
-  Search,
-  SearchInput,
 } from './Navbar.styled';
 import { User } from '@supabase/supabase-js';
 import { logout } from './action';
@@ -42,10 +39,12 @@ function NavBar({
   user,
   avatarURL,
   role,
+  cartItems,
 }: {
   user: User | null;
   avatarURL?: string | null;
   role: string;
+  cartItems?: number | null
 }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -156,7 +155,7 @@ function NavBar({
           <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <Searchbar />
             <IconButton href='/cart'>
-              <Badge badgeContent={1} color='primary'>
+              <Badge badgeContent={cartItems} color='primary'>
                 <ShoppingBasketIcon fontSize='large' color='primary' />
               </Badge>
             </IconButton>
