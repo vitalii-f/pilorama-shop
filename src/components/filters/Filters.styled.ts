@@ -8,6 +8,11 @@ export const Form = styled.form`
   gap: 30px;
 
   margin-top: 30px;
+
+  @media (max-width: 768px) {
+    width: 200px;
+    padding: 0 15px;
+  }
 `;
 
 export const SubmitButton = styled.button`

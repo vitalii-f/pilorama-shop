@@ -1,6 +1,6 @@
 'use client';
 
-import { FormControlLabel, Switch, styled } from '@mui/material';
+import { FormControlLabel, Switch, SxProps, styled } from '@mui/material';
 import React, { MouseEventHandler, useContext, useState } from 'react';
 import { ColorModeContext } from '../themeClient/ThemeClient';
 import { useThemeStore } from '@/stores/theme-store';
@@ -52,7 +52,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const ThemeSwitcher = () => {
+const ThemeSwitcher = ({ sx }: { sx?: SxProps }) => {
   const { theme, toggleTheme } = useThemeStore((state) => state);
 
   const handleSwitchTheme = (
@@ -60,20 +60,21 @@ const ThemeSwitcher = () => {
   ) => {
     if (theme === 'dark') {
       toggleTheme('light');
-      localStorage.theme = 'dark'
+      localStorage.theme = 'dark';
     }
-    if (theme === 'light'){
+    if (theme === 'light') {
       toggleTheme('dark');
-      localStorage.theme = 'light'
+      localStorage.theme = 'light';
     }
   };
 
   return (
-        <MaterialUISwitch
-          sx={{ m: 1 }}
-          defaultChecked
-          onClick={handleSwitchTheme}
-        />
+    <MaterialUISwitch
+      // sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }}
+      sx={sx}
+      defaultChecked
+      onClick={handleSwitchTheme}
+    />
   );
 };
 

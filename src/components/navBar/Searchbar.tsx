@@ -10,12 +10,12 @@ import {
   SearchInput,
   SearchResult,
   SearchResultCard,
+  SearchResultPreview,
 } from './Navbar.styled';
 import SearchIcon from '@mui/icons-material/Search';
 import { Tables } from '@/types/supabase';
 import { searchGame } from './action';
 import { useDebouncedCallback } from 'use-debounce';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -61,7 +61,7 @@ const Searchbar = () => {
         <SearchResult>
           {searchResult.map((result) => (
             <SearchResultCard key={result.capsule_img}>
-              <Image
+              <SearchResultPreview
                 src={result.header_img}
                 alt='Game preview'
                 width={150}

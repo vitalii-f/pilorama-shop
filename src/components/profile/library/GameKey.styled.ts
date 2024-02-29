@@ -12,4 +12,8 @@ export const GameKeyInput = styled.input`
   width: 270px;
   background-color: unset;
   padding: 5px;
+
+  @media (max-width: 630px) {
+    width: 100%;
+  }
 `;

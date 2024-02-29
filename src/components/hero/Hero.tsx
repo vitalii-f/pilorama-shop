@@ -3,7 +3,7 @@ import HeroNav from './HeroNav';
 import Trending from '../trending/Trending';
 import PlatformLabel from '../labels/PlatformLabel';
 import { cache } from 'react';
-import { FooterRow, HeroBanner, HeroFooter, HeroSection, Info, Price } from './Hero.styled';
+import { FooterRow, HeroBanner, HeroFooter, HeroLogo, HeroSection, Info, Price } from './Hero.styled';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 
@@ -28,7 +28,7 @@ const Hero = async () => {
       <HeroNav />
       <HeroFooter>
         <FooterRow>
-          <Image
+          <HeroLogo
             src={data[0].logo_img}
             alt='logo'
             width={300}

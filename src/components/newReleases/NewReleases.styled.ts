@@ -11,17 +11,21 @@ export const Releases = styled.section`
 
   max-width: var(--max-width);
   width: 100%;
-  padding: 20px 0;
+  padding: 20px 20px;
 `;
 export const ReleasesHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Cards = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 170px);
   gap: 30px;
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fill, 170px);
+  }
 `;
 
 export const Card = styled.div`

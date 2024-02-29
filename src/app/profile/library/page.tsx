@@ -3,7 +3,14 @@ import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import React from 'react';
-import { GameContent, GameLabel, GameList, GameTitle, Library, LibraryGame } from './Library.styled';
+import {
+  GameContent,
+  GameLabel,
+  GameList,
+  GameTitle,
+  Library,
+  LibraryGame,
+} from './Library.styled';
 
 const LibraryPage = async () => {
   const cookieStore = cookies();

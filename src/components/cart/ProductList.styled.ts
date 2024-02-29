@@ -5,6 +5,10 @@ import styled from 'styled-components';
 export const Products = styled.div`
   display: flex;
   gap: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const Games = styled.div`

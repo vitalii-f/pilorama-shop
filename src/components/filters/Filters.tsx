@@ -74,7 +74,12 @@ const Filters = ({ filters }: { filters: FiltersProps }) => {
       formRef.current.reset()
       setBudget([0, 100])
       setDisabledSubmit(true)
-      router.replace('games/')
+      const sortType = searchParams.get('sortBy')
+      if (sortType) {
+        router.replace(`games/?sortBy=${sortType}`)
+      } else {
+        router.replace('games/')
+      }
       revalidateGames()
       router.refresh()
     }

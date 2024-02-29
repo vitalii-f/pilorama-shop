@@ -15,7 +15,7 @@ const SortGames = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [sortType, setSortType] = React.useState('');
+  const [sortType, setSortType] = React.useState('release_date');
 
   const handleChange = (event: SelectChangeEvent) => {
     const sortType = event.target.value;
@@ -49,9 +49,6 @@ const SortGames = () => {
         onChange={handleChange}
         label='Sort By'
       >
-        <MenuItem value=''>
-          <em>None</em>
-        </MenuItem>
         <MenuItem value={'release_date'}>Release Date</MenuItem>
         <MenuItem value={'price'}>Price</MenuItem>
         <MenuItem value={'name'}>Name</MenuItem>

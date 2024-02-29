@@ -13,6 +13,7 @@ export const Section = styled.section`
   width: 100%;
   height: 620px;
 
+  padding: 0 10px;
 `;
 
 export const BackgroundImage = styled(Image)`
@@ -34,6 +35,10 @@ export const GameImage = styled(Image)`
   border-radius: 10px;
   object-fit: cover;
   z-index: -1;
+
+  @media (max-width: 600px) {
+    grid-column: 1/4;
+  }
 `;
 
 export const HeroContent = styled.div`
@@ -45,8 +50,15 @@ export const HeroContent = styled.div`
   width: 100%;
 
   z-index: 1;
-  
+
   margin-bottom: 40px;
+
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+  }
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -55,6 +67,10 @@ export const DescriptionWrapper = styled.div`
   gap: 20px;
 
   width: 100%;
+
+  @media (max-width: 600px) {
+    grid-column: 1/3;
+  }
 `;
 
 export const GameName = styled.h1`
@@ -95,6 +111,10 @@ export const HeroControl = styled.div`
   align-items: flex-end;
 
   width: 20%;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const Price = styled.p`

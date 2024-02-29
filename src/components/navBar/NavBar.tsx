@@ -32,6 +32,7 @@ import { User } from '@supabase/supabase-js';
 import { logout } from './action';
 import Searchbar from './Searchbar';
 import ThemeSwitcher from './ThemeSwitcher';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 function NavBar({
   user,
@@ -69,7 +70,7 @@ function NavBar({
     {
       name: 'Games',
       link: '/browse/games',
-      icon: <ShoppingCartIcon />,
+      icon: <SportsEsportsIcon />,
     },
   ];
 
@@ -86,6 +87,16 @@ function NavBar({
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ShoppingCartIcon />
+            </ListItemIcon>
+            <Link href='/cart'>
+              <ListItemText primary='Cart' />
+            </Link>
+          </ListItemButton>
+        </ListItem>
       </List>
     );
   };
@@ -109,8 +120,6 @@ function NavBar({
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
               aria-haspopup='true'
               onClick={handleToggleNavMenu}
               color='inherit'
@@ -129,6 +138,12 @@ function NavBar({
                 </IconButton>
               </HeaderDrawer>
               {renderNavBar()}
+              <ThemeSwitcher
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                  m: 1,
+                }}
+              />
             </Drawer>
           </Box>
 
@@ -150,14 +165,26 @@ function NavBar({
               </Button>
             ))}
           </Box>
-          <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '10px',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              m: { xs: 1 },
+              flexGrow: { xs: 100, md: 0 },
+            }}
+          >
             <Searchbar />
-            <IconButton href='/cart'>
+            <IconButton
+              href='/cart'
+              sx={{ display: { xs: 'none', md: 'block' } }}
+            >
               <Badge badgeContent={cartItems} color='primary'>
                 <ShoppingBasketIcon fontSize='large' color='primary' />
               </Badge>
             </IconButton>
-            <ThemeSwitcher />
+            <ThemeSwitcher sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }} />
           </Box>
           {user ? (
             <Box sx={{ flexGrow: 0 }}>

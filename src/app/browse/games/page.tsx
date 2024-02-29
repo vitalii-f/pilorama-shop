@@ -24,7 +24,8 @@ const fetchData = async (searchParams: SearchParamsProps) => {
     if (!Object.keys(searchParams).length) {
       const { data, error } = await supabase
         .from('games')
-        .select('*, developers(*)');
+        .select('*, developers(*)')
+        .order('release_date', { ascending: true })
       return data;
     } else {
       const platform = searchParams.platform

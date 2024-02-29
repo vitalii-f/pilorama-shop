@@ -18,6 +18,10 @@ export const GameList = styled.div`
 export const LibraryGame = styled.div`
   display: flex;
   gap: 10px;
+  width: 100%;
+  @media (max-width: 630px) {
+    flex-direction: column;
+  }
 `;
 
 export const GameContent = styled.div`

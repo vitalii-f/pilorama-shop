@@ -11,28 +11,39 @@ export const Main = styled.main`
 
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 10px;
 `;
 
 export const Games = styled.section`
   grid-column: 1/10;
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 25px;
 
   max-width: var(--max-width);
   width: 100%;
+
+  @media (max-width: 768px) {
+    grid-column: 1/13;
+  }
 `;
 
 export const GamesHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-right: 10px;
+`;
+
+export const SearchControl = styled.div`
+  display: flex;
+  gap: 15px;
 `;
 
 export const Cards = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 170px);
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, 170px);
+  justify-content: space-between;
+  gap: 10px;
 `;
 
 export const Card = styled.div`
@@ -91,9 +102,11 @@ export const CardPrice = styled(Link)`
 
 export const AsideFilter = styled.aside`
   grid-column: 11/13;
-
-`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 
 export const AsideTitle = styled.h2`
-    line-height: normal;
-`
+  line-height: normal;
+`;

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -23,7 +24,11 @@ export const Search = styled.div`
 
   z-index: 10;
   svg {
-    transform: translateX(100%);
+    position: absolute;
+  }
+
+  @media (max-width: 510px) {
+    width: 100%;
   }
 `;
 
@@ -48,14 +53,20 @@ export const SearchInput = styled.input`
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
+  @media (max-width: 510px) {
+    width: 100%;
+    &:focus-visible,
+    &:not(:placeholder-shown) {
+      width: 100%;
+    }
+  }
 `;
 
 export const SearchResult = styled.div`
   position: absolute;
   top: 100%;
-  left: 24px;
 
-  width: calc(100% - 24px);
+  width: 100%;
 
   background-color: var(--color-secondary);
   border-bottom-left-radius: 5px;
@@ -73,6 +84,14 @@ export const SearchResultCard = styled.div`
   }
 `;
 
+export const SearchResultPreview = styled(Image)`
+  @media (max-width: 510px) {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+`;
+
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -83,10 +102,14 @@ export const CardContent = styled.div`
 
 export const GameName = styled.h3`
   font-weight: 500;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
 `;
 
 export const Developer = styled.p`
   font-size: 14px;
+  @media (max-width: 375px) {
+    display: none;
+  }
 `;
 
 export const Price = styled.p`

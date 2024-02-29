@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
 import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import { Section, SliderImage, StyledSwiper } from './GameSlider.styled';
 import 'swiper/css';
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-const GameSlider = ({ media }: { media: string[]}) => {
+const GameSlider = ({ media }: { media: string[] }) => {
   return (
     <Section>
       <StyledSwiper
@@ -18,11 +18,35 @@ const GameSlider = ({ media }: { media: string[]}) => {
         centeredSlides
         initialSlide={2}
         spaceBetween={50}
+        breakpoints={{
+          1600: {
+            slidesPerView: 4,
+            spaceBetween: 50,
+          },
+          1100: {
+            slidesPerView: 3,
+            spaceBetween: 50,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 50,
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 60,
+          },
+        }}
       >
         {media.map((item) => (
-            <SwiperSlide key={item}>
-                <SliderImage src={item} alt='slide image' fill quality={100} priority />
-            </SwiperSlide>
+          <SwiperSlide key={item}>
+            <SliderImage
+              src={item}
+              alt='slide image'
+              fill
+              quality={100}
+              priority
+            />
+          </SwiperSlide>
         ))}
       </StyledSwiper>
     </Section>

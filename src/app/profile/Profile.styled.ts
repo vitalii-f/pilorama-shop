@@ -58,12 +58,20 @@ export const GeneralProfileWrapper = styled.div`
 export const GeneralProfileHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px;
+  }
 `;
 
 export const GeneralProfileInfo = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 300px);
+  grid-template-columns: repeat(auto-fill, 300px);
   row-gap: 40px;
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fill, 200px);
+  }
 `;
 
 export const Label = styled.label`
