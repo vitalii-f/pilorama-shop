@@ -9,7 +9,9 @@ import {
   VisuallyHiddenInput,
 } from './AddForm.styled';
 import {
+  Backdrop,
   Button,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -23,6 +25,7 @@ import { submitAddForm } from '@/app/admin/collections/[slug]/add/formAction';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useFormStatus } from 'react-dom';
 
 const noRenderList = ['id', 'created_at'];
 
@@ -104,6 +107,25 @@ const MultipleSelectMenu = ({
   );
 };
 
+const Submit = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <>
+      <SubmitButton type='submit' disabled={pending}>
+        ADD
+      </SubmitButton>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={pending}
+      >
+        <CircularProgress color='primary' size={90} thickness={5} />
+      </Backdrop>
+    </>
+  );
+};
+
 const AddForm = ({
   collectionData,
   slug,
@@ -180,7 +202,7 @@ const AddForm = ({
           ))
       )}
       <FormControlSection>
-        <SubmitButton type='submit'>ADD</SubmitButton>
+        <Submit />
         <CalncelButton href={`/admin/collections/${slug}`}>
           Cancel
         </CalncelButton>

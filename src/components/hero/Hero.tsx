@@ -3,10 +3,13 @@ import HeroNav from './HeroNav';
 import Trending from '../trending/Trending';
 import PlatformLabel from '../labels/PlatformLabel';
 import { cache } from 'react';
-import { supabase } from '@/helpers/supabase';
 import { FooterRow, HeroBanner, HeroFooter, HeroSection, Info, Price } from './Hero.styled';
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 
 const fetchBanner = cache(async () => {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   return supabase.from('main_banner').select('*')
 });
 

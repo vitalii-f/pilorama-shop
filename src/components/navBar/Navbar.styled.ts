@@ -1,6 +1,12 @@
 'use client';
 
-import styled, { keyframes } from 'styled-components';
+import Link from 'next/link';
+import styled from 'styled-components';
+
+export const MenuLink = styled(Link)`
+  display: inline-block;
+  width: 100%;
+`;
 
 export const HeaderDrawer = styled.div`
   display: flex;

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import styled from 'styled-components';
+import PlatformLabel from '../labels/PlatformLabel';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -21,8 +22,12 @@ export const TrendingHeader = styled.div`
 
 export const Cards = styled.div`
   display: grid;
-  gap: 40px;
+  /* gap: 40px; */
+  justify-content: space-between;
   grid-template-columns: repeat(3, calc(100% / 3 - 45px));
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, calc(100% / 3 - 15px));
+  }
 `;
 
 export const Card = styled.div`
@@ -52,7 +57,7 @@ export const CardBackground = styled(Image)`
   z-index: -1;
 `;
 
-export const CardPlatform = styled.div`
+export const CardPlatform = styled(PlatformLabel)`
   align-self: flex-start;
   margin: 12px 0 0 12px;
 `;

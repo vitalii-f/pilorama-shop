@@ -1,6 +1,5 @@
 'use server';
 
-import { supabase } from '@/helpers/supabase';
 import { Tables, TablesInsert } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
@@ -9,9 +8,9 @@ import { RedirectType, redirect } from 'next/navigation';
 
 export const createPay = async (cart: Tables<'games'>[]) => {
   const cookieStore = cookies();
-  const supabaseServer = createClient(cookieStore);
+  const supabase = createClient(cookieStore);
 
-  const { data: userData } = await supabaseServer.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
 
   let total_price = 0;
   cart.map((item) => (total_price += item.price));
@@ -81,6 +80,8 @@ export const createPay = async (cart: Tables<'games'>[]) => {
 };
 
 export const removeFromCart = async (cartItemId: number) => {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   try {
     const { data, error } = await supabase
       .from('cart')

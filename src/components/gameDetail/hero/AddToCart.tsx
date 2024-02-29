@@ -20,7 +20,7 @@ const AddToCart = ({
     <>
       {inCart ? (
         <CartButton>
-          <Link href='/cart'>Got To Cart</Link>
+          <Link href='/cart'>Go To Cart</Link>
         </CartButton>
       ) : (
         <CartButton onClick={handleClick}>

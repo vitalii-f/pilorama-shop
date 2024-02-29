@@ -1,13 +1,17 @@
 import React from 'react';
 import { CardContainer, CollectionCard } from './Collections.styled';
 import Link from 'next/link';
-import { supabase } from '@/helpers/supabase';
-import { CollectionsData, Tables } from '@/types/types';
+import { CollectionsData } from '@/types/types';
 import { formatCollectionsData } from '@/helpers/formatter';
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 
 export const fetchCache = 'force-no-store';
 
 const fetchCollections = async () => {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+  
   try {
     const { data, error } = await supabase.from('').select();
     if (!data || error) throw new Error(error.message);

@@ -1,4 +1,3 @@
-import { supabase } from '@/helpers/supabase';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
@@ -13,29 +12,20 @@ import {
   Price,
 } from './FavoritePage.styled';
 
-const fetchProfile = async () => {
-  try {
-    const { data, error } = await supabase.from('profiles').select('*');
-    if (error) throw new Error(error.message);
-    return data[0];
-  } catch (error) {
-    throw new Error(error as string);
-  }
-};
-
-const fetchUser = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data, error } = await supabase.auth.getUser();
-
-  return data.user;
-};
-
 const FavoritePage = async () => {
-  const user = await fetchUser();
-  const profile = await fetchProfile();
-  const favoriteArray = profile.favorite_games_list;
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+
+  const { data: userData } = await supabase.auth.getUser()
+  const { data: profileData } = await supabase.from('profiles').select('*')
+
+  if (!profileData) return (
+    <Container>
+      <h2>You need login to your account.</h2>
+    </Container>
+  )
+
+  const favoriteArray = profileData[0].favorite_games_list;
   const favoriteList =
     favoriteArray &&
     (await supabase

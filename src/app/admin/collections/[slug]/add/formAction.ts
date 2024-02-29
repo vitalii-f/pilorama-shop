@@ -1,7 +1,8 @@
 'use server';
 
-import { supabase } from '@/helpers/supabase';
 import { ResponseCollectionData, TableInsertType } from '@/types/types';
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const submitForm = async (formData: FormData, collection: string) => {
@@ -13,15 +14,6 @@ export const submitForm = async (formData: FormData, collection: string) => {
       delete form[key];
     }
   }
-
-  // const request = await fetch('http://localhost:3000/api/collection', {
-  //   method: 'POST',
-  //   body: JSON.stringify({collection: data.collection, data: form})
-  // })
-
-  // if (request) {
-  //   redirect(`/admin/collections/${params.slug}`);
-  // }
 };
 
 enum ImageFormat {
@@ -30,28 +22,29 @@ enum ImageFormat {
   'image/x-icon' = 'ico',
 }
 
-interface FordmDataAdditional {
-  type: 'image/jpeg' | 'image/png' | 'image/x-icon';
-  name: string;
-}
-
 export const submitAddForm = async (
   formData: FormData,
   collectionData: ResponseCollectionData
 ) => {
   'use server';
 
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   const form: any = {};
 
+  const gameName = formData.get('name');
   const uploadImage = async (file: File) => {
     const { data, error } = await supabase.storage
       .from('images')
-      .upload(`games/${file.name}`, file);
+      .upload(`games/${gameName}/${file.name}`, file);
     if (error) {
       const { data, error } = await supabase.storage
         .from('images')
         .upload(
-          `games/${file.name}_${Math.random() * 100}.${ImageFormat[file.type as keyof typeof ImageFormat]}`,
+          `games/${gameName}/${file.name}_${Math.random() * 100}.${
+            ImageFormat[file.type as keyof typeof ImageFormat]
+          }`,
           file
         );
       if (data) return process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL + data.path;

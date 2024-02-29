@@ -7,7 +7,7 @@ interface PlatformLabelProps {
   className?: string
 }
 
-const PlatformLabel = ({variant, text, className}: PlatformLabelProps) => {
+const PlatformLabel = ({ variant, text, className }: PlatformLabelProps) => {
   return (
     <Label $variant={variant} className={className}>
         {text}

@@ -27,9 +27,7 @@ import Link from 'next/link';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import {
-  HeaderDrawer,
-} from './Navbar.styled';
+import { HeaderDrawer, MenuLink } from './Navbar.styled';
 import { User } from '@supabase/supabase-js';
 import { logout } from './action';
 import Searchbar from './Searchbar';
@@ -44,7 +42,7 @@ function NavBar({
   user: User | null;
   avatarURL?: string | null;
   role: string;
-  cartItems?: number | null
+  cartItems?: number | null;
 }) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -70,7 +68,7 @@ function NavBar({
     },
     {
       name: 'Games',
-      link: '/games',
+      link: '/browse/games',
       icon: <ShoppingCartIcon />,
     },
   ];
@@ -189,14 +187,14 @@ function NavBar({
                 disableScrollLock={true}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>
-                    <Link href='/profile'>Profile</Link>
+                  <Typography width='100%'>
+                    <MenuLink href='/profile'>Profile</MenuLink>
                   </Typography>
                 </MenuItem>
                 {role === 'admin' && (
                   <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign='center'>
-                      <Link href='/admin'>Admin Menu</Link>
+                    <Typography width='100%'>
+                      <MenuLink href='/admin'>Admin Menu</MenuLink>
                     </Typography>
                   </MenuItem>
                 )}

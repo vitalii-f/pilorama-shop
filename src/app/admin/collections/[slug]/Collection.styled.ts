@@ -7,7 +7,7 @@ export const CollectionContainer = styled.div`
     flex-direction: column;
     gap: 30px;
 
-    width: 100%;
+    width: 90%;
     padding: 10px 20px;
 `
 

@@ -47,12 +47,9 @@ const DataTable = ({
     router.refresh();
   };
 
-  const handleBackdrop = async () =>
-    {
-      // await updateRequest(id, collection, data);
-      // router.refresh()
-      setOpenBackdrop(!openBackdrop);
-    };
+  const handleBackdrop = async () => {
+    setOpenBackdrop(!openBackdrop);
+  };
 
   const Row = (props: {
     row: TableType;
@@ -153,9 +150,9 @@ const DataTable = ({
             </h2>
             <Form
               action={(formData) => {
-                submitForm(formData, collection, editItem!)
-                setOpenBackdrop(false)
-                router.refresh()
+                submitForm(formData, collection, editItem!);
+                setOpenBackdrop(false);
+                router.refresh();
               }}
             >
               {headers.map(

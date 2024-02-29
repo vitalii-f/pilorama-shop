@@ -27,9 +27,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
                 </Link>
               </NavLi>
               <NavLi>
-                <Link href='/profile/purchases'>
+                <Link href='/profile/library'>
                   <ShoppingBasketIcon />
-                  Purchases
+                  Library
                 </Link>
               </NavLi>
               <NavLi>

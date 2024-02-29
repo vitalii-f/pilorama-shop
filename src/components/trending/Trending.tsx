@@ -1,12 +1,24 @@
 import AddToCart from '../buttons/AddToCart';
 import ViewAll from '../buttons/ViewAll';
-import PlatformLabel from '../labels/PlatformLabel';
-import styles from './styles.module.css';
 import Link from 'next/link';
-import { supabase } from '@/helpers/supabase';
-import { Card, CardBackground, CardFooter, CardName, CardPrice, CardWrapper, Cards, TrendingHeader, Wrapper } from './Trending.styled';
+import {
+  Card,
+  CardBackground,
+  CardFooter,
+  CardName,
+  CardPlatform,
+  CardPrice,
+  CardWrapper,
+  Cards,
+  TrendingHeader,
+  Wrapper,
+} from './Trending.styled';
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 
 const fetchTrending = async () => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   try {
     const { data, error } = await supabase
       .from('games')
@@ -40,11 +52,7 @@ const Trending = async () => {
                 fill
               />
             </CardWrapper>
-            <PlatformLabel
-              className={styles.card__platform}
-              text={item.platforms_array[0]}
-              variant='contained'
-            />
+            <CardPlatform text={item.platforms_array[0]} variant='contained' />
             <CardName>
               <Link href={`games/${item.id}`}>{item.name}</Link>
             </CardName>

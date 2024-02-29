@@ -1,10 +1,13 @@
 import React from 'react';
 import { Container } from './AddDataPage.styled';
-import { supabase } from '@/helpers/supabase';
 import { formatCollectionsData } from '@/helpers/formatter';
 import AddForm from '@/components/admin/addForm/AddForm';
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 
 const fetchData = async () => {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   try {
     const { data, error } = await supabase.from('').select();
     if (error) throw new Error(error.message);
@@ -15,6 +18,9 @@ const fetchData = async () => {
 };
 
 const AddDataPage = async ({ params }: { params: { slug: string } }) => {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+  
   const res = formatCollectionsData(await fetchData());
   const collectionIndex = res.findIndex(
     (item) => item.collection === params.slug
