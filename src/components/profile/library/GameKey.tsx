@@ -14,7 +14,7 @@ const GameKey = ({ value }: { value: string }) => {
 
   return (
     <GameKeyContainer>
-      <GameKeyInput type={type} value={value} />
+      <GameKeyInput type={type} value={value} autoComplete='off' />
       <IconButton onClick={handleClick}>
         <VisibilityIcon />
       </IconButton>
