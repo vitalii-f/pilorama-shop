@@ -43,7 +43,6 @@ const GameSlider = ({ media }: { media: string[] }) => {
               src={item}
               alt='slide image'
               fill
-              quality={100}
               priority
             />
           </SwiperSlide>

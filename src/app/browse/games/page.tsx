@@ -70,7 +70,7 @@ const GamesPage = async ({
               alt={game.name}
               width={170}
               height={170}
-              quality={100}
+
             />
             <CardContent>
               <CardDescription>

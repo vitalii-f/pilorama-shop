@@ -47,7 +47,6 @@ const Trending = async () => {
               <CardBackground
                 src={item.header_img}
                 alt='banner'
-                quality={100}
                 priority
                 fill
               />

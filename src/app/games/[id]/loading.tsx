@@ -65,7 +65,7 @@ const loading = () => {
           }}
         >
           {[...Array(6).keys()].map((key) => (
-            <Skeleton width={300} height={100} key={key} variant='rounded' />
+            <Skeleton width={300} height={200} key={key} variant='rounded' />
           ))}
         </div>
       </section>

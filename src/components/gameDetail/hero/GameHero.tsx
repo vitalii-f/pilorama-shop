@@ -32,9 +32,11 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: userData, error } = await supabase.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
 
   let isFavorite: boolean = false;
+  let inLibrary: boolean = false;
+  let inCart = false;
   if (userData.user) {
     const { data: profileData } = await supabase
       .from('profiles')
@@ -47,12 +49,22 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
     ) {
       isFavorite = true;
     }
+
+    const { count } = await supabase
+      .from('user_library')
+      .select('*', { count: 'planned', head: true })
+      .eq('user_id', userData.user.id)
+      .eq('game_id', gameData.id);
+    inLibrary = !!count;
   }
-  let inCart = false
 
   if (userData.user) {
-    const { data } = await supabase.from('cart').select('*').eq('user_id', userData.user.id).eq('game_id', gameData.id)
-    inCart = !!data && !!data[0]
+    const { count } = await supabase
+      .from('cart')
+      .select('*', { count: 'planned', head: true })
+      .eq('user_id', userData.user.id)
+      .eq('game_id', gameData.id);
+    inCart = !!count;
   }
 
   return (
@@ -63,7 +75,6 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
           alt={gameData.name}
           fill
           priority
-          quality={100}
         />
       </Background>
       <HeroContent>
@@ -88,7 +99,6 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
               alt='ESRB'
               width={45}
               height={72}
-              quality={100}
             />
             <RaitingDescription>
               <p>
@@ -102,7 +112,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
         <HeroControl>
           <FavoriteButton gameId={gameData.id} isFavorite={isFavorite} />
           <Price>${gameData.price}</Price>
-          <AddToCart game={gameData} inCart={inCart} />
+          <AddToCart game={gameData} inCart={inCart} inLibrary={inLibrary} />
         </HeroControl>
       </HeroContent>
     </Section>

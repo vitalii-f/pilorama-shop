@@ -37,7 +37,6 @@ const NewReleases = async ({ data }: NewReleasesProps) => {
               alt={item.name}
               width={170}
               height={170}
-              quality={100}
               priority
             />
             <CardContent>

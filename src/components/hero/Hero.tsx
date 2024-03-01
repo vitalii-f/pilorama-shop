@@ -30,7 +30,6 @@ const Hero = async () => {
           src={data[0].banner_img}
           fill
           alt='hero background'
-          quality={100}
           priority
         />
         <HeroNav />
@@ -41,7 +40,6 @@ const Hero = async () => {
               alt='logo'
               width={300}
               height={150}
-              quality={100}
               priority
             />
             <Info>
