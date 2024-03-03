@@ -1,7 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
-import React from 'react';
 import {
   Card,
   CardContent,

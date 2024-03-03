@@ -1,12 +1,9 @@
-import React from 'react';
 import { CardContainer, CollectionCard } from './Collections.styled';
 import Link from 'next/link';
 import { CollectionsData } from '@/types/types';
 import { formatCollectionsData } from '@/helpers/formatter';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
-
-export const fetchCache = 'force-no-store';
 
 const fetchCollections = async () => {
   const cookieStore = cookies()

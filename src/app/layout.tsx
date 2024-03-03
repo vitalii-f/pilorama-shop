@@ -25,17 +25,17 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: userData } = await supabase.auth.getUser();
-
-  const { data: profileData } = await supabase.from('profiles').select('*');
+  const { data: profileData } = await supabase
+    .from('profiles')
+    .select('id, avatar, role, cart');
 
   let cartItemsCount = undefined;
 
-  if (userData.user) {
+  if (profileData && profileData[0]) {
     const { count } = await supabase
       .from('cart')
       .select('*', { count: 'estimated', head: true })
-      .eq('user_id', userData.user.id);
+      .eq('user_id', profileData[0].id);
     cartItemsCount = count;
   }
 
@@ -45,12 +45,16 @@ export default async function RootLayout({
         <StyledComponentsRegistry>
           <AppRouterCacheProvider>
             <ThemeClient>
-              <NavBar
-                user={userData.user}
-                avatarURL={profileData ? profileData[0].avatar : null}
-                role={profileData ? profileData[0].role : 'user'}
-                cartItems={cartItemsCount}
-              />
+              {profileData && profileData[0] ? (
+                <NavBar
+                  user={profileData[0].id}
+                  avatarURL={profileData[0].avatar}
+                  role={profileData[0].role}
+                  cartItems={cartItemsCount}
+                />
+              ) : (
+                <NavBar role='user' />
+              )}
               {children}
               <SpeedInsights />
             </ThemeClient>

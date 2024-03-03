@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import styled from 'styled-components';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { IconButton } from '@mui/material';

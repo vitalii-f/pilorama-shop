@@ -1,4 +1,3 @@
-import React from 'react';
 import { signup } from './actions';
 import {
   Form,
@@ -10,7 +9,6 @@ import {
   LoginButton,
   Login,
 } from './Signup.styled';
-import Link from 'next/link';
 
 const SignupPage = () => {
   return (

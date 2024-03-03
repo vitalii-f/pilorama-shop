@@ -1,5 +1,3 @@
-import React from 'react';
-
 const testFetch = async () => {
     'use server'
   let message = {

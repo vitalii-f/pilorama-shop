@@ -1,5 +1,4 @@
 import ProductList from '@/components/cart/ProductList';
-import React from 'react';
 import { CartHeader, Section, Title } from './CartPage.styled';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Label } from './PlatformLabel.styled'
 
 interface PlatformLabelProps {

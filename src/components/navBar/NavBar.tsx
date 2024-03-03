@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -28,11 +27,11 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { HeaderDrawer, MenuLink } from './Navbar.styled';
-import { User } from '@supabase/supabase-js';
 import { logout } from './action';
 import Searchbar from './Searchbar';
 import ThemeSwitcher from './ThemeSwitcher';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import { useState } from 'react';
 
 function NavBar({
   user,
@@ -40,15 +39,15 @@ function NavBar({
   role,
   cartItems,
 }: {
-  user: User | null;
+  user?: string;
   avatarURL?: string | null;
   role: string;
   cartItems?: number | null;
 }) {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(
     null
   );
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleToggleNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setOpen(!open);
@@ -114,9 +113,6 @@ function NavBar({
     >
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          {/* <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-            <Link href='/'><Image src='/logo.svg' width={100} height={100} alt='logo' priority /></Link>
-          </Box> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
@@ -146,10 +142,6 @@ function NavBar({
               />
             </Drawer>
           </Box>
-
-          {/* <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: '100%', justifyContent: 'center' }}>
-            <Link href='/'><Image src='/logo.svg' width={100} height={100} alt='logo' priority /></Link>
-          </Box> */}
 
           <Box
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}

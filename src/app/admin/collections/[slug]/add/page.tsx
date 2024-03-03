@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from './AddDataPage.styled';
 import { formatCollectionsData } from '@/helpers/formatter';
 import AddForm from '@/components/admin/addForm/AddForm';

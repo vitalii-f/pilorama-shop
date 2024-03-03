@@ -1,6 +1,5 @@
 import PlatformLabel from '@/components/labels/PlatformLabel';
 import Image from 'next/image';
-import React from 'react';
 import {
   ContentRaiting,
   DescriptionWrapper,
@@ -12,7 +11,6 @@ import {
   Price,
   Section,
   RaitingDescription,
-  CartButton,
   BackgroundImage,
   Background,
 } from './GameHero.styled';
@@ -32,39 +30,30 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: userData } = await supabase.auth.getUser();
-
   let isFavorite: boolean = false;
   let inLibrary: boolean = false;
   let inCart = false;
-  if (userData.user) {
-    const { data: profileData } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userData.user.id);
 
-    if (
-      profileData &&
-      profileData[0].favorite_games_list?.includes(gameData.id)
-    ) {
+  const { data: profileData } = await supabase.from('profiles').select('*');
+  
+  if (profileData && profileData[0]) {
+    if (profileData[0].favorite_games_list?.includes(gameData.id)) {
       isFavorite = true;
     }
 
-    const { count } = await supabase
+    const { count: libraryCount } = await supabase
       .from('user_library')
-      .select('*', { count: 'planned', head: true })
-      .eq('user_id', userData.user.id)
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', profileData[0].id)
       .eq('game_id', gameData.id);
-    inLibrary = !!count;
-  }
+    inLibrary = !!libraryCount;
 
-  if (userData.user) {
-    const { count } = await supabase
+    const { count: cartCount } = await supabase
       .from('cart')
-      .select('*', { count: 'planned', head: true })
-      .eq('user_id', userData.user.id)
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', profileData[0].id)
       .eq('game_id', gameData.id);
-    inCart = !!count;
+    inCart = !!cartCount;
   }
 
   return (
@@ -94,12 +83,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
             <p>{gameData.developers.name}</p>
           </DevInfo>
           <ContentRaiting>
-            <Image
-              src='/ESRB.png'
-              alt='ESRB'
-              width={45}
-              height={72}
-            />
+            <Image src='/ESRB.png' alt='ESRB' width={45} height={72} />
             <RaitingDescription>
               <p>
                 Blood and Gore, Intense Violence, Partial Nudity, Sexual Themes,

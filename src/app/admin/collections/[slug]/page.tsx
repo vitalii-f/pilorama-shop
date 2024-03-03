@@ -1,6 +1,5 @@
 import DataTable from '@/components/admin/DataTable/DataTable';
 import { Database } from '@/types/supabase';
-import React from 'react';
 import {
   CollectionContainer,
   CollectionControll,

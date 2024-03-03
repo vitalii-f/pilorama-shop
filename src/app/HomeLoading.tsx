@@ -6,7 +6,6 @@ import {
 } from '@/components/hero/Hero.styled';
 import HeroNav from '@/components/hero/HeroNav';
 import PlatformLabel from '@/components/labels/PlatformLabel';
-import React from 'react';
 import { Price } from './profile/favorite/FavoritePage.styled';
 import { Skeleton } from '@mui/material';
 import {
@@ -15,7 +14,7 @@ import {
   Wrapper,
 } from '@/components/trending/Trending.styled';
 
-const loading = () => {
+const HomeLoading = () => {
   return (
     <main>
       <HeroSection>
@@ -46,4 +45,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default HomeLoading;

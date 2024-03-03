@@ -1,4 +1,3 @@
-import React from 'react';
 import ViewAll from '../buttons/ViewAll';
 import PlatformLabel from '../labels/PlatformLabel';
 import {
@@ -37,7 +36,6 @@ const NewReleases = async ({ data }: NewReleasesProps) => {
               alt={item.name}
               width={170}
               height={170}
-              priority
             />
             <CardContent>
               <CardDescription>

@@ -8,14 +8,14 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
 import { revalidateGames } from './actions';
+import { useState } from 'react';
 
 const SortGames = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [sortType, setSortType] = React.useState('release_date');
+  const [sortType, setSortType] = useState('release_date');
 
   const handleChange = (event: SelectChangeEvent) => {
     const sortType = event.target.value;

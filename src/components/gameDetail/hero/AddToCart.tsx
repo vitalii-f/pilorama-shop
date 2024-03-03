@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { CartButton } from './GameHero.styled';
 import { Tables } from '@/types/supabase';
 import Link from 'next/link';

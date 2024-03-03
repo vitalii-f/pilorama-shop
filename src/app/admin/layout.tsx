@@ -1,4 +1,3 @@
-import React from 'react';
 import { AdminAside, Wrapper } from './Admin.styled';
 import AdminNavbar from '@/components/admin/AdminNavbar/AdminNavbar';
 import { cookies } from 'next/headers';
