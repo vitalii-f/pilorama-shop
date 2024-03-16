@@ -37,7 +37,7 @@ export const SubmitButton = styled.button`
   }
 `;
 
-export const CalncelButton = styled(Link)`
+export const CancelButton = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;

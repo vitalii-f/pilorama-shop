@@ -36,7 +36,7 @@ const CollectionPage = async ({
       <CollectionHeader>
         <h2>{params.slug}</h2>
         <CollectionControll>
-          <Link href={`/admin/collections/${params.slug}/add`}>
+          <Link href={`/admin/collections/${params.slug}/add`} prefetch={false}>
             <AddCircleIcon fontSize='large' titleAccess='Add to collection' />
           </Link>
         </CollectionControll>

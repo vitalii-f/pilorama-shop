@@ -1,27 +1,29 @@
 'use client';
 
-import Link from 'next/link';
 import styled from 'styled-components';
 
-export const Container = styled.section`
+export const BackdropContainer = styled.section`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
 
   width: 100%;
+  height: 100vh;
 
-  padding: 10px 20px;
+  /* background-color: grey; */
 `;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  overflow-y: scroll;
+  padding: 20px 10px;
 
   max-width: 350px;
   width: 100%;
+  height: 100vh;
+  margin: 20px 20px;
 `;
 
 export const Label = styled.label`
@@ -40,7 +42,7 @@ export const Label = styled.label`
   }
 `;
 
-export const FormControl = styled.div`
+export const FormControlSection = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
@@ -65,7 +67,7 @@ export const SubmitButton = styled.button`
   }
 `;
 
-export const CalncelButton = styled.button`
+export const CancelButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

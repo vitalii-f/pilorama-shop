@@ -60,9 +60,9 @@ const Searchbar = () => {
       {searchResult?.length ? (
         <SearchResult>
           {searchResult.map((result) => (
-            <SearchResultCard key={result.capsule_img}>
+            <SearchResultCard key={result.capsule}>
               <SearchResultPreview
-                src={result.header_img}
+                src={result.header}
                 alt='Game preview'
                 width={150}
                 height={80}

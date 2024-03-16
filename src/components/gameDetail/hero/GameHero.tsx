@@ -60,7 +60,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
     <Section>
       <Background>
         <BackgroundImage
-          src={gameData.hero_img}
+          src={gameData.hero}
           alt={gameData.name}
           fill
           priority
@@ -68,7 +68,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
       </Background>
       <HeroContent>
         <GameImage
-          src={gameData.icon_img}
+          src={gameData.icon}
           alt={gameData.name}
           width={170}
           height={170}
@@ -77,7 +77,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
           <GameName>{gameData.name}</GameName>
           <DevInfo>
             <PlatformLabel
-              text={gameData.platforms_array[0]}
+              text={gameData.platforms[0]}
               variant='contained'
             />
             <p>{gameData.developers.name}</p>

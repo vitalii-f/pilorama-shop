@@ -40,7 +40,7 @@ const FavoritePage = async () => {
           favoriteList.data.map((favoriteGame) => (
             <Card key={favoriteGame.id}>
               <Image
-                src={favoriteGame.header_img}
+                src={favoriteGame.header}
                 alt={favoriteGame.name}
                 width={250}
                 height={120}

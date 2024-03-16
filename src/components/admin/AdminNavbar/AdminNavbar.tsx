@@ -11,7 +11,7 @@ import TuneIcon from '@mui/icons-material/Tune';
 const navItems = [
   {
     name: 'Dashboard',
-    link: '/admin',
+    link: '/admin/dashboard',
     icon: <LeaderboardIcon fontSize='large' />,
   },
   {

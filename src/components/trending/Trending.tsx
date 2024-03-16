@@ -22,7 +22,7 @@ const fetchTrending = async () => {
   try {
     const { data, error } = await supabase
       .from('games')
-      .select('id, name, price, header_img, platforms_array')
+      .select('id, name, price, header, platforms')
       .order('release_date')
       .limit(3);
     if (error) throw new Error(error.message);
@@ -45,13 +45,13 @@ const Trending = async () => {
           <Card key={item.name}>
             <CardWrapper>
               <CardBackground
-                src={item.header_img}
+                src={item.header}
                 alt='banner'
                 priority
                 fill
               />
             </CardWrapper>
-            <CardPlatform text={item.platforms_array[0]} variant='contained' />
+            <CardPlatform text={item.platforms[0]} variant='contained' />
             <CardName>
               <Link href={`games/${item.id}`}>{item.name}</Link>
             </CardName>

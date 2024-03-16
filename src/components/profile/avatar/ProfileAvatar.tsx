@@ -55,7 +55,7 @@ const ProfileAvatar = ({ avatarURL }: { avatarURL?: string | null }) => {
       <AvatarDialog onClick={handleDialogOpen}>
         <LoadIcon />
       </AvatarDialog>
-      <Dialog maxWidth={'xl'} open={open} onClose={handleDialogOpen}>
+      <Dialog maxWidth={'xs'} fullWidth open={open} onClose={handleDialogOpen}>
         <DialogTitle>Choose your avatar</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -82,8 +82,8 @@ const ProfileAvatar = ({ avatarURL }: { avatarURL?: string | null }) => {
                     name='avatar'
                     value={avatar}
                     onClick={() => {
-                      value && setValue(null)
-                      preview && setPreview(null)
+                      value && setValue(null);
+                      preview && setPreview(null);
                     }}
                   />
                   <AvatarImg
@@ -119,7 +119,7 @@ const ProfileAvatar = ({ avatarURL }: { avatarURL?: string | null }) => {
                     priority
                   />
                 )}
-                <CloudUploadIcon sx={{zIndex: '5'}} />
+                <CloudUploadIcon sx={{ zIndex: '5' }} />
                 <VisuallyHiddenInput
                   type='file'
                   name='avatar'

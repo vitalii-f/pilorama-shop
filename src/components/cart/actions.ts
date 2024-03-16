@@ -19,7 +19,7 @@ export const createPay = async (cart: Tables<'games'>[]) => {
     name: item.name,
     qty: 1,
     sum: item.price * 100,
-    icon: item.icon_img,
+    icon: item.icon,
     unit: 'шт.',
     code: item.id.toString(),
     barcode: 'string',

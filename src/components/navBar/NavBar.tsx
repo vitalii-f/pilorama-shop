@@ -44,9 +44,7 @@ function NavBar({
   role: string;
   cartItems?: number | null;
 }) {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleToggleNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -151,7 +149,18 @@ function NavBar({
               <Button
                 key={item.name + index}
                 onClick={handleToggleNavMenu}
-                sx={{ my: 2, display: 'block', color: 'black' }}
+                sx={{
+                  padding: '0',
+                  my: 2,
+                  display: 'block',
+                  color: 'black',
+                  a: {
+                    display: 'inline-block',
+                    width: '100%',
+                    height: '100%',
+                    padding: 1,
+                  },
+                }}
               >
                 <Link href={item.link}>{item.name}</Link>
               </Button>
@@ -213,7 +222,7 @@ function NavBar({
                 {role === 'admin' && (
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography width='100%'>
-                      <MenuLink href='/admin'>Admin Menu</MenuLink>
+                      <MenuLink href='/admin/dashboard'>Admin Menu</MenuLink>
                     </Typography>
                   </MenuItem>
                 )}

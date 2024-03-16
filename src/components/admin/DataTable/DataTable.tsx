@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -16,31 +15,24 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import { FetchedData, FieldFormat, TableType } from '@/types/types';
+import { TableRowType, Tables } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { deleteRequest, getRequest, updateRequest } from './ActionHandler';
+import { deleteRequest } from './ActionHandler';
+import CollectionForm from '../collectionControl/CollectionForm';
 import { Backdrop } from '@mui/material';
-import {
-  CalncelButton,
-  Container,
-  Form,
-  FormControl,
-  Label,
-  SubmitButton,
-} from './Backdrop.styled';
-import submitForm from './submitEditForm';
+import { useState } from 'react';
 
 const DataTable = ({
   data,
   collection,
 }: {
-  data: TableType[];
-  collection: string;
+  data: TableRowType[];
+  collection: Tables;
 }) => {
   const router = useRouter();
-  const headers = Object.keys(data[0]) as Array<keyof TableType>;
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [editItem, setEditItem] = React.useState<number | string | null>(null);
+  const headers = Object.keys(data[0]) as Array<keyof TableRowType>;
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [editItem, setEditItem] = useState<TableRowType>();
 
   const handleDelete = async (id: number | string, collection: string) => {
     await deleteRequest(id, collection);
@@ -52,15 +44,15 @@ const DataTable = ({
   };
 
   const Row = (props: {
-    row: TableType;
-    headers: Array<keyof TableType>;
+    row: TableRowType;
+    headers: Array<keyof TableRowType>;
     collection: string;
   }) => {
     const { row, headers, collection } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
-      <React.Fragment>
+      <>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
           <TableCell>
             <IconButton
@@ -81,9 +73,11 @@ const DataTable = ({
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout='auto' unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant='h6' gutterBottom component='div'>
-                  {/* Control */}
-                </Typography>
+                <Typography
+                  variant='h6'
+                  gutterBottom
+                  component='div'
+                ></Typography>
                 <Table size='small' aria-label='purchases'>
                   <TableHead>
                     <TableRow>
@@ -104,8 +98,7 @@ const DataTable = ({
                       <TableCell sx={{ textAlign: 'center' }}>
                         <IconButton
                           onClick={() => {
-                            setEditItem(row.id);
-                            handleBackdrop();
+                            router.push(`${collection}/edit/${row.id}`);
                           }}
                         >
                           <EditIcon />
@@ -119,75 +112,21 @@ const DataTable = ({
             </Collapse>
           </TableCell>
         </TableRow>
-      </React.Fragment>
+      </>
     );
-  };
-
-  const noRenderList = ['id', 'created_at'];
-
-  const RenderBackdrop = () => {
-    const [requestData, setRequestData] = React.useState<FetchedData | null>(
-      null
-    );
-    React.useEffect(() => {
-      fetch(
-        `http://localhost:3000/api/collection?collection=${collection}`
-      ).then((value) => value.json().then((result) => setRequestData(result)));
-    }, []);
-
-    const currentRow = data.find((row) => {
-      if (row.id === editItem) {
-        return row;
-      }
-    });
-
-    if (requestData && currentRow)
-      return (
-        <Backdrop open={openBackdrop}>
-          <Container>
-            <h2>
-              Edit ID: <u>{editItem}</u>
-            </h2>
-            <Form
-              action={(formData) => {
-                submitForm(formData, collection, editItem!);
-                setOpenBackdrop(false);
-                router.refresh();
-              }}
-            >
-              {headers.map(
-                (field, index) =>
-                  !noRenderList.find((item) => item === field) && (
-                    <Label key={field}>
-                      {field}
-                      <input
-                        disabled={field === 'id'}
-                        type={
-                          FieldFormat[
-                            requestData.types[index] as keyof typeof FieldFormat
-                          ]
-                        }
-                        name={field}
-                        defaultValue={currentRow[field]}
-                      />
-                    </Label>
-                  )
-              )}
-              <FormControl>
-                <SubmitButton type='submit'>Edit</SubmitButton>
-                <CalncelButton type='reset' onClick={handleBackdrop}>
-                  Cancel
-                </CalncelButton>
-              </FormControl>
-            </Form>
-          </Container>
-        </Backdrop>
-      );
   };
 
   return (
     <TableContainer component={Paper}>
-      <RenderBackdrop />
+      <Backdrop
+        open={openBackdrop}
+        sx={{ zIndex: '5' }}
+        onClick={handleBackdrop}
+      >
+        {editItem && (
+          <CollectionForm collectionName={collection} inputValues={editItem} />
+        )}
+      </Backdrop>
       <Table aria-label='collapsible table'>
         <TableHead>
           <TableRow>

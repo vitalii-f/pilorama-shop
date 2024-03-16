@@ -46,8 +46,8 @@ const fetchData = async (searchParams: SearchParamsProps) => {
         .select('*, developers(*)')
         .gte('price', searchParams['budgete-start'] || 0)
         .lte('price', searchParams['budgete-end'] || 9999)
-        .contains('platforms_array', platform)
-        .contains('genres_array', genre)
+        .contains('platforms', platform)
+        .contains('genres', genre)
         .order(orderParam as string, { ascending: true });
       return data;
     }
@@ -66,7 +66,7 @@ const GamesPage = async ({
         gamesData.map((game) => (
           <Card key={game.name}>
             <CardImage
-              src={game.capsule_img}
+              src={game.capsule}
               alt={game.name}
               width={170}
               height={170}
@@ -80,7 +80,7 @@ const GamesPage = async ({
                 <CardDeveloper>{game.developers.name}</CardDeveloper>
               </CardDescription>
               <PlatformLabel
-                text={game.platforms_array[0]}
+                text={game.platforms[0]}
                 variant='outlined'
               />
               <CardPrice href={`/games/${game.id}`}>${game.price}</CardPrice>

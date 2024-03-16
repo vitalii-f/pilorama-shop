@@ -86,58 +86,61 @@ export type Database = {
       }
       games: {
         Row: {
-          capsule_img: string
+          capsule: string
           created_at: string
           developers: number
           discount: number | null
-          genres_array: string[]
-          header_img: string
-          hero_img: string
-          icon_img: string
+          genres: string[]
+          header: string
+          hero: string
+          icon: string
           id: number
-          logo_img: string
+          logo: string
           name: string
-          platforms_array: string[]
+          platforms: string[]
           price: number
           publishers: number
           release_date: string
-          slider_img_array: string[]
+          slider: string[]
+          sold_count: number
         }
         Insert: {
-          capsule_img: string
+          capsule: string
           created_at?: string
           developers: number
           discount?: number | null
-          genres_array: string[]
-          header_img: string
-          hero_img: string
-          icon_img: string
+          genres: string[]
+          header: string
+          hero: string
+          icon: string
           id?: number
-          logo_img: string
+          logo: string
           name: string
-          platforms_array: string[]
+          platforms: string[]
           price: number
           publishers: number
           release_date: string
-          slider_img_array: string[]
+          slider: string[]
+          sold_count?: number
         }
         Update: {
-          capsule_img?: string
+          capsule?: string
           created_at?: string
           developers?: number
           discount?: number | null
-          genres_array?: string[]
-          header_img?: string
-          hero_img?: string
-          icon_img?: string
+          genres?: string[]
+          header?: string
+          hero?: string
+          icon?: string
           id?: number
-          logo_img?: string
+          logo?: string
           name?: string
-          platforms_array?: string[]
+          platforms?: string[]
           price?: number
           publishers?: number
           release_date?: string
-          slider_img_array?: string[]
+          slider?: string[]
+          sold_count?: number
         }
         Relationships: [
           {
@@ -302,6 +305,24 @@ export type Database = {
           }
         ]
       }
+      test: {
+        Row: {
+          created_at: string
+          id: number
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          text?: string
+        }
+        Relationships: []
+      }
       user_library: {
         Row: {
           created_at: string
@@ -352,6 +373,12 @@ export type Database = {
       add_favorite_game: {
         Args: {
           profile_id: string
+          game_id: number
+        }
+        Returns: undefined
+      }
+      increment_sold_count: {
+        Args: {
           game_id: number
         }
         Returns: undefined

@@ -31,7 +31,7 @@ const LibraryPage = async () => {
         {libraryData.map((game) => (
           <LibraryGame key={game.id}>
             <Image
-              src={game.games!.icon_img}
+              src={game.games!.icon}
               alt={game.games!.name}
               width={100}
               height={100}

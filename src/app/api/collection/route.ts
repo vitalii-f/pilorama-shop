@@ -1,7 +1,7 @@
 import {
   CollectionsData,
   TableInsertType,
-  TableType,
+  TableRowType,
   TableUpdateType,
   Tables,
 } from '@/types/types';
@@ -16,7 +16,7 @@ interface DataProps {
 }
 
 export async function GET(request: Request) {
-  const supabase = createClient()
+  const supabase = createClient();
   const { searchParams } = new URL(request.url);
   const collection = searchParams.get('collection') as Tables;
   try {
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
 
     const typesKeys = Object.keys(
       collectionsData.definitions[collection].properties
-    ) as Array<keyof TableType>;
+    ) as Array<keyof TableRowType>;
 
     const res = {
       collection: collection,
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const supabase = createClient()
+  const supabase = createClient();
   const formData: DataProps = await request.json();
   try {
     const { data, error } = await supabase
@@ -67,7 +67,7 @@ interface DataDeleteProps {
 }
 
 export async function DELETE(request: Request) {
-  const supabase = createClient()
+  const supabase = createClient();
   const requestData: DataDeleteProps = await request.json();
   try {
     const { data, error } = await supabase
@@ -92,7 +92,7 @@ interface PutProps {
 }
 
 export async function PUT(request: Request) {
-  const supabase = createClient()
+  const supabase = createClient();
   const requestData: PutProps = await request.json();
   try {
     const { data, error } = await supabase

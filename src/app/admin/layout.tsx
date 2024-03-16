@@ -8,10 +8,9 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: userData } = await supabase.auth.getUser();
-  const { data: profileData } = await supabase.from('profiles').select('*')
+  const { data: profileData } = await supabase.from('profiles').select('role')
 
-  if (profileData && profileData[0].role !== 'admin') {
+  if (profileData && profileData[0] && profileData[0].role !== 'admin') {
     redirect('/');
   }
   

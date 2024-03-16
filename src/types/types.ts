@@ -1,10 +1,11 @@
-import { Database } from './supabase';
+import { Database, TablesUpdate } from './supabase';
 
 export type DatabaseTables = Database['public']['Tables'];
 export type Tables = keyof DatabaseTables;
 
-export type TableType = {
-  [key in keyof DatabaseTables]: DatabaseTables[key]['Row'];
+
+export type TableRowType = {
+  [key in Tables]: DatabaseTables[key]['Row'];
 }[keyof DatabaseTables];
 
 export type TableInsertType = {
@@ -18,9 +19,9 @@ export type TableUpdateType = {
 export interface CollectionsData {
   definitions: {
     [key in keyof DatabaseTables]: {
-      required?: string[]
+      required?: string[];
       properties: {
-        [key in keyof TableType]: {
+        [key in keyof TableRowType]: {
           description: string;
           format: string;
           type: string;
@@ -39,6 +40,15 @@ export enum FieldFormat {
   'timestamp with time zone' = 'date',
 }
 
+export enum CollectionFieldType {
+  number = 'number',
+  text = 'text',
+  select_multiple = 'select_multiple',
+  select = 'select',
+  date = 'date',
+  img_multiple = 'file_multiple',
+  img = 'file',
+}
 
 export interface FetchedData {
   collection: Tables;
@@ -47,23 +57,45 @@ export interface FetchedData {
 }
 
 export interface ResponseCollectionData {
-  collection: Tables
+  collection: Tables;
   fields: {
-      name: keyof TableType;
-      isRequired: boolean | undefined;
-      isSelect: boolean;
-      isMultipleSelect: boolean;
-      selectItems: {
-        id: number
-        name: string
-        value: string
-      }[] | undefined;
-      type: string;
+    name: keyof TableRowType;
+    isRequired: boolean | undefined;
+    isSelect: boolean;
+    isMultipleSelect: boolean;
+    selectItems:
+      | {
+          id: number;
+          name: string;
+          value: string;
+        }[]
+      | undefined;
+    type: string;
   }[];
-}[]
+}
+[];
 
 export enum ImageFormat {
   'image/jpeg' = 'jpg',
   'image/png' = 'png',
   'image/x-icon' = 'ico',
+}
+
+export interface SelectProps {
+  id: number;
+  name: string;
+  value: string;
+}
+
+export interface CollectionInputProps {
+  name: string;
+  type: CollectionFieldType;
+  isRequired: boolean;
+  isBlocked: boolean;
+  isMultiple: boolean;
+  selectItems: SelectProps[];
+}
+
+export interface MiltipleImagesProps {
+  [key: string]: Array<FileList | string>;
 }

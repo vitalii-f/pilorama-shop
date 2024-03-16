@@ -6,13 +6,14 @@ import {
 } from './GameDescription.styled';
 import { Tables } from '@/types/supabase';
 
-interface GameDescriptionProps extends Omit<Tables<'games'>, 'developers' | 'publishers'> {
-  developers: Tables<'developers'>
-  publishers: Tables<'publishers'>
+interface GameDescriptionProps
+  extends Omit<Tables<'games'>, 'developers' | 'publishers'> {
+  developers: Tables<'developers'>;
+  publishers: Tables<'publishers'>;
 }
 
 const GameDescription = ({ gameData }: { gameData: GameDescriptionProps }) => {
-const releaseDate = new Date(gameData.release_date)
+  const releaseDate = new Date(gameData.release_date);
 
   return (
     <DescriptionList>
@@ -30,7 +31,7 @@ const releaseDate = new Date(gameData.release_date)
       </ListItem>
       <ListItem>
         <Title>tags</Title>
-        <Text>{gameData.genres_array}</Text>
+        <Text>{gameData.genres.join(', ')}</Text>
       </ListItem>
     </DescriptionList>
   );

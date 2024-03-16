@@ -56,8 +56,11 @@ export const LoadIcon = styled(CloudDownloadIcon)`
 export const ChangeAvatarLine = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: repeat(4, 80px);
+  grid-template-columns: repeat(auto-fill, 80px);
+  justify-content: space-between;
   column-gap: 20px;
+  row-gap: 20px;
+
   width: 100%;
 
   input[type='radio'] {

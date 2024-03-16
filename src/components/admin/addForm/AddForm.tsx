@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {
-  CalncelButton,
+  CancelButton,
   Form,
   FormControlSection,
   SubmitButton,
@@ -203,9 +203,7 @@ const AddForm = ({
       )}
       <FormControlSection>
         <Submit />
-        <CalncelButton href={`/admin/collections/${slug}`}>
-          Cancel
-        </CalncelButton>
+        <CancelButton href={`/admin/collections/${slug}`}>Cancel</CancelButton>
       </FormControlSection>
     </Form>
   );

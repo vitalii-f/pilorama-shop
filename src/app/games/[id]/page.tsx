@@ -12,14 +12,17 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import { createClient } from '@/utils/supabase/client';
 
 const fetchGameData = async (id: number) => {
-  const supabase = createClient()
+  const supabase = createClient();
   try {
-    const { data, error } = await supabase.from('games').select('*, developers(*), publishers(*)').eq('id', id)
-    if (error) throw new Error(error.message)
+    const { data, error } = await supabase
+      .from('games')
+      .select('*, developers(*), publishers(*)')
+      .eq('id', id);
+    if (error) throw new Error(error.message);
 
-    return data
+    return data;
   } catch (error) {
-    throw new Error(error as string)
+    throw new Error(error as string);
   }
 };
 
@@ -28,7 +31,7 @@ const GameDetailPage = async ({ params }: { params: { id: number } }) => {
   return (
     <Main>
       <GameHero gameData={gameData[0]} />
-      <GameSlider media={gameData[0].slider_img_array} />
+      <GameSlider media={gameData[0].slider} />
       <AdditionalInfo>
         <AdditionalWrapper>
           {/* <AdditionalImage

@@ -19,6 +19,16 @@ export const Cards = styled.div`
 export const Card = styled.div`
   display: flex;
   gap: 5px;
+  @media (max-width: 700px) {
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+
+    img {
+      width: unset;
+      height: unset;
+    }
+  }
 `;
 
 export const CardContent = styled.div`

@@ -47,7 +47,7 @@ const ProductList = ({ cart }: { cart: ProductListProps[] }) => {
         {cart.map((item) => (
           <ProductItem key={item.games!.name}>
             <Image
-              src={item.games!.header_img}
+              src={item.games!.header}
               alt={item.games!.name}
               width={150}
               height={80}

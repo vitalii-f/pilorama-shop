@@ -32,7 +32,7 @@ const NewReleases = async ({ data }: NewReleasesProps) => {
         {data.map((item, index) => (
           <Card key={item.name + index}>
             <RealeasesImage
-              src={item.capsule_img}
+              src={item.capsule}
               alt={item.name}
               width={170}
               height={170}
@@ -45,7 +45,7 @@ const NewReleases = async ({ data }: NewReleasesProps) => {
                 <CardDeveloper>{item.developers.name}</CardDeveloper>
               </CardDescription>
               <PlatformLabel
-                text={item.platforms_array[0]}
+                text={item.platforms[0]}
                 variant='outlined'
               />
               <CardPrice href={`/games/${item.id}`}>${item.price}</CardPrice>

@@ -39,6 +39,7 @@ export async function POST(request: Request) {
             price: purchaseData[0].total_price,
             user_id: purchaseData[0].user_id,
           });
+          await supabase.rpc('increment_sold_count', { game_id: gameId });
         }
 
         await supabase
