@@ -17,10 +17,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { TableRowType, Tables } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { deleteRequest } from './ActionHandler';
 import CollectionForm from '../collectionControl/CollectionForm';
 import { Backdrop } from '@mui/material';
 import { useState } from 'react';
+import { deleteFromCollection } from '../collectionControl/CollectionActions';
 
 const DataTable = ({
   data,
@@ -35,7 +35,7 @@ const DataTable = ({
   const [editItem, setEditItem] = useState<TableRowType>();
 
   const handleDelete = async (id: number | string, collection: string) => {
-    await deleteRequest(id, collection);
+    await deleteFromCollection(id, collection);
     router.refresh();
   };
 

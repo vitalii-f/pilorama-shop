@@ -41,6 +41,8 @@ const MultipleFileSelect = ({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
+    
+    if (!defaultValue) return setLoadedImage([event.target.files])
 
     setLoadedImage((prev) => {
       if (!prev || !event.target.files) return;
@@ -101,6 +103,7 @@ const MultipleFileSelect = ({
   };
 
   const RestoreButton = () => {
+    if (!defaultValue) return
     if (!loadedImage || defaultValue !== loadedImage)
       return (
         <IconButton

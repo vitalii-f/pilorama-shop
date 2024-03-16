@@ -6,7 +6,11 @@ import {
   TableUpdateType,
   Tables,
 } from '@/types/types';
-import { editCollection, getCollectionInputs } from './CollectionActions';
+import {
+  addToCollection,
+  editCollection,
+  getCollectionInputs,
+} from './CollectionActions';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import MultipleSelectMenu from './MultipleSelectMenu';
@@ -20,11 +24,7 @@ import {
   SubmitButton,
 } from './CollectionControl.styled';
 import { useFormStatus } from 'react-dom';
-import {
-  Backdrop,
-  CircularProgress,
-  TextField,
-} from '@mui/material';
+import { Backdrop, CircularProgress, TextField } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import MultipleFileSelect from './MultipleFileSelect';
@@ -50,7 +50,7 @@ const CollectionForm = ({
   inputValues,
 }: {
   collectionName: Tables;
-  inputValues: TableUpdateType;
+  inputValues?: TableUpdateType;
 }) => {
   const router = useRouter();
   const [collectionInputs, setCollectionInputs] =
@@ -71,106 +71,131 @@ const CollectionForm = ({
     <CollectionFormContainer>
       <Form
         action={(formData) =>
-          editCollection(formData, inputValues, collectionName, multipleImage)
+          inputValues
+            ? editCollection(
+                formData,
+                inputValues,
+                collectionName,
+                multipleImage
+              )
+            : addToCollection(formData, collectionName, collectionInputs)
         }
       >
         {collectionInputs.map((input) => {
           switch (input.type) {
             case 'number':
               return (
-                <TextField
-                  name={input.name}
-                  label={input.name}
-                  type='number'
-                  required={input.isRequired}
-                  disabled={input.isBlocked}
-                  defaultValue={
-                    inputValues &&
-                    inputValues[input.name as keyof TableUpdateType]
-                  }
-                  inputMode='numeric'
-                  inputProps={{step: 'any'}}
-                />
-              );
-            case 'text':
-              return (
-                <TextField
-                  name={input.name}
-                  label={input.name}
-                  type='text'
-                  required={input.isRequired}
-                  disabled={input.isBlocked}
-                  defaultValue={
-                    inputValues &&
-                    inputValues[input.name as keyof TableUpdateType]
-                  }
-                />
-              );
-            case 'date':
-              return (
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  key={input.name}
-                >
-                  <DatePicker
+                !input.isBlocked && (
+                  <TextField
                     name={input.name}
                     label={input.name}
+                    type='number'
+                    required={input.isRequired}
                     disabled={input.isBlocked}
                     defaultValue={
                       inputValues &&
-                      dayjs(inputValues[input.name as keyof TableUpdateType])
+                      inputValues[input.name as keyof TableUpdateType]
+                    }
+                    inputMode='numeric'
+                    inputProps={{ step: 'any' }}
+                  />
+                )
+              );
+            case 'text':
+              return (
+                !input.isBlocked && (
+                  <TextField
+                    name={input.name}
+                    label={input.name}
+                    type='text'
+                    required={input.isRequired}
+                    disabled={input.isBlocked}
+                    defaultValue={
+                      inputValues &&
+                      inputValues[input.name as keyof TableUpdateType]
                     }
                   />
-                </LocalizationProvider>
+                )
+              );
+            case 'date':
+              return (
+                !input.isBlocked && (
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    key={input.name}
+                  >
+                    <DatePicker
+                      name={input.name}
+                      label={input.name}
+                      disabled={input.isBlocked}
+                      defaultValue={
+                        inputValues &&
+                        dayjs(inputValues[input.name as keyof TableUpdateType])
+                      }
+                    />
+                  </LocalizationProvider>
+                )
               );
             case 'select_multiple':
               return (
-                <MultipleSelectMenu
-                  inputProps={input}
-                  key={input.name}
-                  defaultValue={
-                    inputValues &&
-                    (inputValues[
-                      input.name as keyof TableUpdateType
-                    ] as unknown as string[])
-                  }
-                />
+                !input.isBlocked && (
+                  <MultipleSelectMenu
+                    inputProps={input}
+                    key={input.name}
+                    defaultValue={
+                      inputValues &&
+                      (inputValues[
+                        input.name as keyof TableUpdateType
+                      ] as unknown as string[])
+                    }
+                  />
+                )
               );
             case 'select':
               return (
-                <SelectMenu
-                  inputProps={input}
-                  key={input.name}
-                  defaultValue={
-                    inputValues &&
-                    (inputValues[input.name as keyof TableUpdateType] as string)
-                  }
-                />
+                !input.isBlocked && (
+                  <SelectMenu
+                    inputProps={input}
+                    key={input.name}
+                    defaultValue={
+                      inputValues &&
+                      (inputValues[
+                        input.name as keyof TableUpdateType
+                      ] as string)
+                    }
+                  />
+                )
               );
             case 'file_multiple':
               return (
-                <MultipleFileSelect
-                  inputProps={input}
-                  key={input.name}
-                  defaultValue={
-                    inputValues &&
-                    (inputValues[
-                      input.name as keyof TableUpdateType
-                    ] as unknown as string[])
-                  }
-                  setImages={setMultipleImage}
-                />
+                !input.isBlocked && (
+                  <MultipleFileSelect
+                    inputProps={input}
+                    key={input.name}
+                    defaultValue={
+                      inputValues &&
+                      (inputValues[
+                        input.name as keyof TableUpdateType
+                      ] as unknown as string[])
+                    }
+                    setImages={setMultipleImage}
+                  />
+                )
               );
             case 'file':
               return (
-                <FileSelect
-                  inputProps={input}
-                  key={input.name}
-                  defaultValue={
-                    inputValues &&
-                    (inputValues[input.name as keyof TableUpdateType] as string)
-                  }
-                />
+                !input.isBlocked && (
+                  <FileSelect
+                    inputProps={input}
+                    key={input.name}
+                    defaultValue={
+                      inputValues &&
+                      (inputValues[
+                        input.name as keyof TableUpdateType
+                      ] as string)
+                    }
+                  />
+                )
               );
             default:
               return <></>;

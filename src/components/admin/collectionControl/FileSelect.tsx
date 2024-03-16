@@ -57,6 +57,7 @@ const FileSelect = ({
   };
 
   const RestoreButton = () => {
+    if (!defaultValue) return
     if (!loadedImage || defaultValue !== loadedImage)
       return (
         <IconButton

@@ -2,6 +2,7 @@
 
 import {
   CollectionFieldType,
+  CollectionInputProps,
   CollectionsData,
   ImageFormat,
   MiltipleImagesProps,
@@ -13,6 +14,17 @@ import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+interface CollectionData {
+  [key: string]:
+    | number
+    | string
+    | string[]
+    | number[]
+    | (string | FileList)[]
+    | FormDataEntryValue[]
+    | FormDataEntryValue;
+}
 
 const collectionFields = [
   'number',
@@ -73,6 +85,74 @@ export const getCollectionInputs = async (collectionName: Tables) => {
   return fields;
 };
 
+export const addToCollection = async (
+  formData: FormData,
+  collectionName: string,
+  collectionInputs: CollectionInputProps[]
+) => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const uploadImage = async (file: File) => {
+    const id = formData.get('name');
+    try {
+      const { data, error } = await supabase.storage
+        .from('images')
+        .upload(`${collectionName}/${id}/${file.name}`, file);
+      if (error) {
+        const { data, error } = await supabase.storage
+          .from('images')
+          .upload(
+            `games/${collectionName}/${file.name}_${Math.random() * 100}.${
+              ImageFormat[file.type as keyof typeof ImageFormat]
+            }`,
+            file
+          );
+        if (error) throw new Error(error.message);
+        return process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL + data.path;
+      }
+      if (data) return process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL + data.path;
+    } catch (error) {
+      return new Error(error as string);
+    }
+  };
+
+  const insertData: CollectionData = {};
+
+  for (const [key, value] of formData.entries()) {
+    const inputReferens = collectionInputs.find((input) => input.name === key);
+    switch (inputReferens?.type) {
+      case 'select_multiple':
+        insertData[key] = formData.getAll(key);
+        break;
+      case 'file_multiple': {
+        if (!insertData[key]) insertData[key] = [];
+        const uploadUrl = await uploadImage(value as File);
+        if (!uploadUrl || uploadUrl instanceof Error) return;
+        (insertData[key] as string[]).push(uploadUrl);
+        break;
+      }
+      case 'file': {
+        const uploadUrl = await uploadImage(value as File);
+        if (!uploadUrl || uploadUrl instanceof Error) return;
+        insertData[key] = uploadUrl;
+        break;
+      }
+      default:
+        insertData[key] = value;
+    }
+  }
+
+  if (Object.keys(insertData).length) {
+    const { data, error } = await supabase
+      .from(collectionName)
+      .insert(insertData);
+    console.log(error);
+    revalidatePath(`/admin/collections/${collectionName}`);
+    redirect(`/admin/collections/${collectionName}`);
+  }
+};
+
 export const editCollection = async (
   formData: FormData,
   initialValues: TableUpdateType,
@@ -107,16 +187,7 @@ export const editCollection = async (
     }
   };
 
-  interface Test {
-    [key: string]:
-      | number
-      | string
-      | string[]
-      | number[]
-      | (string | FileList)[];
-  }
-
-  const updateData: Test = {};
+  const updateData: CollectionData = {};
 
   const deleteMultipleImages = async () => {
     const removeImages: string[] = [];
@@ -137,8 +208,9 @@ export const editCollection = async (
 
     await supabase.storage.from('images').remove(formattedLinks);
   };
+
   deleteMultipleImages();
-  const uploadPromises = [];
+
   for (const [key, value] of formData.entries()) {
     if (Array.isArray(initialValues[key as keyof TableUpdateType])) {
       if (value instanceof File) {
@@ -171,8 +243,24 @@ export const editCollection = async (
       .from(collectionName)
       .update(updateData)
       .eq('id', initialValues.id);
-      
+
     revalidatePath(`/admin/collections/${collectionName}`);
     redirect(`/admin/collections/${collectionName}`);
+  }
+};
+
+export const deleteFromCollection = async (id: number | string, collection: string) => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  try {
+    const { data, error } = await supabase
+      .from(collection)
+      .delete()
+      .eq('id', id)
+      .select();
+    if (error) throw new Error(error.message);
+    return data
+  } catch (error) {
+    throw new Error(error as string);
   }
 };

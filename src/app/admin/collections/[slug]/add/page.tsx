@@ -1,12 +1,13 @@
 import { Container } from './AddDataPage.styled';
 import { formatCollectionsData } from '@/helpers/formatter';
-import AddForm from '@/components/admin/addForm/AddForm';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
+import CollectionForm from '@/components/admin/collectionControl/CollectionForm';
+import { Tables } from '@/types/types';
 
 const fetchData = async () => {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   try {
     const { data, error } = await supabase.from('').select();
     if (error) throw new Error(error.message);
@@ -16,10 +17,10 @@ const fetchData = async () => {
   }
 };
 
-const AddDataPage = async ({ params }: { params: { slug: string } }) => {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
-  
+const AddDataPage = async ({ params }: { params: { slug: Tables } }) => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   const res = formatCollectionsData(await fetchData());
   const collectionIndex = res.findIndex(
     (item) => item.collection === params.slug
@@ -46,7 +47,7 @@ const AddDataPage = async ({ params }: { params: { slug: string } }) => {
       <h2>
         Add to <u>{collectionData.collection}</u>
       </h2>
-      <AddForm collectionData={collectionData} slug={params.slug} />
+      <CollectionForm collectionName={params.slug} />
     </Container>
   );
 };

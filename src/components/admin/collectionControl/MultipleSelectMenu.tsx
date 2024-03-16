@@ -16,12 +16,10 @@ const MultipleSelectMenu = ({
   inputProps: CollectionInputProps;
   defaultValue?: string[];
 }) => {
-  const [items, setItems] = useState<string[]>(defaultValue || ['']);
+  const [items, setItems] = useState<string[]>(defaultValue || []);
 
   const handleChange = (event: SelectChangeEvent<typeof items>) => {
-    const {
-      target: { value },
-    } = event;
+    const value = event.target.value;
     setItems(typeof value === 'string' ? value.split(',') : value);
   };
 
