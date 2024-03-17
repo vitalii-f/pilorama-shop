@@ -30,21 +30,6 @@ import { useEffect, useState } from 'react';
 import MultipleFileSelect from './MultipleFileSelect';
 import { useRouter } from 'next/navigation';
 
-const Submit = () => {
-  const { pending } = useFormStatus();
-
-  return (
-    <>
-      <SubmitButton type='submit' disabled={pending}>
-        EDIT
-      </SubmitButton>
-      <Backdrop open={pending}>
-        <CircularProgress color='primary' size={90} thickness={5} />
-      </Backdrop>
-    </>
-  );
-};
-
 const CollectionForm = ({
   collectionName,
   inputValues,
@@ -65,6 +50,21 @@ const CollectionForm = ({
     };
     getInputs();
   }, [collectionName]);
+
+  const Submit = () => {
+    const { pending } = useFormStatus();
+
+    return (
+      <>
+        <SubmitButton type='submit' disabled={pending}>
+          {inputValues ? 'EDIT' : 'ADD'}
+        </SubmitButton>
+        <Backdrop open={pending} sx={{zIndex: '5'}}>
+          <CircularProgress color='primary' size={90} thickness={5} />
+        </Backdrop>
+      </>
+    );
+  };
 
   if (!collectionInputs) return;
   return (
@@ -87,6 +87,7 @@ const CollectionForm = ({
               return (
                 !input.isBlocked && (
                   <TextField
+                    key={input.name}
                     name={input.name}
                     label={input.name}
                     type='number'
@@ -105,6 +106,7 @@ const CollectionForm = ({
               return (
                 !input.isBlocked && (
                   <TextField
+                    key={input.name}
                     name={input.name}
                     label={input.name}
                     type='text'

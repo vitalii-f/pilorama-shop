@@ -7,12 +7,11 @@ import {
   GameName,
   HeroContent,
   HeroControl,
-  GameImage,
+  GameIcon,
   Price,
   Section,
   RaitingDescription,
   BackgroundImage,
-  Background,
 } from './GameHero.styled';
 import { Tables } from '@/types/supabase';
 import FavoriteButton from './FavoriteButton';
@@ -35,7 +34,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
   let inCart = false;
 
   const { data: profileData } = await supabase.from('profiles').select('*');
-  
+
   if (profileData && profileData[0]) {
     if (profileData[0].favorite_games_list?.includes(gameData.id)) {
       isFavorite = true;
@@ -58,16 +57,9 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
 
   return (
     <Section>
-      <Background>
-        <BackgroundImage
-          src={gameData.hero}
-          alt={gameData.name}
-          fill
-          priority
-        />
-      </Background>
+      <BackgroundImage src={gameData.hero} alt={gameData.name} fill priority />
       <HeroContent>
-        <GameImage
+        <GameIcon
           src={gameData.icon}
           alt={gameData.name}
           width={170}
@@ -76,10 +68,7 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
         <DescriptionWrapper>
           <GameName>{gameData.name}</GameName>
           <DevInfo>
-            <PlatformLabel
-              text={gameData.platforms[0]}
-              variant='contained'
-            />
+            <PlatformLabel text={gameData.platforms[0]} variant='contained' />
             <p>{gameData.developers.name}</p>
           </DevInfo>
           <ContentRaiting>

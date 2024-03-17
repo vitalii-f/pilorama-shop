@@ -1,6 +1,5 @@
 import { Main } from './page.styled';
 import {
-  Background,
   ContentRaiting,
   DescriptionWrapper,
   DevInfo,
@@ -15,7 +14,6 @@ const loading = () => {
   return (
     <Main>
       <Section>
-        <Background></Background>
         <HeroContent>
           <Skeleton width={170} height={170} variant='rounded' />
           <DescriptionWrapper>

@@ -17,8 +17,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { TableRowType, Tables } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import CollectionForm from '../collectionControl/CollectionForm';
-import { Backdrop } from '@mui/material';
 import { useState } from 'react';
 import { deleteFromCollection } from '../collectionControl/CollectionActions';
 
@@ -31,16 +29,10 @@ const DataTable = ({
 }) => {
   const router = useRouter();
   const headers = Object.keys(data[0]) as Array<keyof TableRowType>;
-  const [openBackdrop, setOpenBackdrop] = useState(false);
-  const [editItem, setEditItem] = useState<TableRowType>();
 
   const handleDelete = async (id: number | string, collection: string) => {
     await deleteFromCollection(id, collection);
     router.refresh();
-  };
-
-  const handleBackdrop = async () => {
-    setOpenBackdrop(!openBackdrop);
   };
 
   const Row = (props: {
@@ -118,15 +110,6 @@ const DataTable = ({
 
   return (
     <TableContainer component={Paper}>
-      <Backdrop
-        open={openBackdrop}
-        sx={{ zIndex: '5' }}
-        onClick={handleBackdrop}
-      >
-        {editItem && (
-          <CollectionForm collectionName={collection} inputValues={editItem} />
-        )}
-      </Backdrop>
       <Table aria-label='collapsible table'>
         <TableHead>
           <TableRow>

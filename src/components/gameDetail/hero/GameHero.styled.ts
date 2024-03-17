@@ -14,6 +14,7 @@ export const Section = styled.section`
   height: 620px;
 
   padding: 0 10px;
+  box-shadow: inset 0px -48px 50px 0px rgba(0, 0, 0, 0.25);
 `;
 
 export const BackgroundImage = styled(Image)`
@@ -23,14 +24,7 @@ export const BackgroundImage = styled(Image)`
   filter: brightness(80%);
 `;
 
-export const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  box-shadow: inset 0px -48px 50px 0px rgba(0, 0, 0, 0.25);
-`;
-
-export const GameImage = styled(Image)`
+export const GameIcon = styled(Image)`
   box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   object-fit: cover;
@@ -49,8 +43,6 @@ export const HeroContent = styled.div`
   max-width: var(--max-width);
   width: 100%;
 
-  z-index: 1;
-
   margin-bottom: 40px;
 
   @media (max-width: 600px) {
@@ -67,7 +59,6 @@ export const DescriptionWrapper = styled.div`
   gap: 20px;
 
   width: 100%;
-
   @media (max-width: 600px) {
     grid-column: 1/3;
   }
@@ -96,12 +87,13 @@ export const RaitingDescription = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  color: var(--color-secondary);
-  font-size: 10px;
   font-weight: 600;
   line-height: normal;
-
   max-width: 300px;
+
+  font-size: 11px;
+  color: var(--color-secondary);
+  mix-blend-mode: screen;
 `;
 
 export const HeroControl = styled.div`
