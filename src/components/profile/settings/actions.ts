@@ -17,7 +17,16 @@ export const changeUserPassword = async (
   if (newPassword === newPasswordRepeat) {
     const coockieStore = cookies();
     const supabase = createClient(coockieStore);
-    const { data } = await supabase.auth.updateUser({ password: newPassword });
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+
+    if (error)
+      return {
+        status: 'error',
+        message: error.message,
+      };
+
     return {
       status: 'success',
       message: 'New password saved.',
@@ -32,7 +41,7 @@ export const changeUserLogin = async (
   const newLogin = formData.get('new_login') as string;
   const coockieStore = cookies();
   const supabase = createClient(coockieStore);
-  const { data, error } = await supabase.auth.updateUser({
+  const { error } = await supabase.auth.updateUser({
     data: { login: newLogin },
   });
   if (!error) {

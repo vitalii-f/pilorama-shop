@@ -29,6 +29,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import MultipleFileSelect from './MultipleFileSelect';
 import { useRouter } from 'next/navigation';
+import MarkDownInput from './MarkDownInput';
 
 const CollectionForm = ({
   collectionName,
@@ -59,7 +60,7 @@ const CollectionForm = ({
         <SubmitButton type='submit' disabled={pending}>
           {inputValues ? 'EDIT' : 'ADD'}
         </SubmitButton>
-        <Backdrop open={pending} sx={{zIndex: '5'}}>
+        <Backdrop open={pending} sx={{ zIndex: '5' }}>
           <CircularProgress color='primary' size={90} thickness={5} />
         </Backdrop>
       </>
@@ -198,6 +199,17 @@ const CollectionForm = ({
                     }
                   />
                 )
+              );
+            case 'markdown':
+              return (
+                <MarkDownInput
+                  key={input.name}
+                  inputProps={input}
+                  defaultValue={
+                    inputValues &&
+                    (inputValues[input.name as keyof TableUpdateType] as string)
+                  }
+                />
               );
             default:
               return <></>;

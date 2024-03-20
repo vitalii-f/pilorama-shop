@@ -1,6 +1,6 @@
 'use client';
 
-import { Slider } from '@mui/material';
+import { Backdrop, CircularProgress, Slider } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import {
   BudgeteInput,
@@ -56,40 +56,54 @@ const Filters = ({ filters }: { filters: FiltersProps }) => {
       filterLink = filterLink.slice(0, -1);
     }
 
-    if (!searchParams.size) {
-      router.replace(`games${filterLink}`);
-      revalidateGames();
-      router.refresh();
-    } else if (searchParams.size && searchParams.get('sortBy')) {
+    if (searchParams.size && searchParams.get('sortBy')) {
       const sortType = searchParams.get('sortBy');
 
       router.replace(`games${filterLink}&sortBy=${sortType}`);
       revalidateGames();
       router.refresh();
+      return;
     }
+
+    router.replace(`games${filterLink}`);
+    revalidateGames();
+    router.refresh();
   };
 
   const resetForm = () => {
     if (formRef.current) {
-      formRef.current.reset()
-      setBudget([0, 100])
-      setDisabledSubmit(true)
-      const sortType = searchParams.get('sortBy')
+      formRef.current.reset();
+      setBudget([0, 100]);
+      setDisabledSubmit(true);
+      const sortType = searchParams.get('sortBy');
       if (sortType) {
-        router.replace(`games/?sortBy=${sortType}`)
+        router.replace(`games/?sortBy=${sortType}`);
       } else {
-        router.replace('games/')
+        router.replace('games/');
       }
-      revalidateGames()
-      router.refresh()
+      revalidateGames();
+      router.refresh();
     }
+  };
+
+  const Submit = () => {
+    const { pending } = useFormStatus();
+
+    return (
+      <>
+        <SubmitButton type='submit' disabled={disabledSubmit}>
+          APPLY
+        </SubmitButton>
+        <Backdrop open={pending}>
+          <CircularProgress />
+        </Backdrop>
+      </>
+    );
   };
 
   return (
     <Form action={formSubmit} ref={formRef}>
-      <SubmitButton type='submit' disabled={disabledSubmit}>
-        APPLY
-      </SubmitButton>
+      <Submit />
       {!disabledSubmit && (
         <ResetButton type='reset' onClick={resetForm}>
           RESET FILTERS

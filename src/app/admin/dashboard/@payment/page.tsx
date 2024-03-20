@@ -1,10 +1,8 @@
 import PaymentChart from '@/components/admin/dashboard/PaymentChart';
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/client';
 
 const PaymentPage = async () => {
-  const cookieStorage = cookies();
-  const supabase = createClient(cookieStorage);
+  const supabase = createClient();
 
   const { data } = await supabase
     .from('games')

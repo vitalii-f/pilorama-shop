@@ -13,12 +13,10 @@ import {
   TrendingHeader,
   Wrapper,
 } from './Trending.styled';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 
 const fetchTrending = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const { data, error } = await supabase
       .from('games')

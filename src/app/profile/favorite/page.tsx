@@ -15,7 +15,6 @@ const FavoritePage = async () => {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const { data: userData } = await supabase.auth.getUser()
   const { data: profileData } = await supabase.from('profiles').select('*')
 
   if (!profileData) return (

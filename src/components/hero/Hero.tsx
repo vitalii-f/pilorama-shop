@@ -11,12 +11,10 @@ import {
   Info,
   Price,
 } from './Hero.styled';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 
 const fetchBanner = cache(async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   return supabase.from('main_banner').select('*');
 });
 

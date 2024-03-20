@@ -48,6 +48,7 @@ export enum CollectionFieldType {
   date = 'date',
   img_multiple = 'file_multiple',
   img = 'file',
+  markdown = 'markdown'
 }
 
 export interface FetchedData {

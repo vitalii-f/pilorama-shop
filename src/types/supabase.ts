@@ -88,6 +88,9 @@ export type Database = {
         Row: {
           capsule: string
           created_at: string
+          description_background: string | null
+          description_text: string | null
+          description_title: string | null
           developers: number
           discount: number | null
           genres: string[]
@@ -107,6 +110,9 @@ export type Database = {
         Insert: {
           capsule: string
           created_at?: string
+          description_background?: string | null
+          description_text?: string | null
+          description_title?: string | null
           developers: number
           discount?: number | null
           genres: string[]
@@ -126,6 +132,9 @@ export type Database = {
         Update: {
           capsule?: string
           created_at?: string
+          description_background?: string | null
+          description_text?: string | null
+          description_title?: string | null
           developers?: number
           discount?: number | null
           genres?: string[]

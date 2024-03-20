@@ -9,14 +9,12 @@ import {
 } from './page.styled';
 import Filters from '@/components/filters/Filters';
 import SortGames from '@/components/filters/SortGames';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import FiltersButton from '@/components/filters/FiltersButton';
 import FiltersDrawer from '@/components/filters/FiltersDrawer';
 
 const fetchFilters = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const { data: platforms, error: platformsError } = await supabase
       .from('platforms')

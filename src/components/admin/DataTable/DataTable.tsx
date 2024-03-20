@@ -56,7 +56,21 @@ const DataTable = ({
             </IconButton>
           </TableCell>
           {headers.map((title, index) => (
-            <TableCell component='th' scope='row' key={title + index}>
+            // white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            <TableCell
+              component='th'
+              scope='row'
+              key={title + index}
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                maxWidth: '300px',
+              }}
+              height={20}
+            >
               {row[title]}
             </TableCell>
           ))}
