@@ -6,8 +6,11 @@ import { Section, SliderImage, StyledSwiper } from './GameSlider.styled';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 const GameSlider = ({ media }: { media: string[] }) => {
+  const routeParams = useParams<{id: string}>();
   return (
     <Section>
       <StyledSwiper
@@ -39,12 +42,15 @@ const GameSlider = ({ media }: { media: string[] }) => {
       >
         {media.map((item) => (
           <SwiperSlide key={item}>
-            <SliderImage
-              src={item}
-              alt='slide image'
-              fill
-              priority
-            />
+            <Link href={`${routeParams.id}/preview?url=${item}`}>
+              <SliderImage
+                src={item}
+                alt='slide image'
+                fill
+                priority
+                quality={60}
+              />
+            </Link>
           </SwiperSlide>
         ))}
       </StyledSwiper>

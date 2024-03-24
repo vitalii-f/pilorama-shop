@@ -17,14 +17,19 @@ export const AdditionalInfo = styled.section`
   max-width: var(--max-width);
   width: 100%;
 
-  padding: 30px 0;
+  margin: 30px 0;
+  padding: 0 10px;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    justify-content: unset;
+  }
 `;
 
 export const AdditionalWrapper = styled.div`
   position: relative;
 
-  width: 100%;
-  height: 350px;
+  min-height: 350px;
 `;
 
 export const AdditionalImage = styled(Image)`
@@ -47,7 +52,21 @@ export const AdditionalContent = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 0 20px;
+  padding: 10px 20px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+
+    & > div {
+      width: 70%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & > div {
+      width: 90%;
+    }
+  }
 `;
 
 export const AdditionalTitle = styled.div`
@@ -63,20 +82,24 @@ export const AdditionalText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  
+
   color: #f8f8f8;
   text-align: justify;
   font-size: 11px;
   font-weight: 600;
   line-height: normal;
 
-  width: calc(50% - 50px);
+  width: 50%;
 `;
 
 export const Aside = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  max-width: 300px;
+  min-width: 150px;
+  width: 100%;
 `;
 
 export const GiftButton = styled.button`

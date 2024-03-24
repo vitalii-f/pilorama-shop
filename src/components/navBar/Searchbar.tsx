@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   CardContent,
   Developer,
@@ -29,14 +29,14 @@ interface SearchResultProps extends Omit<Tables<'games'>, 'developers'> {
 
 const Searchbar = () => {
   const pathname = usePathname();
-  const [searchResult, setSearchResult] = React.useState<SearchResultProps[]>();
+  const [searchResult, setSearchResult] = useState<SearchResultProps[]>();
 
   const debounced = useDebouncedCallback(async (value) => {
     const result = await searchGame(value);
     setSearchResult(result);
   }, 1000);
 
-  const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
     const searchParam = event.target.value;
     if (searchResult && searchParam.length < 3) {
       setSearchResult(undefined);

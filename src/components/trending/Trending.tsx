@@ -1,7 +1,7 @@
-import AddToCart from '../buttons/AddToCart';
 import ViewAll from '../buttons/ViewAll';
 import Link from 'next/link';
 import {
+  AddToCartLink,
   Card,
   CardBackground,
   CardFooter,
@@ -55,7 +55,7 @@ const Trending = async () => {
             </CardName>
             <CardFooter>
               <CardPrice>${item.price}</CardPrice>
-              <AddToCart />
+              <AddToCartLink href={`games/${item.id}`}>Add to cart</AddToCartLink>
             </CardFooter>
           </Card>
         ))}

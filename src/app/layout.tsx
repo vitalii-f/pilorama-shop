@@ -13,7 +13,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 const openSans = Open_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Pilorama store',
+  title: 'Pilorama shop',
   description: 'Online game store',
 };
 

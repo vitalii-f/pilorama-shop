@@ -15,6 +15,23 @@ import GameDescription from '@/components/gameDetail/description/GameDescription
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import { createClient } from '@/utils/supabase/client';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import { Metadata, ResolvingMetadata } from 'next';
+
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const product = await fetchGameData(+params.id);
+
+  return {
+    title: product.name,
+  };
+}
 
 const fetchGameData = async (id: number) => {
   const supabase = createClient();
@@ -48,7 +65,6 @@ const GameDetailPage = async ({ params }: { params: { id: number } }) => {
                   src={gameData.description_background}
                   alt='additional background'
                   fill
-                  quality={100}
                   priority
                 />
                 <AdditionalContent>
@@ -57,7 +73,6 @@ const GameDetailPage = async ({ params }: { params: { id: number } }) => {
                   </AdditionalTitle>
                   <AdditionalText>
                     <MDXRemote source={JSON.parse(gameData.description_text)} />
-
                   </AdditionalText>
                 </AdditionalContent>
               </>

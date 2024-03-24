@@ -132,12 +132,12 @@ function NavBar({
                 </IconButton>
               </HeaderDrawer>
               {renderNavBar()}
-              <ThemeSwitcher
+              {/* <ThemeSwitcher
                 sx={{
                   display: { xs: 'flex', md: 'none' },
                   m: 1,
                 }}
-              />
+              /> */}
             </Drawer>
           </Box>
 
@@ -185,7 +185,7 @@ function NavBar({
                 <ShoppingBasketIcon fontSize='large' color='primary' />
               </Badge>
             </IconButton>
-            <ThemeSwitcher sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }} />
+            {/* <ThemeSwitcher sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }} /> */}
           </Box>
           {user ? (
             <Box sx={{ flexGrow: 0 }}>

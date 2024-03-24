@@ -6,7 +6,7 @@ export const DescriptionList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 300px;
+  width: 100%;
 `;
 
 export const ListItem = styled.div`

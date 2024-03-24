@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import PlatformLabel from '../labels/PlatformLabel';
+import Link from 'next/link';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -80,4 +81,21 @@ export const CardFooter = styled.div`
 
 export const CardPrice = styled.span`
   z-index: 1;
+`;
+
+export const AddToCartLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+
+  width: 90px;
+  height: 26px;
+
+  border: unset;
+  border-radius: 10px 0;
+
+  background-color: var(--color-primary);
+  filter: var(--shadow-dark-blue);
 `;

@@ -14,10 +14,6 @@ export const StyledSwiper = styled(Swiper)`
   padding: 0 60px;
   padding-top: 50px;
 
-  .swiper-wrapper {
-    /* gap: 100px; */
-  }
-
   .swiper-slide {
     width: calc(100% / 4);
     height: 200px;
