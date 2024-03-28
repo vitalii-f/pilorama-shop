@@ -1,6 +1,5 @@
 import { createClient } from '@/utils/supabase/server';
 import crypto from 'crypto';
-import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   const message = await request.json();
@@ -23,8 +22,7 @@ export async function POST(request: Request) {
     let result = verify.verify(publicKeyBuf, signatureBuf);
 
     if (result === true) {
-      const cookieStore = cookies();
-      const supabase = createClient(cookieStore);
+      const supabase = createClient();
 
       const { data: purchaseData } = await supabase
         .from('purchase')

@@ -100,3 +100,9 @@ export interface CollectionInputProps {
 export interface MiltipleImagesProps {
   [key: string]: Array<FileList | string>;
 }
+
+export interface FormStateProps {
+  status: 'loading' | 'success' | 'rejected';
+  message?: string;
+  error?: string;
+}

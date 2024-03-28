@@ -1,6 +1,5 @@
 import GameKey from '@/components/profile/library/GameKey';
 import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
 import Image from 'next/image';
 import {
   GameContent,
@@ -12,8 +11,7 @@ import {
 } from './Library.styled';
 
 const LibraryPage = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data: userData } = await supabase.auth.getUser();
 

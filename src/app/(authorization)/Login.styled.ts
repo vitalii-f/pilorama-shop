@@ -75,7 +75,7 @@ export const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-export const Login = styled(Link)`
+export const TypeSwitch = styled(Link)`
   font-size: 16px;
   font-weight: 600;
 `;

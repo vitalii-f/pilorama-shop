@@ -70,7 +70,6 @@ const ThemeSwitcher = ({ sx }: { sx?: SxProps }) => {
 
   return (
     <MaterialUISwitch
-      // sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }}
       sx={sx}
       defaultChecked
       onClick={handleSwitchTheme}

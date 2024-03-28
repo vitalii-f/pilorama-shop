@@ -1,5 +1,4 @@
 import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
 import Image from 'next/image';
 import {
   Card,
@@ -12,16 +11,21 @@ import {
 } from './FavoritePage.styled';
 
 const FavoritePage = async () => {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createClient();
 
-  const { data: profileData } = await supabase.from('profiles').select('*')
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user)
+    return (
+      <Container>
+        <h2>You need login to your account.</h2>
+      </Container>
+    );
 
-  if (!profileData) return (
-    <Container>
-      <h2>You need login to your account.</h2>
-    </Container>
-  )
+  const { data: profileData, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userData.user.id);
+  if (error) throw new Error(error.message);
 
   const favoriteArray = profileData[0].favorite_games_list;
   const favoriteList =

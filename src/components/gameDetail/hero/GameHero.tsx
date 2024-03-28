@@ -15,7 +15,6 @@ import {
 } from './GameHero.styled';
 import { Tables } from '@/types/supabase';
 import FavoriteButton from './FavoriteButton';
-import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import AddToCart from './AddToCart';
 
@@ -26,33 +25,36 @@ interface GameHeropProps {
 }
 
 const GameHero = async ({ gameData }: GameHeropProps) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   let isFavorite: boolean = false;
   let inLibrary: boolean = false;
   let inCart = false;
 
-  const { data: profileData } = await supabase.from('profiles').select('*');
+  const { data: userData } = await supabase.auth.getUser();
+  
+  if (userData.user) {
+    const { data: profileData } = await supabase.from('profiles').select('*').eq('id', userData.user.id);
 
-  if (profileData && profileData[0]) {
-    if (profileData[0].favorite_games_list?.includes(gameData.id)) {
-      isFavorite = true;
+    if (profileData && profileData[0]) {
+      if (profileData[0].favorite_games_list?.includes(gameData.id)) {
+        isFavorite = true;
+      }
+
+      const { count: libraryCount } = await supabase
+        .from('user_library')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', profileData[0].id)
+        .eq('game_id', gameData.id);
+      inLibrary = !!libraryCount;
+
+      const { count: cartCount } = await supabase
+        .from('cart')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', profileData[0].id)
+        .eq('game_id', gameData.id);
+      inCart = !!cartCount;
     }
-
-    const { count: libraryCount } = await supabase
-      .from('user_library')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', profileData[0].id)
-      .eq('game_id', gameData.id);
-    inLibrary = !!libraryCount;
-
-    const { count: cartCount } = await supabase
-      .from('cart')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', profileData[0].id)
-      .eq('game_id', gameData.id);
-    inCart = !!cartCount;
   }
 
   return (

@@ -18,6 +18,7 @@ interface SearchParamsProps {
 
 const fetchData = async (searchParams: SearchParamsProps) => {
   const supabase = createClient();
+  
   try {
     if (!Object.keys(searchParams).length) {
       const { data, error } = await supabase

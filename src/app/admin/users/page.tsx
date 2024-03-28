@@ -8,13 +8,16 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { cookies } from 'next/headers';
 
 const getProfiles = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-  const { data, error } = await supabase.from('profiles').select('*');
+  const supabase = createClient();
+
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+  if (userError) throw new Error(userError.message);
+
+  const { data, error } = await supabase.from('profiles').select('*').eq('id', userData.user.id);
   if (error) throw new Error(error.message);
+  
   return data;
 };
 

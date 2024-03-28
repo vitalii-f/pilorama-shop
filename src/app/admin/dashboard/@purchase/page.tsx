@@ -1,11 +1,8 @@
 import PurchaseChart from '@/components/admin/dashboard/PurchaseChart';
 import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
-import React from 'react';
 
 const PurchasePage = async () => {
-  const cookieStorage = cookies();
-  const supabase = createClient(cookieStorage);
+  const supabase = createClient();
 
   const { count: successCount } = await supabase
     .from('purchase')

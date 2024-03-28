@@ -22,7 +22,6 @@ const CollectionsLayout = async ({
           <CollectionCard key={collectionName}>
             <Link
               href={`/admin/collections/${collectionName}`}
-              prefetch={false}
             >
               {collectionName}
             </Link>

@@ -1,27 +1,17 @@
 import { Container } from './AddDataPage.styled';
 import { formatCollectionsData } from '@/helpers/formatter';
-import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import CollectionForm from '@/components/admin/collectionControl/CollectionForm';
 import { Tables } from '@/types/types';
 
-const fetchData = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-  try {
-    const { data, error } = await supabase.from('').select();
-    if (error) throw new Error(error.message);
-    return data;
-  } catch (error) {
-    throw new Error(error as string);
-  }
-};
-
 const AddDataPage = async ({ params }: { params: { slug: Tables } }) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
-  const res = formatCollectionsData(await fetchData());
+  const { data, error } = await supabase.from('' as Tables).select();
+    if (error) throw new Error(error.message);
+
+  //@ts-ignore
+  const res = formatCollectionsData(data);
   const collectionIndex = res.findIndex(
     (item) => item.collection === params.slug
   );
@@ -31,7 +21,7 @@ const AddDataPage = async ({ params }: { params: { slug: Tables } }) => {
     collectionData.fields.map(async (item) => {
       if (item.isSelect || item.isMultipleSelect) {
         const tableName = item.name.replace('_array', '');
-        const { data } = (await supabase.from(tableName).select('*')) as {
+        const { data } = (await supabase.from(tableName as Tables).select('*')) as {
           data: { id: number; name: string; value: string }[];
         };
         return { ...item, selectItems: data };

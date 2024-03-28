@@ -1,7 +1,6 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
 
 interface ActionState {
   status: 'pending' | 'success' | 'error';
@@ -15,8 +14,7 @@ export const changeUserPassword = async (
   const newPassword = formData.get('new_password') as string;
   const newPasswordRepeat = formData.get('new_password_repeat');
   if (newPassword === newPasswordRepeat) {
-    const coockieStore = cookies();
-    const supabase = createClient(coockieStore);
+    const supabase = createClient();
     const { error } = await supabase.auth.updateUser({
       password: newPassword,
     });
@@ -39,8 +37,7 @@ export const changeUserLogin = async (
   formData: FormData
 ): Promise<ActionState> => {
   const newLogin = formData.get('new_login') as string;
-  const coockieStore = cookies();
-  const supabase = createClient(coockieStore);
+  const supabase = createClient();
   const { error } = await supabase.auth.updateUser({
     data: { login: newLogin },
   });

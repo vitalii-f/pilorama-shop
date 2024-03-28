@@ -7,12 +7,12 @@ import {
   ImageFormat,
   MiltipleImagesProps,
   SelectProps,
+  TableInsertType,
   TableUpdateType,
   Tables,
 } from '@/types/types';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 interface CollectionData {
@@ -38,11 +38,10 @@ const collectionFields = [
 ];
 
 export const getCollectionInputs = async (collectionName: Tables) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data, error } = await supabase
-    .from('')
+    .from('' as Tables)
     .select('*')
     .returns<CollectionsData>();
   if (error) throw new Error(error.message);
@@ -67,7 +66,7 @@ export const getCollectionInputs = async (collectionName: Tables) => {
 
       if (type === 'select' || type === 'select_multiple') {
         const { data } = await supabase
-          .from(key)
+          .from(key as Tables)
           .select('*')
           .returns<SelectProps[]>();
         if (data) selectItems = data;
@@ -91,8 +90,7 @@ export const addToCollection = async (
   collectionName: string,
   collectionInputs: CollectionInputProps[]
 ) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const uploadImage = async (file: File) => {
     const id = formData.get('name');
@@ -146,9 +144,11 @@ export const addToCollection = async (
 
   if (Object.keys(insertData).length) {
     const { data, error } = await supabase
-      .from(collectionName)
-      .insert(insertData);
-    console.log(error);
+      .from(collectionName as Tables)
+      .insert(insertData as TableInsertType);
+
+    if (error) throw new Error(error.message);
+    
     revalidatePath(`/admin/collections/${collectionName}`);
     redirect(`/admin/collections/${collectionName}`);
   }
@@ -162,8 +162,7 @@ export const editCollection = async (
 ) => {
   if (!initialValues) return;
 
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const uploadImage = async (file: File) => {
     try {
@@ -241,16 +240,15 @@ export const editCollection = async (
       }
     }
   }
-  console.log(updateData);
 
   if (Object.keys(updateData).length) {
     await supabase
-      .from(collectionName)
+      .from(collectionName as Tables)
       .update(updateData)
-      .eq('id', initialValues.id);
+      .eq('id', initialValues.id!);
 
     revalidatePath(`/admin/collections/${collectionName}`);
-    // redirect(`/admin/collections/${collectionName}`);
+    redirect(`/admin/collections/${collectionName}`);
   }
 };
 
@@ -258,11 +256,10 @@ export const deleteFromCollection = async (
   id: number | string,
   collection: string
 ) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const { data, error } = await supabase
-      .from(collection)
+      .from(collection as Tables)
       .delete()
       .eq('id', id)
       .select();

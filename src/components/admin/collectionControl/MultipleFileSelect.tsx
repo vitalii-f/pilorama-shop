@@ -37,6 +37,7 @@ const MultipleFileSelect = ({
 
   useEffect(() => {
     if (defaultValue) setImages({ [inputProps.name]: defaultValue });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

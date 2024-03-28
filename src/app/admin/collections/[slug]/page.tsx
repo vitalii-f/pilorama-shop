@@ -7,14 +7,12 @@ import {
 } from './Collection.styled';
 import Link from 'next/link';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 
 const fetchCollection = async (
   collection: keyof Database['public']['Tables']
 ) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const { data, error } = await supabase.from(collection).select('*');
     if (error) throw new Error(error.message);
@@ -36,7 +34,7 @@ const CollectionPage = async ({
       <CollectionHeader>
         <h2>{params.slug}</h2>
         <CollectionControll>
-          <Link href={`/admin/collections/${params.slug}/add`} prefetch={false}>
+          <Link href={`/admin/collections/${params.slug}/add`}>
             <AddCircleIcon fontSize='large' titleAccess='Add to collection' />
           </Link>
         </CollectionControll>

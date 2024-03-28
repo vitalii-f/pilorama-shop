@@ -4,20 +4,20 @@ import {
   GeneralProfileWrapper,
   Label,
 } from './Profile.styled';
-import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import ProfileAvatar from '@/components/profile/avatar/ProfileAvatar';
 
 const ProfilePage = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data: userData } = await supabase.auth.getUser();
-  const { data: profileData } = await supabase.from('profiles').select('*');
-
-  if (!userData.user || !profileData) {
-    return <div>Please, login to account!</div>;
-  }
+  if (!userData.user) return <div>Please, login to account!</div>;
+  
+  const { data: profileData, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userData.user?.id);
+  if (error) throw new Error(error.message);
 
   return (
     <GeneralProfileWrapper>

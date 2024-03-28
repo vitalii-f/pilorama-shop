@@ -67,15 +67,6 @@ export const NavLink = styled(Link)<StyledProps>`
   font-weight: ${(props) => (props.$isActive ? '600' : undefined)};
 `;
 
-//   .link {
-//     color: var(--color-secondary);
-//   }
-
-//   .link-active {
-//     color: #ffffff;
-//     font-weight: 600;
-//   }
-
 export const HeroFooter = styled.div`
   display: flex;
   flex-direction: column;

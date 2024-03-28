@@ -2,12 +2,10 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const addToFavorite = async (gameId: number) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data: userData } = await supabase.auth.getUser();
 
@@ -23,8 +21,7 @@ export const addToFavorite = async (gameId: number) => {
 
 export const addToCart = async (gameId: number) => {
   try {
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
+    const supabase = createClient();
 
     const { data, error } = await supabase
       .from('cart')
@@ -35,10 +32,9 @@ export const addToCart = async (gameId: number) => {
       .select();
     if (error) throw new Error(error.message);
 
-    revalidatePath(`/cart`)
-
+    revalidatePath(`/cart`);
   } catch (error) {
     throw new Error(error as string);
   }
-  redirect('/cart')
+  redirect('/cart');
 };

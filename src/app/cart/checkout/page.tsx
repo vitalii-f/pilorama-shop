@@ -1,5 +1,4 @@
 import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
 import {
   CheckoutContent,
   CheckoutHeader,
@@ -11,8 +10,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningIcon from '@mui/icons-material/Warning';
 
 const fetchUser = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const { data, error } = await supabase.auth.getUser();
     if (error) throw new Error(error.message);
@@ -24,8 +22,7 @@ const fetchUser = async () => {
 };
 
 const getInvoice = async (userId: string) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   try {
     const { data, error } = await supabase
       .from('purchase')

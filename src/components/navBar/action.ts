@@ -2,12 +2,10 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const logout = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { error } = await supabase.auth.signOut();
 
@@ -20,8 +18,7 @@ export const logout = async () => {
 };
 
 export const searchGame = async (searchParam: string) => {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createClient()
   try {
     const { data, error } = await supabase
       .from('games')

@@ -3,13 +3,11 @@
 import { ImageFormat } from '@/types/types';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 
 type AvatarForm = [string, FormDataEntryValue][];
 
 export const submitAvatar = async (formData: FormData) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   const { data: userData } = await supabase.auth.getUser();
   const avatar: AvatarForm = [];
 

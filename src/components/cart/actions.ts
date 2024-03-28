@@ -3,12 +3,10 @@
 import { Tables, TablesInsert } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
 
 export const createPay = async (cart: Tables<'games'>[]) => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data: userData } = await supabase.auth.getUser();
 
@@ -80,8 +78,7 @@ export const createPay = async (cart: Tables<'games'>[]) => {
 };
 
 export const removeFromCart = async (cartItemId: number) => {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createClient()
   try {
     const { data, error } = await supabase
       .from('cart')

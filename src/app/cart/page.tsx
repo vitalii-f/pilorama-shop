@@ -1,11 +1,9 @@
 import ProductList from '@/components/cart/ProductList';
 import { CartHeader, Section, Title } from './CartPage.styled';
-import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 
 const CartPage = async () => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data: userData, error: userError } = await supabase.auth.getUser();
   if (userError) throw new Error(userError.message);

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, Suspense } from 'react';
 import {
   AsideFilter,
   AsideTitle,
@@ -40,7 +40,9 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
         <GamesHeader>
           <h2>Games</h2>
           <SearchControl>
-            <SortGames />
+            <Suspense fallback={<p>Loading</p>}>
+              <SortGames />
+            </Suspense>
             <FiltersButton />
           </SearchControl>
         </GamesHeader>
@@ -48,10 +50,14 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
       </Games>
       <AsideFilter>
         <AsideTitle>Filters</AsideTitle>
-        <Filters filters={filters} />
+        <Suspense fallback={<p>Loading</p>}>
+          <Filters filters={filters} />
+        </Suspense>
       </AsideFilter>
       <FiltersDrawer>
-        <Filters filters={filters} />
+        <Suspense fallback={<p>Loading</p>}>
+          <Filters filters={filters} />
+        </Suspense>
       </FiltersDrawer>
     </Main>
   );
