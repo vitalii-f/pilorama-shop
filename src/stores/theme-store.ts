@@ -1,4 +1,3 @@
-import { Tables } from '@/types/supabase'
 import { create } from 'zustand'
 
 interface CartState {
@@ -8,5 +7,5 @@ interface CartState {
 
 export const useThemeStore = create<CartState>()((set) => ({
     theme: 'dark',
-    toggleTheme: (newItem) => set((state) => ({ theme: newItem })),
+    toggleTheme: (newItem) => set((_state) => ({ theme: newItem })),
 }))

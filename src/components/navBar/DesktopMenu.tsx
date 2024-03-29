@@ -1,6 +1,5 @@
 import { Button } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
 import { menuList } from './MenuItems';
 
 const DesktopMenu = () => {

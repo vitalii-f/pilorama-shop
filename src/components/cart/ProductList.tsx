@@ -1,7 +1,6 @@
 'use client';
 
 import { Tables } from '@/types/supabase';
-import React, { useEffect, useState } from 'react';
 import {
   GameInfo,
   GamePrice,

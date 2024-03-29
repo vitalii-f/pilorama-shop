@@ -10,7 +10,7 @@ import MenuItems from './MenuItems';
 const MobileMenu = () => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const handleToggleNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleToggleNavMenu = (_event: React.MouseEvent<HTMLElement>) => {
     setOpen(!open);
   };
   

@@ -7,5 +7,5 @@ interface CartState {
 
 export const useFiltersStore = create<CartState>()((set) => ({
   open: false,
-  setOpen: (newItem) => set((state) => ({ open: newItem})),
+  setOpen: (newItem) => set((_state) => ({ open: newItem})),
 }));

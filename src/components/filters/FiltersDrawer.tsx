@@ -2,7 +2,7 @@
 
 import { useFiltersStore } from '@/stores/filters-store';
 import { Drawer } from '@mui/material';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 const FiltersDrawer = ({ children }: { children: ReactNode }) => {
   const { open, setOpen } = useFiltersStore((state) => state);

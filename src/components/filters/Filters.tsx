@@ -34,7 +34,7 @@ const Filters = ({ filters }: { filters: FiltersProps }) => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleBudgetChange = (event: Event, newValue: number | number[]) => {
+  const handleBudgetChange = (_event: Event, newValue: number | number[]) => {
     setBudget(newValue as number[]);
     setDisabledSubmit(false);
   };

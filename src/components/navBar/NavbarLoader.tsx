@@ -1,5 +1,4 @@
 import { AppBar, Box, Container, Skeleton, Toolbar } from '@mui/material';
-import React from 'react';
 import DesktopMenu from './DesktopMenu';
 import Searchbar from './Searchbar';
 

@@ -16,7 +16,7 @@ import { FormStateProps } from '@/types/types';
 
 const UpdatePasswordForm = ({ code }: { code: string }) => {
   const [state, formAction] = useFormState<FormStateProps, FormData>(
-    (state, formData) => updatePassword(formData, code),
+    (_state, formData) => updatePassword(formData, code),
     { status: 'loading' }
   );
 

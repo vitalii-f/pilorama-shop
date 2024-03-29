@@ -11,7 +11,7 @@ const signInSchema = object({
   password: string().min(6).max(16).required(),
 });
 
-export const login = async (prevState: FormStateProps, formData: FormData): Promise<FormStateProps> => {
+export const login = async (_prevState: FormStateProps, formData: FormData): Promise<FormStateProps> => {
   const supabase = createClient();
 
   const data = {

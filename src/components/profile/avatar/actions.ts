@@ -11,7 +11,7 @@ export const submitAvatar = async (formData: FormData) => {
   const { data: userData } = await supabase.auth.getUser();
   const avatar: AvatarForm = [];
 
-  if (!userData.user) throw new Error('UserData is null')
+  if (!userData.user) throw new Error('UserData is null');
 
   for (const field of formData.entries()) {
     avatar.push(field);
@@ -19,7 +19,7 @@ export const submitAvatar = async (formData: FormData) => {
 
   if (typeof avatar[0][1] === 'string') {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('profiles')
         .update({ avatar: avatar[0][1] })
         .eq('id', userData.user.id);
@@ -45,8 +45,10 @@ export const submitAvatar = async (formData: FormData) => {
           );
         if (error) throw new Error(error.message);
         if (dataStorage) {
-          const path = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_AVATARS_URL + dataStorage.path;
-          const { data: dbData, error } = await supabase
+          const path =
+            process.env.NEXT_PUBLIC_SUPABASE_STORAGE_AVATARS_URL +
+            dataStorage.path;
+          await supabase
             .from('profiles')
             .update({ avatar: path })
             .eq('id', userData.user.id);
@@ -54,8 +56,10 @@ export const submitAvatar = async (formData: FormData) => {
       }
 
       if (dataStorage) {
-        const path = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_AVATARS_URL + dataStorage.path;
-        const { data: dbData, error } = await supabase
+        const path =
+          process.env.NEXT_PUBLIC_SUPABASE_STORAGE_AVATARS_URL +
+          dataStorage.path;
+        await supabase
           .from('profiles')
           .update({ avatar: path })
           .eq('id', userData.user.id);

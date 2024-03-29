@@ -10,7 +10,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
-import React, { FormEvent, InputHTMLAttributes, useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
   AvatarDialog,
   AvatarImg,
@@ -34,13 +34,11 @@ const avatarList = [
 ];
 
 const ProfileAvatar = ({ avatarURL }: { avatarURL?: string | null }) => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<File | null>(null);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<File | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [preview, setPreview] = React.useState<File | null>(null);
-
-  const handleUploadAvatar = (event: FormEvent<HTMLInputElement>) => {};
+  const [preview, setPreview] = useState<File | null>(null);
 
   const handleDialogOpen = () => {
     setOpen(!open);

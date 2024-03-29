@@ -143,7 +143,7 @@ export const addToCollection = async (
   }
 
   if (Object.keys(insertData).length) {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from(collectionName as Tables)
       .insert(insertData as TableInsertType);
 

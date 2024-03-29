@@ -15,17 +15,14 @@ import GameDescription from '@/components/gameDetail/description/GameDescription
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import { createClient } from '@/utils/supabase/client';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 
 type Props = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await fetchGameData(+params.id);
 
   return {

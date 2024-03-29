@@ -8,7 +8,7 @@ interface ActionState {
 }
 
 export const changeUserPassword = async (
-  initialState: ActionState,
+  _initialState: ActionState,
   formData: FormData
 ): Promise<ActionState> => {
   const newPassword = formData.get('new_password') as string;
@@ -33,7 +33,7 @@ export const changeUserPassword = async (
 };
 
 export const changeUserLogin = async (
-  initialState: ActionState,
+  _initialState: ActionState,
   formData: FormData
 ): Promise<ActionState> => {
   const newLogin = formData.get('new_login') as string;

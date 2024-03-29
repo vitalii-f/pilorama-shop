@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HeroNavigation, NavLink } from './Hero.styled';
 
@@ -20,11 +19,6 @@ const HeroNav = () => {
           </NavLink>
         </li>
       </ul>
-      {/* <ul>
-                <li><NavLink href='/' $isActive={pathname === '/collections'}>Collections</NavLink></li>
-                <li><NavLink href='/' $isActive={pathname === '/deals'}>Deals</NavLink></li>
-                <li><NavLink href='/' $isActive={pathname === '/subscribtions'}>Subscribtions</NavLink></li>
-            </ul> */}
     </HeroNavigation>
   );
 };

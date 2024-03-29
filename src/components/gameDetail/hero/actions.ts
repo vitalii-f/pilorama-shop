@@ -23,7 +23,7 @@ export const addToCart = async (gameId: number) => {
   try {
     const supabase = createClient();
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('cart')
       .insert({
         game_id: gameId,

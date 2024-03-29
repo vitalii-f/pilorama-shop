@@ -9,7 +9,7 @@ const resetPasswordSchema = object({
 });
 
 export const resetPassword = async (
-  prevState: FormStateProps,
+  _prevState: FormStateProps,
   formData: FormData
 ): Promise<FormStateProps> => {
   const supabase = createClient();
@@ -27,7 +27,7 @@ export const resetPassword = async (
     };
 
   const { error } = await supabase.auth.resetPasswordForEmail(email as string, {
-    redirectTo: 'http://localhost:3000/update-password/',
+    redirectTo: process.env.HOST!,
   });
 
   if (error)

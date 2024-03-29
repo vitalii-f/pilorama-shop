@@ -12,7 +12,7 @@ const signUpSchema = object({
   login: string().min(5).max(12).required(),
 });
 
-export const signup = async (prevState: FormStateProps, formData: FormData): Promise<FormStateProps> => {
+export const signup = async (_prevState: FormStateProps, formData: FormData): Promise<FormStateProps> => {
   const supabase = createClient();
 
   const validateData = await signUpSchema

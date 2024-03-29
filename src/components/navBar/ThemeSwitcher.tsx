@@ -1,8 +1,6 @@
 'use client';
 
-import { FormControlLabel, Switch, SxProps, styled } from '@mui/material';
-import React, { MouseEventHandler, useContext, useState } from 'react';
-import { ColorModeContext } from '../themeClient/ThemeClient';
+import { Switch, SxProps, styled } from '@mui/material';
 import { useThemeStore } from '@/stores/theme-store';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -56,7 +54,7 @@ const ThemeSwitcher = ({ sx }: { sx?: SxProps }) => {
   const { theme, toggleTheme } = useThemeStore((state) => state);
 
   const handleSwitchTheme = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    _event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (theme === 'dark') {
       toggleTheme('light');

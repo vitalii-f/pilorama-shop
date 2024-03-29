@@ -1,4 +1,4 @@
-import { Database, TablesUpdate } from './supabase';
+import { Database } from './supabase';
 
 export type DatabaseTables = Database['public']['Tables'];
 export type Tables = keyof DatabaseTables;
