@@ -1,7 +1,7 @@
 'use client';
 
 import { Backdrop, CircularProgress, Slider } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   BudgeteInput,
   BudgeteInputs,
@@ -44,28 +44,21 @@ const Filters = ({ filters }: { filters: FiltersProps }) => {
   };
 
   const formSubmit = (formData: FormData) => {
-    let filterLink: string = '?';
+    const params = new URLSearchParams();
+
+    const sortBy = searchParams.get('sortBy')
+    const page = searchParams.get('page')
+    
+    if (sortBy) params.set('sortBy', sortBy)
+    if (page) params.delete('sortBy', page)
 
     formData.forEach((value, key) => {
       if (value) {
-        filterLink += `${key}=${value}&`;
+        params.set(key, formData.getAll(key).join());
       }
     });
 
-    if (filterLink[filterLink.length - 1] === '&') {
-      filterLink = filterLink.slice(0, -1);
-    }
-
-    if (searchParams.size && searchParams.get('sortBy')) {
-      const sortType = searchParams.get('sortBy');
-
-      router.replace(`games${filterLink}&sortBy=${sortType}`);
-      revalidateGames();
-      router.refresh();
-      return;
-    }
-
-    router.replace(`games${filterLink}`);
+    router.replace(`games?${params}`);
     revalidateGames();
     router.refresh();
   };

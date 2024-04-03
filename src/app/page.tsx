@@ -10,8 +10,10 @@ const fetchData = async () => {
   try {
     const { data, error } = await supabase
       .from('games')
-      .select('*, developers(*)');
+      .select('*, developers(*)')
+      .limit(6)
     if (error) throw new Error(error.message);
+    
     return data;
   } catch (error) {
     throw new Error(error as string);

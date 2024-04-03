@@ -12,37 +12,43 @@ import {
   Price,
 } from './Hero.styled';
 import { createClient } from '@/utils/supabase/client';
+import Link from 'next/link';
 
 const fetchBanner = cache(async () => {
   const supabase = createClient();
-  return supabase.from('main_banner').select('*');
+  const { data, error } = await supabase
+    .from('main_banner')
+    .select('*, games(price, platforms)');
+  if (error) throw new Error(error.message);
+
+  return data[0];
 });
 
 const Hero = async () => {
-  const { data } = await fetchBanner();
+  const data = await fetchBanner();
 
   if (data)
     return (
       <HeroSection>
-        <HeroBanner
-          src={data[0].banner_img}
-          fill
-          alt='hero background'
-          priority
-        />
+        <HeroBanner src={data.banner_img} fill alt='hero background' priority />
         <HeroNav />
         <HeroFooter>
           <FooterRow>
             <HeroLogo
-              src={data[0].logo_img}
+              src={data.logo_img}
               alt='logo'
               width={300}
               height={150}
               priority
             />
             <Info>
-              <PlatformLabel text='PS5' variant='contained' />
-              <Price>$9.99</Price>
+              <PlatformLabel
+                text={data.games?.platforms[0] || ''}
+                variant='contained'
+              />
+              <Link href={`games/${data.game_id}`}>
+                <Price>${data.games?.price}</Price>
+              </Link>
             </Info>
           </FooterRow>
           <Trending />

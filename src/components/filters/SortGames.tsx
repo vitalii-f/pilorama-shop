@@ -19,24 +19,14 @@ const SortGames = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     const sortType = event.target.value;
-    setSortType(sortType);
-    if (!searchParams.size) {
-      router.replace(`games?sortBy=${sortType}`);
-      revalidateGames();
-      router.refresh();
-    } else if (searchParams.size && !searchParams.get('sortBy')) {
-      const searchString = searchParams.toString();
-      router.replace(`games?${searchString}&sortBy=${sortType}`);
-      revalidateGames();
-      router.refresh();
-    } else if (searchParams.size && searchParams.get('sortBy')) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('sortBy', sortType);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('sortBy', sortType);
 
-      router.replace(`games?${params}`);
-      revalidateGames();
-      router.refresh();
-    }
+    setSortType(sortType);
+    
+    router.replace(`games?${params}`);
+    revalidateGames();
+    router.refresh();
   };
 
   return (

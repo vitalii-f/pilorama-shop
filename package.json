@@ -21,7 +21,7 @@
     "@mui/x-date-pickers": "^7.1.0",
     "@next/mdx": "^14.1.4",
     "@supabase/ssr": "^0.1.0",
-    "@supabase/supabase-js": "^2.41.1",
+    "@supabase/supabase-js": "^2.42.0",
     "@vercel/speed-insights": "^1.0.10",
     "dayjs": "^1.11.10",
     "easymde": "^2.18.0",

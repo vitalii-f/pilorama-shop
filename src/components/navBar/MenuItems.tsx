@@ -1,7 +1,13 @@
 import HomeIcon from '@mui/icons-material/Home';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import Link from 'next/link';
 
 export const menuList = [
@@ -22,26 +28,22 @@ const MenuItems = () => {
     <List>
       {menuList.map((item) => (
         <ListItem key={item.name} disablePadding>
-          <ListItemButton>
+          <ListItemButton LinkComponent={Link} href={item.link}>
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <Link href={item.link}>
-              <ListItemText primary={item.name} />
-            </Link>
+            <ListItemText primary={item.name} />
           </ListItemButton>
         </ListItem>
       ))}
       <ListItem disablePadding>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} href='/cart'>
           <ListItemIcon>
             <ShoppingCartIcon />
           </ListItemIcon>
-          <Link href='/cart'>
-            <ListItemText primary='Cart' />
-          </Link>
+          <ListItemText primary='Cart' />
         </ListItemButton>
       </ListItem>
     </List>
   );
-}
+};
 
-export default MenuItems
+export default MenuItems;
