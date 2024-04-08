@@ -4,14 +4,14 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  position: relative;
+
   width: 100vw;
   height: calc(100vh - 64px);
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-image: url('/auth_background.png');
 `;
 
 export const FormContainer = styled.div`

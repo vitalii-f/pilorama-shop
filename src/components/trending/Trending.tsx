@@ -13,22 +13,7 @@ import {
   TrendingHeader,
   Wrapper,
 } from './Trending.styled';
-import { createClient } from '@/utils/supabase/client';
-
-const fetchTrending = async () => {
-  const supabase = createClient();
-  try {
-    const { data, error } = await supabase
-      .from('games')
-      .select('id, name, price, header, platforms')
-      .order('release_date')
-      .limit(3);
-    if (error) throw new Error(error.message);
-    return data;
-  } catch (error) {
-    throw new Error(error as string);
-  }
-};
+import { fetchTrending } from '@/utils/games/games';
 
 const Trending = async () => {
   const data = await fetchTrending();

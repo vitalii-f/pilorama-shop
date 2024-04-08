@@ -106,6 +106,7 @@ export type Database = {
           release_date: string
           slider: string[]
           sold_count: number
+          views: number | null
         }
         Insert: {
           capsule: string
@@ -128,6 +129,7 @@ export type Database = {
           release_date: string
           slider: string[]
           sold_count?: number
+          views?: number | null
         }
         Update: {
           capsule?: string
@@ -150,6 +152,7 @@ export type Database = {
           release_date?: string
           slider?: string[]
           sold_count?: number
+          views?: number | null
         }
         Relationships: [
           {
@@ -395,6 +398,12 @@ export type Database = {
         Returns: undefined
       }
       increment_sold_count: {
+        Args: {
+          game_id: number
+        }
+        Returns: undefined
+      }
+      increment_views: {
         Args: {
           game_id: number
         }

@@ -3,14 +3,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import {
   CardContent,
-  Developer,
-  GameName,
-  Price,
   Search,
   SearchInput,
   SearchResult,
-  SearchResultCard,
-  SearchResultPreview,
 } from './Navbar.styled';
 import SearchIcon from '@mui/icons-material/Search';
 import { Tables } from '@/types/supabase';
@@ -18,6 +13,8 @@ import { searchGame } from './action';
 import { useDebouncedCallback } from 'use-debounce';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Box, Card, CardActionArea, Typography } from '@mui/material';
+import Image from 'next/image';
 
 interface SearchResultProps extends Omit<Tables<'games'>, 'developers'> {
   developers: {
@@ -60,27 +57,34 @@ const Searchbar = () => {
       {searchResult?.length ? (
         <SearchResult>
           {searchResult.map((result) => (
-            <SearchResultCard key={result.capsule}>
-              <SearchResultPreview
-                src={result.header}
-                alt='Game preview'
-                width={150}
-                height={80}
-                priority
-              />
-              <CardContent>
-                <GameName>
-                  <Link
-                    href={`/games/${result.id}`}
-                    onClick={() => setSearchResult(undefined)}
-                  >
-                    {result.name}
-                  </Link>
-                </GameName>
-                <Developer>{result.developers.name}</Developer>
-                <Price>${result.price}</Price>
-              </CardContent>
-            </SearchResultCard>
+            <Card key={result.capsule}>
+              <CardActionArea
+                LinkComponent={Link}
+                href={`/games/${result.id}`}
+                onClick={() => setSearchResult(undefined)}
+              >
+                <Box sx={{ display: 'flex', gap: '10px' }}>
+                  <Image
+                    src={result.header}
+                    alt={result.name}
+                    width={100}
+                    height={70}
+                    style={{ objectFit: 'cover' }}
+                  />
+                  <CardContent style={{ padding: '5px 0' }}>
+                    <Typography
+                      fontSize={'clamp(0.9rem, 1.5vw, 1rem)'}
+                      whiteSpace={'nowrap'}
+                      overflow={'hidden'}
+                      textOverflow={'ellipsis'}
+                    >
+                      {result.name}
+                    </Typography>
+                    <Typography>${result.price}</Typography>
+                  </CardContent>
+                </Box>
+              </CardActionArea>
+            </Card>
           ))}
         </SearchResult>
       ) : searchResult?.length === 0 ? (

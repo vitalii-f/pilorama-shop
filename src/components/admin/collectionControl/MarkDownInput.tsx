@@ -12,7 +12,7 @@ const MarkDownInput = ({
   inputProps: CollectionInputProps;
   defaultValue?: string;
 }) => {
-  const [value, setValue] = useState<string>(defaultValue || '');
+  const [value, setValue] = useState<string>(defaultValue ? JSON.parse(defaultValue) : '');
 
   const handleChange = useCallback((text: string) => {
     setValue(text);

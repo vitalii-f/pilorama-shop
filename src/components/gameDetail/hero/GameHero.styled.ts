@@ -36,6 +36,8 @@ export const GameIcon = styled(Image)`
 `;
 
 export const HeroContent = styled.div`
+  position: relative;
+
   display: flex;
   align-items: flex-end;
   gap: 20px;
@@ -78,6 +80,7 @@ export const DevInfo = styled.div`
 `;
 
 export const ContentRaiting = styled.div`
+  position: relative;
   display: flex;
   gap: 5px;
 `;

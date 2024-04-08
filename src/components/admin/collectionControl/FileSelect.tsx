@@ -23,6 +23,7 @@ const FileSelect = ({
   const [loadedImage, setLoadedImage] = useState<File | string | undefined>(
     defaultValue
   );
+
   const ref = useRef<HTMLInputElement>(null);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

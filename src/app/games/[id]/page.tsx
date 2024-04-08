@@ -13,9 +13,10 @@ import {
 import GameSlider from '@/components/gameDetail/slider/GameSlider';
 import GameDescription from '@/components/gameDetail/description/GameDescription';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-import { createClient } from '@/utils/supabase/client';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Metadata } from 'next';
+import { fetchGameData } from '@/utils/games/games';
+import { createClient } from '@/utils/supabase/server';
 
 type Props = {
   params: { id: string };
@@ -30,23 +31,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const fetchGameData = async (id: number) => {
-  const supabase = createClient();
-  try {
-    const { data, error } = await supabase
-      .from('games')
-      .select('*, developers(*), publishers(*)')
-      .eq('id', id);
-    if (error) throw new Error(error.message);
-
-    return data[0];
-  } catch (error) {
-    throw new Error(error as string);
-  }
-};
-
 const GameDetailPage = async ({ params }: { params: { id: number } }) => {
   const gameData = await fetchGameData(params.id);
+
+  const supabase = createClient()
+  await supabase.rpc('increment_views', { game_id: params.id })
 
   return (
     <Main>
@@ -63,6 +52,7 @@ const GameDetailPage = async ({ params }: { params: { id: number } }) => {
                   alt='additional background'
                   fill
                   priority
+                  sizes='90vw'
                 />
                 <AdditionalContent>
                   <AdditionalTitle>
@@ -76,7 +66,7 @@ const GameDetailPage = async ({ params }: { params: { id: number } }) => {
             )}
         </AdditionalWrapper>
         <Aside>
-          <GiftButton>
+          <GiftButton disabled title='Coming soon...'>
             <CardGiftcardIcon />
             Buy As A Gift
           </GiftButton>

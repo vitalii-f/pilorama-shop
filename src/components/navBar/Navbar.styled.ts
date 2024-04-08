@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -75,43 +74,10 @@ export const SearchResult = styled.div`
   overflow: hidden;
 `;
 
-export const SearchResultCard = styled.div`
-  display: flex;
-  gap: 5px;
-
-  &:hover {
-    background-color: var(--color-hover-search);
-  }
-`;
-
-export const SearchResultPreview = styled(Image)`
-  @media (max-width: 510px) {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  }
-`;
-
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
 
   padding-top: 5px;
-`;
-
-export const GameName = styled.h3`
-  font-weight: 500;
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-`;
-
-export const Developer = styled.p`
-  font-size: 14px;
-  @media (max-width: 375px) {
-    display: none;
-  }
-`;
-
-export const Price = styled.p`
-  font-weight: 500;
 `;

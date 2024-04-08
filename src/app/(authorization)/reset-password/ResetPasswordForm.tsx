@@ -4,7 +4,6 @@ import { useFormState, useFormStatus } from 'react-dom';
 import {
   Form,
   FormButtons,
-  Wrapper,
   Input,
   Label,
   FormContainer,
@@ -39,35 +38,33 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <Wrapper>
-      <FormContainer>
-        <Form>
-          <Label htmlFor='email'>
-            Email:
-            <Input
-              id='email'
-              name='email'
-              type='email'
-              required
-              disabled={isDisabled}
-            />
-          </Label>
-          <FormButtons>
-            <SubmitButton />
-          </FormButtons>
-          {state.status === 'rejected' && (
-            <Alert severity='error' sx={{ width: '100%' }}>
-              {state.error}
-            </Alert>
-          )}
-          {state.status === 'success' && (
-            <Alert severity='success' sx={{ width: '100%' }}>
-              {state.message}
-            </Alert>
-          )}
-        </Form>
-      </FormContainer>
-    </Wrapper>
+    <FormContainer>
+      <Form>
+        <Label htmlFor='email'>
+          Email:
+          <Input
+            id='email'
+            name='email'
+            type='email'
+            required
+            disabled={isDisabled}
+          />
+        </Label>
+        <FormButtons>
+          <SubmitButton />
+        </FormButtons>
+        {state.status === 'rejected' && (
+          <Alert severity='error' sx={{ width: '100%' }}>
+            {state.error}
+          </Alert>
+        )}
+        {state.status === 'success' && (
+          <Alert severity='success' sx={{ width: '100%' }}>
+            {state.message}
+          </Alert>
+        )}
+      </Form>
+    </FormContainer>
   );
 };
 

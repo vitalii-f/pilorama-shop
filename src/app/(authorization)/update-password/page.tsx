@@ -1,4 +1,4 @@
-import { Wrapper, FormContainer } from '../Login.styled';
+import { FormContainer } from '../Login.styled';
 import { createClient } from '@/utils/supabase/server';
 import UpdatePasswordForm from './UpdatePasswordForm';
 
@@ -9,13 +9,10 @@ const UpdatePasswordPage = async ({
 }) => {
   const supabase = createClient();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (session) {
+  const { data } = await supabase.auth.getUser()
+  
+  if (data.user) {
     return (
-      <Wrapper>
         <FormContainer
           style={{
             display: 'flex',
@@ -27,7 +24,6 @@ const UpdatePasswordPage = async ({
         >
           <h1 style={{ fontSize: '18px' }}>You can login to your account.</h1>
         </FormContainer>
-      </Wrapper>
     );
   }
 

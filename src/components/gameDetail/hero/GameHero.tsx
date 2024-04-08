@@ -32,9 +32,12 @@ const GameHero = async ({ gameData }: GameHeropProps) => {
   let inCart = false;
 
   const { data: userData } = await supabase.auth.getUser();
-  
+
   if (userData.user) {
-    const { data: profileData } = await supabase.from('profiles').select('*').eq('id', userData.user.id);
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userData.user.id);
 
     if (profileData && profileData[0]) {
       if (profileData[0].favorite_games_list?.includes(gameData.id)) {
