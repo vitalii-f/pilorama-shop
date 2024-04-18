@@ -10,8 +10,7 @@ import {
 import Filters from '@/components/filters/Filters';
 import SortGames from '@/components/filters/SortGames';
 import { createClient } from '@/utils/supabase/client';
-import FiltersButton from '@/components/filters/FiltersButton';
-import FiltersDrawer from '@/components/filters/FiltersDrawer';
+import MobileFilters from '@/components/filters/MobileFilters';
 
 const fetchFilters = async () => {
   const supabase = createClient();
@@ -43,7 +42,7 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
             <Suspense fallback={<p>Loading</p>}>
               <SortGames />
             </Suspense>
-            <FiltersButton />
+            <MobileFilters filters={filters} />
           </SearchControl>
         </GamesHeader>
         {children}
@@ -54,11 +53,6 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
           <Filters filters={filters} />
         </Suspense>
       </AsideFilter>
-      <FiltersDrawer>
-        <Suspense fallback={<p>Loading</p>}>
-          <Filters filters={filters} />
-        </Suspense>
-      </FiltersDrawer>
     </Main>
   );
 };

@@ -32,4 +32,3 @@ export const SettingsBlockContent = styled.div`
   justify-content: space-between;
   gap: 30px;
 `;
-

@@ -6,7 +6,7 @@ import {
   CollectionHeader,
 } from './Collection.styled';
 import Link from 'next/link';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { AddCircle } from '@mui/icons-material';
 import { createClient } from '@/utils/supabase/server';
 
 const fetchCollection = async (
@@ -35,7 +35,7 @@ const CollectionPage = async ({
         <h2>{params.slug}</h2>
         <CollectionControll>
           <Link href={`/admin/collections/${params.slug}/add`}>
-            <AddCircleIcon fontSize='large' titleAccess='Add to collection' />
+            <AddCircle fontSize='large' titleAccess='Add to collection' />
           </Link>
         </CollectionControll>
       </CollectionHeader>

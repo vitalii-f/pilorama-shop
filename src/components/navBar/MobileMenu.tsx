@@ -1,7 +1,6 @@
-'use client'
+'use client';
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import MenuIcon from '@mui/icons-material/Menu';
+import { ChevronLeft, Menu } from '@mui/icons-material';
 import { Drawer, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { HeaderDrawer } from './Navbar.styled';
@@ -13,7 +12,7 @@ const MobileMenu = () => {
   const handleToggleNavMenu = (_event: React.MouseEvent<HTMLElement>) => {
     setOpen(!open);
   };
-  
+
   return (
     <>
       <IconButton
@@ -22,7 +21,7 @@ const MobileMenu = () => {
         onClick={handleToggleNavMenu}
         color='inherit'
       >
-        <MenuIcon />
+        <Menu />
       </IconButton>
       <Drawer
         open={open}
@@ -32,7 +31,7 @@ const MobileMenu = () => {
       >
         <HeaderDrawer>
           <IconButton onClick={handleToggleNavMenu}>
-            <ChevronLeftIcon />
+            <ChevronLeft />
           </IconButton>
         </HeaderDrawer>
         <MenuItems />

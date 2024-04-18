@@ -4,12 +4,12 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import { Badge, Container } from '@mui/material';
 import Link from 'next/link';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { ShoppingBasket } from '@mui/icons-material';
 import Searchbar from './Searchbar';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
 import UserMenu from './UserMenu';
-import { fetchCartCount, fetchUser } from '../services/user';
+import { fetchCartCount, fetchUser } from '@/services/user';
 
 async function NavBar() {
   const user = await fetchUser()
@@ -57,7 +57,7 @@ async function NavBar() {
                 sx={{ display: { xs: 'none', md: 'block' } }}
               >
                 <Badge badgeContent={cartItemsCount} color='primary'>
-                  <ShoppingBasketIcon fontSize='large' color='primary' />
+                  <ShoppingBasket fontSize='large' color='primary' />
                 </Badge>
               </IconButton>
             )}

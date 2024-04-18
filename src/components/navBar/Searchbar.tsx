@@ -3,11 +3,11 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import {
   CardContent,
-  Search,
+  SearchWrapper,
   SearchInput,
   SearchResult,
 } from './Navbar.styled';
-import SearchIcon from '@mui/icons-material/Search';
+import { Search } from '@mui/icons-material';
 import { Tables } from '@/types/supabase';
 import { searchGame } from './action';
 import { useDebouncedCallback } from 'use-debounce';
@@ -47,8 +47,8 @@ const Searchbar = () => {
   }, [pathname]);
 
   return (
-    <Search>
-      <SearchIcon />
+    <SearchWrapper>
+      <Search />
       <SearchInput
         type='text'
         placeholder='Search...'
@@ -92,7 +92,7 @@ const Searchbar = () => {
           <h2>No Result</h2>
         </SearchResult>
       ) : undefined}
-    </Search>
+    </SearchWrapper>
   );
 };
 

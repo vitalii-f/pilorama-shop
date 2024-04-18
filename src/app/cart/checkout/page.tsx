@@ -6,8 +6,7 @@ import {
   Main,
   Section,
 } from './Checkout.styled';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import WarningIcon from '@mui/icons-material/Warning';
+import { CheckCircle, Warning } from '@mui/icons-material';
 
 const fetchUser = async () => {
   const supabase = createClient();
@@ -59,7 +58,7 @@ const CheckoutPage = async () => {
       <Main>
         <Section>
           <CheckoutHeader>
-            <CheckCircleIcon fontSize='large' color='success' />
+            <CheckCircle fontSize='large' color='success' />
             <h2>Your payment is {invoice.status}</h2>
           </CheckoutHeader>
           <CheckoutContent>
@@ -78,7 +77,7 @@ const CheckoutPage = async () => {
       <Main>
         <Section>
           <CheckoutHeader>
-            <WarningIcon fontSize='large' color='warning' />
+            <Warning fontSize='large' color='warning' />
             <h2>Your payment in {invoice.status}</h2>
           </CheckoutHeader>
           <CheckoutContent>

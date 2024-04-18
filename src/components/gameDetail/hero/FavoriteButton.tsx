@@ -1,8 +1,7 @@
 'use client';
 
 import { IconButton } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { addToFavorite } from './actions';
 
 const FavoriteButton = ({
@@ -14,7 +13,7 @@ const FavoriteButton = ({
 }) => {
   return (
     <IconButton onClick={() => addToFavorite(gameId)}>
-      {isFavorite ? <FavoriteIcon color='error' /> : <FavoriteBorderIcon />}
+      {isFavorite ? <Favorite color='error' /> : <FavoriteBorder />}
     </IconButton>
   );
 };

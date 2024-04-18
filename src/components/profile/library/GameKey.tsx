@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Visibility } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { GameKeyContainer, GameKeyInput } from './GameKey.styled';
 
@@ -16,7 +16,7 @@ const GameKey = ({ value }: { value: string }) => {
     <GameKeyContainer>
       <GameKeyInput type={type} value={value} autoComplete='off' />
       <IconButton onClick={handleClick}>
-        <VisibilityIcon />
+        <Visibility />
       </IconButton>
     </GameKeyContainer>
   );

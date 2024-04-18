@@ -11,10 +11,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
+import {
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  DeleteForever,
+  Edit,
+} from '@mui/icons-material';
 import { TableRowType, Tables } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -52,7 +54,7 @@ const DataTable = ({
               size='small'
               onClick={() => setOpen(!open)}
             >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
             </IconButton>
           </TableCell>
           {headers.map((title, index) => (
@@ -95,7 +97,7 @@ const DataTable = ({
                         <IconButton
                           onClick={() => handleDelete(row.id, collection)}
                         >
-                          <DeleteForeverIcon />
+                          <DeleteForever />
                         </IconButton>
                       </TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
@@ -104,7 +106,7 @@ const DataTable = ({
                             router.push(`${collection}/edit/${row.id}`);
                           }}
                         >
-                          <EditIcon />
+                          <Edit />
                         </IconButton>
                       </TableCell>
                       <TableCell sx={{ width: '100%' }} />

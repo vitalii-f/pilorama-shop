@@ -12,7 +12,7 @@ import {
 } from './page.styled';
 import GameSlider from '@/components/gameDetail/slider/GameSlider';
 import GameDescription from '@/components/gameDetail/description/GameDescription';
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import { CardGiftcard } from '@mui/icons-material';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Metadata } from 'next';
 import { fetchGameData } from '@/utils/games/games';
@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const GameDetailPage = async ({ params }: { params: { id: number } }) => {
   const gameData = await fetchGameData(params.id);
 
-  const supabase = createClient()
-  await supabase.rpc('increment_views', { game_id: params.id })
+  const supabase = createClient();
+  await supabase.rpc('increment_views', { game_id: params.id });
 
   return (
     <Main>
@@ -67,7 +67,7 @@ const GameDetailPage = async ({ params }: { params: { id: number } }) => {
         </AdditionalWrapper>
         <Aside>
           <GiftButton disabled title='Coming soon...'>
-            <CardGiftcardIcon />
+            <CardGiftcard />
             Buy As A Gift
           </GiftButton>
           <GameDescription gameData={gameData} />

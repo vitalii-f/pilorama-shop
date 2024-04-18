@@ -15,10 +15,10 @@ import {
 import Image from 'next/image';
 import { createPay, removeFromCart } from './actions';
 import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete } from '@mui/icons-material';
 
 interface ProductListProps extends Tables<'cart'> {
-  games: Tables<'games'> | null
+  games: Tables<'games'> | null;
 }
 
 const ProductList = ({ cart }: { cart: ProductListProps[] }) => {
@@ -27,7 +27,7 @@ const ProductList = ({ cart }: { cart: ProductListProps[] }) => {
 
   const DeleteFromCard = ({ cartItemId }: { cartItemId: number }) => {
     const handleDelete = async () => {
-      await removeFromCart(cartItemId)
+      await removeFromCart(cartItemId);
     };
     return (
       <IconButton
@@ -35,7 +35,7 @@ const ProductList = ({ cart }: { cart: ProductListProps[] }) => {
         title='Delete from cart'
         onClick={handleDelete}
       >
-        <DeleteIcon />
+        <Delete />
       </IconButton>
     );
   };
@@ -65,7 +65,11 @@ const ProductList = ({ cart }: { cart: ProductListProps[] }) => {
           <p>Total price: ${totalPrice}</p>
           <p>Total amount: {cart.length}</p>
         </PayZoneInfo>
-        <PayButton onClick={async () => await createPay(cart.map(item => item.games!))}>Buy</PayButton>
+        <PayButton
+          onClick={async () => await createPay(cart.map((item) => item.games!))}
+        >
+          Buy
+        </PayButton>
       </PayZone>
     </Products>
   );

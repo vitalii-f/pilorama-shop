@@ -2,7 +2,7 @@
 
 import { Button, IconButton, InputLabel } from '@mui/material';
 import { ChangeEvent, memo, useRef, useState } from 'react';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { CloudUpload, Close, Restore } from '@mui/icons-material';
 import { CollectionInputProps } from '@/types/types';
 import {
   InputTitle,
@@ -10,8 +10,6 @@ import {
   VisuallyHiddenInput,
 } from './CollectionControl.styled';
 import Img from 'next/image';
-import CloseIcon from '@mui/icons-material/Close';
-import RestoreIcon from '@mui/icons-material/Restore';
 
 const FileSelect = ({
   inputProps,
@@ -58,7 +56,7 @@ const FileSelect = ({
   };
 
   const RestoreButton = () => {
-    if (!defaultValue) return
+    if (!defaultValue) return;
     if (!loadedImage || defaultValue !== loadedImage)
       return (
         <IconButton
@@ -67,7 +65,7 @@ const FileSelect = ({
             setLoadedImage(defaultValue);
           }}
         >
-          <RestoreIcon />
+          <Restore />
         </IconButton>
       );
   };
@@ -83,7 +81,7 @@ const FileSelect = ({
           onClick={() => setLoadedImage(undefined)}
           color='primary'
         >
-          <CloseIcon color='error' />
+          <Close color='error' />
         </IconButton>
       );
   };
@@ -104,7 +102,7 @@ const FileSelect = ({
       <Button
         component='label'
         variant='contained'
-        startIcon={<CloudUploadIcon />}
+        startIcon={<CloudUpload />}
       >
         Upload file
         <VisuallyHiddenInput

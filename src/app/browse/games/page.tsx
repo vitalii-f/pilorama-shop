@@ -10,7 +10,7 @@ import {
 } from '../page.styled';
 import Link from 'next/link';
 import PlatformLabel from '@/components/labels/PlatformLabel';
-import { createClient } from '@/utils/supabase/client';
+import { createClient } from '@/utils/supabase/server';
 import GamePagination from '@/components/games/GamePagination';
 
 interface SearchParamsProps {

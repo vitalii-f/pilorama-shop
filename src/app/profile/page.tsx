@@ -12,7 +12,7 @@ const ProfilePage = async () => {
 
   const { data: userData } = await supabase.auth.getUser();
   if (!userData.user) return <div>Please, login to account!</div>;
-  
+
   const { data: profileData, error } = await supabase
     .from('profiles')
     .select('*')

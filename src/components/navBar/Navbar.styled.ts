@@ -15,7 +15,7 @@ export const HeaderDrawer = styled.div`
   height: 100px;
 `;
 
-export const Search = styled.div`
+export const SearchWrapper = styled.div`
   position: relative;
 
   display: flex;

@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { CloudUpload, Close, Restore } from '@mui/icons-material';
 import { CollectionInputProps, MiltipleImagesProps } from '@/types/types';
 import {
   InputTitle,
@@ -18,8 +18,6 @@ import {
   VisuallyHiddenInput,
 } from './CollectionControl.styled';
 import Img from 'next/image';
-import CloseIcon from '@mui/icons-material/Close';
-import RestoreIcon from '@mui/icons-material/Restore';
 
 const MultipleFileSelect = ({
   inputProps,
@@ -37,13 +35,13 @@ const MultipleFileSelect = ({
 
   useEffect(() => {
     if (defaultValue) setImages({ [inputProps.name]: defaultValue });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
-    
-    if (!defaultValue) return setLoadedImage([event.target.files])
+
+    if (!defaultValue) return setLoadedImage([event.target.files]);
 
     setLoadedImage((prev) => {
       if (!prev || !event.target.files) return;
@@ -85,7 +83,7 @@ const MultipleFileSelect = ({
               onClick={() => handleRemove(item)}
               color='primary'
             >
-              <CloseIcon color='error' />
+              <Close color='error' />
             </IconButton>
           </PreviewWrapper>
         );
@@ -104,7 +102,7 @@ const MultipleFileSelect = ({
   };
 
   const RestoreButton = () => {
-    if (!defaultValue) return
+    if (!defaultValue) return;
     if (!loadedImage || defaultValue !== loadedImage)
       return (
         <IconButton
@@ -113,7 +111,7 @@ const MultipleFileSelect = ({
             setLoadedImage(defaultValue);
           }}
         >
-          <RestoreIcon />
+          <Restore />
         </IconButton>
       );
   };
@@ -127,11 +125,7 @@ const MultipleFileSelect = ({
         <RestoreButton />
       </InputTitle>
       <Preview />
-      <Button
-        component='label'
-        variant='contained'
-        startIcon={<CloudUploadIcon />}
-      >
+      <Button component='label' variant='contained' startIcon={<CloudUpload />}>
         Upload file
         <VisuallyHiddenInput
           type='file'

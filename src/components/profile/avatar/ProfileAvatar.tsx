@@ -20,7 +20,7 @@ import {
   LoadIcon,
   VisuallyHiddenInput,
 } from './ProfileAvatar.styled';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { CloudUpload } from '@mui/icons-material';
 import { submitAvatar } from './actions';
 
 const avatarList = [
@@ -117,7 +117,7 @@ const ProfileAvatar = ({ avatarURL }: { avatarURL?: string | null }) => {
                     priority
                   />
                 )}
-                <CloudUploadIcon sx={{ zIndex: '5' }} />
+                <CloudUpload sx={{ zIndex: '5' }} />
                 <VisuallyHiddenInput
                   type='file'
                   name='avatar'

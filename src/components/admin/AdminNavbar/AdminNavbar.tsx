@@ -3,31 +3,33 @@
 import { NavLink, NavLinks } from './AdminNavbar.styled';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import StorageIcon from '@mui/icons-material/Storage';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import PeopleIcon from '@mui/icons-material/People';
-import TuneIcon from '@mui/icons-material/Tune';
+import {
+  Storage,
+  Leaderboard,
+  Tune,
+  PeopleAltSharp,
+} from '@mui/icons-material';
 
 const navItems = [
   {
     name: 'Dashboard',
     link: '/admin/dashboard',
-    icon: <LeaderboardIcon fontSize='large' />,
+    icon: <Leaderboard fontSize='large' />,
   },
   {
     name: 'Collections',
     link: '/admin/collections',
-    icon: <StorageIcon fontSize='large' />,
+    icon: <Storage fontSize='large' />,
   },
   {
     name: 'Users',
     link: '/admin/users',
-    icon: <PeopleIcon fontSize='large' />,
+    icon: <PeopleAltSharp fontSize='large' />,
   },
   {
     name: 'Settings',
     link: '/admin/settings',
-    icon: <TuneIcon fontSize='large' />,
+    icon: <Tune fontSize='large' />,
   },
 ];
 
@@ -43,7 +45,9 @@ const AdminNavbar = () => {
             }
             key={item.name}
           >
-            <Link href={item.link} title={item.name} >{item.icon}</Link>
+            <Link href={item.link} title={item.name}>
+              {item.icon}
+            </Link>
           </NavLink>
         ))}
       </NavLinks>

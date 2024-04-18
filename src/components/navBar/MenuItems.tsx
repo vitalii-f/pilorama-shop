@@ -1,6 +1,8 @@
-import HomeIcon from '@mui/icons-material/Home';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import {
+  Home,
+  SportsEsports,
+  ShoppingCart,
+} from '@mui/icons-material';
 import {
   List,
   ListItem,
@@ -14,12 +16,12 @@ export const menuList = [
   {
     name: 'Home',
     link: '/',
-    icon: <HomeIcon />,
+    icon: <Home />,
   },
   {
     name: 'Games',
     link: '/browse/games',
-    icon: <SportsEsportsIcon />,
+    icon: <SportsEsports />,
   },
 ];
 
@@ -37,7 +39,7 @@ const MenuItems = () => {
       <ListItem disablePadding>
         <ListItemButton LinkComponent={Link} href='/cart'>
           <ListItemIcon>
-            <ShoppingCartIcon />
+            <ShoppingCart />
           </ListItemIcon>
           <ListItemText primary='Cart' />
         </ListItemButton>

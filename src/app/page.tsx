@@ -3,7 +3,7 @@ import Hero from '@/components/hero/Hero';
 import NewReleases from '@/components/newReleases/NewReleases';
 import { createClient } from '@/utils/supabase/client';
 import { Suspense } from 'react';
-import HomeLoading from './HomeLoading';
+import HomeLoading from '../components/home/HomeLoading';
 
 const fetchData = async () => {
   const supabase = createClient();
@@ -11,9 +11,9 @@ const fetchData = async () => {
     const { data, error } = await supabase
       .from('games')
       .select('*, developers(*)')
-      .limit(6)
+      .limit(6);
     if (error) throw new Error(error.message);
-    
+
     return data;
   } catch (error) {
     throw new Error(error as string);

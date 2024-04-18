@@ -6,10 +6,12 @@ import {
   Section,
   Wrapper,
 } from './Profile.styled';
-import PersonIcon from '@mui/icons-material/Person';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import SettingsIcon from '@mui/icons-material/Settings';
+import {
+  Person,
+  ShoppingBasket,
+  Favorite,
+  Settings,
+} from '@mui/icons-material';
 import Link from 'next/link';
 
 const layout = ({ children }: { children: React.ReactNode }) => {
@@ -22,24 +24,25 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             <NavUl>
               <NavLi>
                 <Link href='/profile'>
-                  <PersonIcon /> General
+                  <Person />
+                  General
                 </Link>
               </NavLi>
               <NavLi>
                 <Link href='/profile/library'>
-                  <ShoppingBasketIcon />
+                  <ShoppingBasket />
                   Library
                 </Link>
               </NavLi>
               <NavLi>
                 <Link href='/profile/favorite'>
-                  <FavoriteIcon />
+                  <Favorite />
                   Favorite
                 </Link>
               </NavLi>
               <NavLi>
                 <Link href='/profile/settings'>
-                  <SettingsIcon />
+                  <Settings />
                   Settings
                 </Link>
               </NavLi>

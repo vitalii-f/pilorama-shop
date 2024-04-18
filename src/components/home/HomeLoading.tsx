@@ -6,7 +6,7 @@ import {
 } from '@/components/hero/Hero.styled';
 import HeroNav from '@/components/hero/HeroNav';
 import PlatformLabel from '@/components/labels/PlatformLabel';
-import { Price } from './profile/favorite/FavoritePage.styled';
+import { Price } from '../../app/profile/favorite/FavoritePage.styled';
 import { Skeleton } from '@mui/material';
 import {
   Cards,

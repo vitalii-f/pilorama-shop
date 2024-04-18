@@ -1,7 +1,7 @@
 'use client';
 
 import styled from 'styled-components';
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import { CloudDownload } from '@mui/icons-material';
 import Image from 'next/image';
 
 export const AvatarWrapper = styled.div`
@@ -45,7 +45,7 @@ export const AvatarDialog = styled.div`
   cursor: pointer;
 `;
 
-export const LoadIcon = styled(CloudDownloadIcon)`
+export const LoadIcon = styled(CloudDownload)`
   && {
     transition: all 0.5s;
   }
