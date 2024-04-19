@@ -12,10 +12,7 @@ import {
 const getProfiles = async () => {
   const supabase = createClient();
 
-  const { data: userData, error: userError } = await supabase.auth.getUser()
-  if (userError) throw new Error(userError.message);
-
-  const { data, error } = await supabase.from('profiles').select('*').eq('id', userData.user.id);
+  const { data, error } = await supabase.from('profiles').select('*')
   if (error) throw new Error(error.message);
   
   return data;
