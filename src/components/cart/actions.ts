@@ -55,7 +55,7 @@ export const createPay = async (cart: Tables<'games'>[]) => {
     {
       method: 'POST',
       headers: {
-        'X-Token': 'usFmFVz-3UCn0t9U2AQouvajNmjY0y3vyZ6GITsKJYtQ',
+        'X-Token': process.env.X_SIGN!,
       },
       body: JSON.stringify(requestBody),
     }
